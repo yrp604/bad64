@@ -17,6 +17,7 @@ pub enum OperandClass {
     Imm64 = OperandClass_IMM64,
     FImm32 = OperandClass_FIMM32,
     StrImm = OperandClass_STR_IMM,
+    Reg = OperandClass_REG,
     MultiReg = OperandClass_MULTI_REG,
     SysReg = OperandClass_SYS_REG,
     MemReg = OperandClass_MEM_REG,
@@ -31,22 +32,43 @@ pub enum OperandClass {
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-pub struct Register(i32);
+pub struct SysReg(i32);
 
-impl Register {}
+impl SysReg {
+    pub fn name(&self) -> &'static str {
+        unsafe { CStr::from_ptr(get_system_register_name(self.0)) }
+            .to_str()
+            .unwrap()
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub struct Reg(i32);
+
+impl Reg {
+    pub fn name(&self) -> &'static str {
+        unsafe { CStr::from_ptr(get_register_name(self.0)) }
+            .to_str()
+            .unwrap()
+    }
+
+    pub fn size(&self) -> usize {
+        unsafe { get_register_size(self.0) as usize }
+    }
+}
 
 /// Structure containing an instruction operand
-#[derive(Clone, Debug, Eq, Hash, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Operand<'a>(&'a bad64_sys::InstructionOperand);
 
 impl Operand<'_> {
     pub fn class(&self) -> OperandClass {
-        OperandClass::from_i32(self.0.operandClass).unwrap()
+        OperandClass::from_i32(self.0.operandClass).expect("unknown operand class in operand")
     }
 
-    pub fn reg(&self, n: usize) -> Option<Register> {
+    pub fn reg(&self, n: usize) -> Option<Reg> {
         match self.class() {
-            OperandClass::MemReg | OperandClass::MultiReg => {
+            OperandClass::Reg | OperandClass::MemReg | OperandClass::MultiReg => {
                 // TODO: add MAX_REGISTERS when it gets implemented
                 if n >= 5 {
                     return None;
@@ -56,7 +78,7 @@ impl Operand<'_> {
                     return None;
                 }
 
-                Some(Register(self.0.reg[n]))
+                Some(Reg(self.0.reg[n]))
             }
             _ => None,
         }
@@ -71,6 +93,14 @@ impl Operand<'_> {
             _ => None,
         }
     }
+
+    pub fn sysreg(&self) -> Option<SysReg> {
+        if self.class() != OperandClass::SysReg {
+            return None;
+        }
+
+        Some(SysReg(self.0.sysreg))
+    }
 }
 
 /// Structure containing a decoded instruction
@@ -79,7 +109,7 @@ pub struct Instruction(bad64_sys::Instruction);
 
 impl Instruction {
     /// Get the instruction mnemonic
-    pub fn mnem(&self) -> &str {
+    pub fn mnem(&self) -> &'static str {
         unsafe { CStr::from_ptr(get_operation(&self.0 as _)) }
             .to_str()
             .unwrap()
@@ -127,7 +157,7 @@ pub enum DecodeError {
 /// assert_eq!(decoded.mnem(), "nop");
 /// ```
 pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
-    let mut decoded = MaybeUninit::uninit();
+    let mut decoded = MaybeUninit::zeroed();
 
     let r = unsafe { aarch64_decompose(ins, decoded.as_mut_ptr(), address) };
 

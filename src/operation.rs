@@ -1027,6 +1027,9 @@ pub enum Operation {
     ZIP2 = Operation_ARM64_ZIP2,
 }
 
+// this is a guard to try to detect if new instructions get added
+const_assert_eq!(Operation_ARM64_ZIP2, 1018);
+
 impl Operation {
     pub fn name(&self) -> &'static str {
         unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap())) }

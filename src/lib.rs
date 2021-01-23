@@ -3,6 +3,9 @@
 #[macro_use]
 extern crate num_derive;
 
+#[macro_use]
+extern crate static_assertions;
+
 use core::mem::MaybeUninit;
 
 use cstr_core::CStr;

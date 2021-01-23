@@ -65,7 +65,7 @@ impl<'a> Operand<'a> {
 
     pub fn reg(&self, n: usize) -> Option<Reg> {
         match self.class() {
-            OperandClass::Reg | OperandClass::MemReg | OperandClass::MultiReg => {
+            OperandClass::Reg | OperandClass::MultiReg => {
                 // TODO: add MAX_REGISTERS when it gets implemented
                 if n >= 5 {
                     return None;
@@ -80,6 +80,20 @@ impl<'a> Operand<'a> {
             _ => None,
         }
     }
+    /*
+    pub fn mem(&self) -> Option<()> {
+        match self.class() {
+            OperandClass::MemReg
+            | OperandClass::MemOffset
+            | OperandClass::MemExtended
+            | OperandClass::MemPreIdx
+            | OperandClass::MemPostIdx => {
+
+            }
+            _ => None,
+        }
+    }
+    */
 
     pub fn imm(&self) -> Option<u64> {
         match self.class() {
@@ -97,5 +111,19 @@ impl<'a> Operand<'a> {
         }
 
         Some(SysReg(self.0.sysreg))
+    }
+
+    pub fn implspec(&self) -> Option<(u8, u8, u8, u8, u8)> {
+        if self.class() != OperandClass::ImplementationSpecific {
+            return None;
+        }
+
+        Some((
+            self.0.implspec[0],
+            self.0.implspec[1],
+            self.0.implspec[2],
+            self.0.implspec[3],
+            self.0.implspec[4],
+        ))
     }
 }

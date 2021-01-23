@@ -11,6 +11,8 @@ fn decode_add() {
     // add x0, x1, #0x41
     let ins = decode(0x91010420, 0).unwrap();
 
+    assert_eq!(ins.operation(), Operation::ADD);
+
     let o0 = ins.operand(0).unwrap();
     let o1 = ins.operand(1).unwrap();
     let o2 = ins.operand(2).unwrap();

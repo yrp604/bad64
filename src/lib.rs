@@ -11,8 +11,10 @@ use num_traits::FromPrimitive;
 use bad64_sys::*;
 
 mod operand;
+mod operation;
 
 pub use operand::{Operand, OperandClass};
+pub use operation::Operation;
 
 /// Structure containing a decoded instruction
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
@@ -31,6 +33,12 @@ impl Instruction {
         unsafe { CStr::from_ptr(get_operation(&self.0 as _)) }
             .to_str()
             .unwrap()
+    }
+
+    pub fn operation(&self) -> Operation {
+        assert!(self.0.operation != 0);
+
+        Operation::from_i32(self.0.operation).unwrap()
     }
 
     pub fn operand(&self, n: usize) -> Option<Operand> {

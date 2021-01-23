@@ -9,3 +9,5 @@ edition = "2018"
 [dependencies]
 bad64-sys = { path = "../bad64-sys" }
 cstr_core = "0.2"
+num-traits = "0.2"
+num-derive = "0.3"

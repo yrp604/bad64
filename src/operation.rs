@@ -1,6 +1,9 @@
 use bad64_sys::*;
 
-#[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive)]
+use cstr_core::CStr;
+use num_traits::ToPrimitive;
+
+#[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive, ToPrimitive)]
 #[repr(i32)]
 #[allow(non_camel_case_types)]
 pub enum Operation {
@@ -1022,4 +1025,12 @@ pub enum Operation {
     YIELD = Operation_ARM64_YIELD,
     ZIP1 = Operation_ARM64_ZIP1,
     ZIP2 = Operation_ARM64_ZIP2,
+}
+
+impl Operation {
+    pub fn name(&self) -> &'static str {
+        unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap())) }
+            .to_str()
+            .unwrap()
+    }
 }

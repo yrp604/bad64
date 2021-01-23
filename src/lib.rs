@@ -55,6 +55,16 @@ impl Instruction {
         Some(o)
     }
 
+    pub fn operands(&self) -> usize {
+        for n in 0..MAX_OPERANDS as usize {
+            if self.operand(n).is_none() {
+                return n;
+            }
+        }
+
+        0
+    }
+
     pub fn nth(&self, n: usize) -> Operand {
         self.operand(n).unwrap()
     }
@@ -87,15 +97,36 @@ pub enum DecodeError {
 /// assert_eq!(decoded.mnem(), "nop");
 /// ```
 pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
+    let mut ctx: context = unsafe { MaybeUninit::zeroed().assume_init() };
+
+    ctx.halted = true;
+    ctx.insword = ins;
+    ctx.address = address;
+    ctx.features0 = 0xFFFFFFFFFFFFFFFF;
+    ctx.features1 = 0xFFFFFFFFFFFFFFFF;
+    ctx.EDSCR_HDE = true;
+
     let mut decoded = MaybeUninit::zeroed();
 
-    let r = unsafe { aarch64_decompose(ins, decoded.as_mut_ptr(), address) };
+    let r = unsafe { decode_spec(&mut ctx as *mut context, decoded.as_mut_ptr()) };
 
     if r != 0 {
-        Err(DecodeError::from_i32(r).unwrap())
-    } else {
-        Ok(Instruction(unsafe { decoded.assume_init() }))
+        return Err(DecodeError::from_i32(r).unwrap())
     }
+
+    let mut decoded = unsafe { decoded.assume_init() };
+
+    if decoded.encoding == DECODE_STATUS_UNDEFINED {
+        return Err(DecodeError::Undefined);
+    }
+
+    let r = unsafe { decode_scratchpad(&mut ctx as *mut context, &mut decoded as *mut bad64_sys::Instruction) };
+
+    if r != 0 {
+        return Err(DecodeError::from_i32(r).unwrap())
+    }
+
+    Ok(Instruction(decoded))
 }
 /*
 pub fn disassemble(code: &[u8], address: u64) -> impl Iterator<Item=(u64, Result<Instruction, DecodeError>)> {

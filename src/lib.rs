@@ -12,7 +12,7 @@ use bad64_sys::*;
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive)]
 #[repr(i32)]
 pub enum OperandClass {
-    None =  OperandClass_NONE,
+    None = OperandClass_NONE,
     Imm32 = OperandClass_IMM32,
     Imm64 = OperandClass_IMM64,
     FImm32 = OperandClass_FIMM32,
@@ -33,9 +33,7 @@ pub enum OperandClass {
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Register(i32);
 
-impl Register {
-
-}
+impl Register {}
 
 /// Structure containing an instruction operand
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
@@ -50,20 +48,27 @@ impl Operand<'_> {
         match self.class() {
             OperandClass::MemReg | OperandClass::MultiReg => {
                 // TODO: add MAX_REGISTERS when it gets implemented
-                if n >= 5 { return None; }
+                if n >= 5 {
+                    return None;
+                }
 
-                if self.0.reg[n] == Register_REG_NONE { return None; }
+                if self.0.reg[n] == Register_REG_NONE {
+                    return None;
+                }
 
                 Some(Register(self.0.reg[n]))
-            },
+            }
             _ => None,
         }
     }
 
     pub fn imm(&self) -> Option<u64> {
         match self.class() {
-            OperandClass::Imm32 | OperandClass::Imm64 | OperandClass::FImm32 | OperandClass::StrImm => Some(self.0.immediate),
-            _ => None
+            OperandClass::Imm32
+            | OperandClass::Imm64
+            | OperandClass::FImm32
+            | OperandClass::StrImm => Some(self.0.immediate),
+            _ => None,
         }
     }
 }
@@ -81,16 +86,19 @@ impl Instruction {
     }
 
     pub fn operand(&self, n: usize) -> Option<Operand> {
-        if n >= MAX_OPERANDS as usize { return None; }
+        if n >= MAX_OPERANDS as usize {
+            return None;
+        }
 
         let o = Operand(&self.0.operands[n]);
 
-        if o.class() == OperandClass::None { return None; }
+        if o.class() == OperandClass::None {
+            return None;
+        }
 
         Some(o)
     }
 }
-
 
 /// Enum for decoding errors
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive)]
@@ -104,7 +112,6 @@ pub enum DecodeError {
     Lost = DECODE_STATUS_LOST,
     Unreachable = DECODE_STATUS_UNREACHABLE,
 }
-
 
 /// Decode a single instruction
 ///

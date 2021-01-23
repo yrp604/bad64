@@ -30,6 +30,13 @@ pub enum OperandClass {
     ImplementationSpecific = OperandClass_IMPLEMENTATION_SPECIFIC,
 }
 
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub struct Register(i32);
+
+impl Register {
+
+}
+
 /// Structure containing an instruction operand
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Operand<'a>(&'a bad64_sys::InstructionOperand);
@@ -37,6 +44,27 @@ pub struct Operand<'a>(&'a bad64_sys::InstructionOperand);
 impl Operand<'_> {
     pub fn class(&self) -> OperandClass {
         OperandClass::from_i32(self.0.operandClass).unwrap()
+    }
+
+    pub fn reg(&self, n: usize) -> Option<Register> {
+        match self.class() {
+            OperandClass::MemReg | OperandClass::MultiReg => {
+                // TODO: add MAX_REGISTERS when it gets implemented
+                if n >= 5 { return None; }
+
+                if self.0.reg[n] == Register_REG_NONE { return None; }
+
+                Some(Register(self.0.reg[n]))
+            },
+            _ => None,
+        }
+    }
+
+    pub fn imm(&self) -> Option<u64> {
+        match self.class() {
+            OperandClass::Imm32 | OperandClass::Imm64 | OperandClass::FImm32 | OperandClass::StrImm => Some(self.0.immediate),
+            _ => None
+        }
     }
 }
 
@@ -53,7 +81,7 @@ impl Instruction {
     }
 
     pub fn operand(&self, n: usize) -> Option<Operand> {
-        if n >= 5 { return None; }
+        if n >= MAX_OPERANDS as usize { return None; }
 
         let o = Operand(&self.0.operands[n]);
 

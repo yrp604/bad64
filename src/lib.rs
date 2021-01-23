@@ -38,7 +38,9 @@ pub struct Instruction(bad64_sys::Instruction);
 
 impl Instruction {
     pub fn mnem(&self) -> &str {
-        unsafe { CStr::from_ptr(get_operation(&self.0 as _)) }.to_str().unwrap()
+        unsafe { CStr::from_ptr(get_operation(&self.0 as _)) }
+            .to_str()
+            .unwrap()
     }
 }
 
@@ -50,6 +52,6 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     if r != 0 {
         Err(DecodeError::from(r))
     } else {
-        Ok(Instruction( unsafe { decoded.assume_init() }))
+        Ok(Instruction(unsafe { decoded.assume_init() }))
     }
 }

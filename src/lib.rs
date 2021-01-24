@@ -17,11 +17,13 @@ use bad64_sys::*;
 mod operand;
 mod operation;
 mod reg;
+mod shift;
 mod sysreg;
 
 pub use operand::{Operand, Imm};
 pub use operation::Operation;
 pub use reg::Reg;
+pub use shift::Shift;
 pub use sysreg::SysReg;
 
 /// Structure containing a decoded instruction

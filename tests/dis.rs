@@ -25,9 +25,9 @@ fn decode_add() {
     assert_eq!(ins.operand(3), None);
     assert_eq!(ins.operand(5), None);
 
-    assert_eq!(o0, Operand::Reg(Reg::X0));
-    assert_eq!(o1, Operand::Reg(Reg::X1));
-    assert_eq!(o2, Operand::Imm64(Imm { neg: false, val: 0x41, shift: None }));
+    assert_eq!(o0, Operand::Reg(Reg::X0, None));
+    assert_eq!(o1, Operand::Reg(Reg::X1, None));
+    assert_eq!(o2, Operand::Imm64(Imm { neg: false, val: 0x41 }, None));
 }
 
 #[test]

@@ -6,6 +6,7 @@ extern crate num_derive;
 #[macro_use]
 extern crate static_assertions;
 
+use core::convert::TryFrom;
 use core::mem::MaybeUninit;
 
 use cstr_core::CStr;
@@ -15,9 +16,13 @@ use bad64_sys::*;
 
 mod operand;
 mod operation;
+mod reg;
+mod sysreg;
 
-pub use operand::{Operand, OperandClass};
+pub use operand::Operand;
 pub use operation::Operation;
+pub use reg::Reg;
+pub use sysreg::SysReg;
 
 /// Structure containing a decoded instruction
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
@@ -49,13 +54,10 @@ impl Instruction {
             return None;
         }
 
-        let o = Operand::new(&self.0.operands[n]);
-
-        if o.class() == OperandClass::None {
-            return None;
+        match Operand::try_from(&self.0.operands[n]) {
+            Err(_) => None,
+            Ok(oo) => Some(oo),
         }
-
-        Some(o)
     }
 
     pub fn operands(&self) -> usize {
@@ -114,7 +116,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     let r = unsafe { decode_spec(&mut ctx as *mut context, decoded.as_mut_ptr()) };
 
     if r != 0 {
-        return Err(DecodeError::from_i32(r).unwrap())
+        return Err(DecodeError::from_i32(r).unwrap());
     }
 
     let mut decoded = unsafe { decoded.assume_init() };
@@ -123,10 +125,15 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
         return Err(DecodeError::Undefined);
     }
 
-    let r = unsafe { decode_scratchpad(&mut ctx as *mut context, &mut decoded as *mut bad64_sys::Instruction) };
+    let r = unsafe {
+        decode_scratchpad(
+            &mut ctx as *mut context,
+            &mut decoded as *mut bad64_sys::Instruction,
+        )
+    };
 
     if r != 0 {
-        return Err(DecodeError::from_i32(r).unwrap())
+        return Err(DecodeError::from_i32(r).unwrap());
     }
 
     Ok(Instruction(decoded))

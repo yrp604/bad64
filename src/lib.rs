@@ -19,7 +19,7 @@ mod operation;
 mod reg;
 mod sysreg;
 
-pub use operand::Operand;
+pub use operand::{Operand, Imm};
 pub use operation::Operation;
 pub use reg::Reg;
 pub use sysreg::SysReg;
@@ -54,10 +54,7 @@ impl Instruction {
             return None;
         }
 
-        match Operand::try_from(&self.0.operands[n]) {
-            Err(_) => None,
-            Ok(oo) => Some(oo),
-        }
+        Operand::try_from(&self.0.operands[n]).ok()
     }
 
     pub fn operands(&self) -> usize {
@@ -68,10 +65,6 @@ impl Instruction {
         }
 
         0
-    }
-
-    pub fn nth(&self, n: usize) -> Operand {
-        self.operand(n).unwrap()
     }
 }
 

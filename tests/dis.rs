@@ -17,6 +17,7 @@ fn decode_add() {
 
     assert_eq!(ins.operation(), Operation::ADD);
     assert_eq!(ins.operands(), 3);
+    assert_eq!(ins.mnem(), "add");
 
     let o0 = ins.operand(0).unwrap();
     let o1 = ins.operand(1).unwrap();
@@ -26,7 +27,7 @@ fn decode_add() {
 
     assert_eq!(o0, Operand::Reg(Reg::X0));
     assert_eq!(o1, Operand::Reg(Reg::X1));
-    assert_eq!(o2, Operand::Imm64(0x41));
+    assert_eq!(o2, Operand::Imm64(Imm { neg: false, val: 0x41, shift: None }));
 }
 
 #[test]

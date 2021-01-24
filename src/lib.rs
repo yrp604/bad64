@@ -20,7 +20,7 @@ mod reg;
 mod shift;
 mod sysreg;
 
-pub use operand::{Operand, Imm};
+pub use operand::{Imm, Operand};
 pub use operation::Operation;
 pub use reg::Reg;
 pub use shift::Shift;

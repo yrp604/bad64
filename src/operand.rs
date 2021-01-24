@@ -7,9 +7,8 @@ use crate::Reg;
 use crate::Shift;
 use crate::SysReg;
 
-
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-pub struct Imm{
+pub struct Imm {
     pub neg: bool,
     pub val: u64,
 }
@@ -17,9 +16,15 @@ pub struct Imm{
 impl From<&bad64_sys::InstructionOperand> for Imm {
     fn from(oo: &bad64_sys::InstructionOperand) -> Self {
         if oo.signedImm == 1 && (oo.immediate as i64) < 0 {
-            Self { neg: true, val: !oo.immediate }
+            Self {
+                neg: true,
+                val: !oo.immediate,
+            }
         } else {
-            Self { neg: false, val: oo.immediate }
+            Self {
+                neg: false,
+                val: oo.immediate,
+            }
         }
     }
 }
@@ -42,7 +47,6 @@ pub enum Operand {
     /*
     MemPostIdx = OperandClass_MEM_POST_IDX,
     MemExtended = OperandClass_MEM_EXTENDED,
-    Label = OperandClass_LABEL,
     Condition = OperandClass_CONDITION,
     Name = OperandClass_NAME,
     */
@@ -57,7 +61,10 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass_IMM32 => Ok(Self::Imm32(Imm::from(oo), Shift::try_from(oo).ok())),
             OperandClass_IMM64 => Ok(Self::Imm64(Imm::from(oo), Shift::try_from(oo).ok())),
             OperandClass_FIMM32 => Ok(Self::FImm32(Imm::from(oo), Shift::try_from(oo).ok())),
-            OperandClass_REG => Ok(Self::Reg(Reg::from_i32(oo.reg[0]).unwrap(), Shift::try_from(oo).ok())),
+            OperandClass_REG => Ok(Self::Reg(
+                Reg::from_i32(oo.reg[0]).unwrap(),
+                Shift::try_from(oo).ok(),
+            )),
             OperandClass_MULTI_REG => {
                 let mut regs = [None; 5];
 

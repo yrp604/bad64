@@ -11,6 +11,29 @@ fn decode_nop() {
 }
 
 #[test]
+fn decode_iter_nop() {
+    let ins1 = decode(0xd503201f, 0).unwrap();
+    let mut ii = disassemble(b"\x1f\x20\x03\xd5", 0);
+
+    let ins2 = ii.next().unwrap();
+
+    assert_eq!(0, ins2.0);
+    assert_eq!(ins1, ins2.1.unwrap());
+
+    assert_eq!(ii.next(), None);
+}
+
+#[test]
+fn decode_iter_err() {
+    let mut ii = disassemble(&[0x41_u8; 8], 0);
+
+    assert_eq!(ii.next().unwrap(), (0, Err(DecodeError::Unallocated)));
+    assert_eq!(ii.next().unwrap(), (4, Err(DecodeError::Unallocated)));
+    assert_eq!(ii.next(), None);
+}
+
+
+#[test]
 fn decode_add() {
     // add x0, x1, #0x41
     let ins = decode(0x91010420, 0).unwrap();

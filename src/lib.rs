@@ -6,7 +6,7 @@ extern crate num_derive;
 #[macro_use]
 extern crate static_assertions;
 
-use core::convert::TryFrom;
+use core::convert::{TryFrom, TryInto};
 use core::mem::MaybeUninit;
 
 use cstr_core::CStr;
@@ -66,7 +66,7 @@ impl Instruction {
             }
         }
 
-        0
+        5
     }
 }
 
@@ -106,8 +106,16 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
         _ => Err(DecodeError::from_i32(r).unwrap()),
     }
 }
-/*
-pub fn disassemble(code: &[u8], address: u64) -> impl Iterator<Item=(u64, Result<Instruction, DecodeError>)> {
-    debug_assert!(code.len() % 4 == 0);
+
+pub fn disassemble(code: &[u8], address: u64) -> impl Iterator<Item=(u64, Result<Instruction, DecodeError>)> + '_ {
+    (address..).step_by(4).zip(code.chunks(4)).map(|(addr, bytes)| {
+        match bytes.try_into() {
+            Ok(v) => {
+                let vv = u32::from_le_bytes(v);
+
+                (addr, decode(vv, addr))
+            }
+            Err(_) => (addr, Err(DecodeError::EndOfInstruction))
+        }
+    })
 }
-*/

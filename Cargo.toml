@@ -6,7 +6,7 @@ edition = "2018"
 description = "Rust bindings for Binja's arm64 disassembler"
 license = "Apache-2.0"
 repository = "https://github.com/yrp604/bad64"
-categories = ["api-bindings", "encoding", "no_std"]
+categories = ["api-bindings", "encoding", "no-std"]
 keywords = ["disassembler", "armv8", "arm64", "aarch64", "binja"]
 
 

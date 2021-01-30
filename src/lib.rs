@@ -92,8 +92,13 @@ pub enum DecodeError {
 ///
 /// # Examples
 /// ```
-/// use bad64::decode;
+/// use bad64::{decode, Operation};
+///
+/// // NOTE: little endian instruction
 /// let decoded = decode(0xd503201f, 0x1000).unwrap();
+///
+/// assert_eq!(decoded.operands(), 0);
+/// assert_eq!(decoded.operation(), Operation::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
 /// ```
 pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
@@ -107,6 +112,29 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     }
 }
 
+/// Disassemble bytes
+///
+/// # Arguments
+///
+/// * `code` - u8 slice to zero or more instructions
+/// * `address` - Location of code in memory
+///
+/// # Examples
+/// ```
+/// use bad64::{disassemble, Operation};
+///
+/// let mut decoded_iter = disassemble(b"\x1f\x20\x03\xd5", 0x1000);
+///
+/// let (addr, maybe_decoded) = decoded_iter.next().unwrap();
+/// let decoded = maybe_decoded.expect(&format!("Could not decode instruction at {:x}", addr));
+///
+/// assert_eq!(addr, 0x1000);
+/// assert_eq!(decoded.operands(), 0);
+/// assert_eq!(decoded.operation(), Operation::NOP);
+/// assert_eq!(decoded.mnem(), "nop");
+///
+/// assert_eq!(decoded_iter.next(), None);
+/// ```
 pub fn disassemble(code: &[u8], address: u64) -> impl Iterator<Item=(u64, Result<Instruction, DecodeError>)> + '_ {
     (address..).step_by(4).zip(code.chunks(4)).map(|(addr, bytes)| {
         match bytes.try_into() {

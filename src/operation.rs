@@ -3,6 +3,7 @@ use bad64_sys::*;
 use cstr_core::CStr;
 use num_traits::ToPrimitive;
 
+/// An instruction operation
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive, ToPrimitive)]
 #[repr(u32)]
 #[allow(non_camel_case_types)]
@@ -1049,12 +1050,14 @@ impl Operation {
     /// assert_eq!(decoded.operation().name(), decoded.mnem());
     /// ```
     pub fn name(&self) -> &'static str {
-        #[cfg(target_os = "windows")] {
+        #[cfg(target_os = "windows")]
+        {
             unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap())) }
                 .to_str()
                 .unwrap()
         }
-        #[cfg(not(target_os = "windows"))] {
+        #[cfg(not(target_os = "windows"))]
+        {
             unsafe { CStr::from_ptr(operation_to_str(self.to_u32().unwrap())) }
                 .to_str()
                 .unwrap()

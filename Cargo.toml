@@ -19,3 +19,8 @@ static_assertions = "1"
 
 [dev-dependencies]
 rand = "0.8"
+criterion = "0.3"
+
+[[bench]]
+name = "nop"
+harness = false

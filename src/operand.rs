@@ -7,6 +7,7 @@ use crate::Reg;
 use crate::Shift;
 use crate::SysReg;
 
+/// An instruction immediate
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Imm {
     pub neg: bool,
@@ -29,7 +30,7 @@ impl From<&bad64_sys::InstructionOperand> for Imm {
     }
 }
 
-/// Structure containing an instruction operand
+/// An instruction operand
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub enum Operand {
     Imm32 {
@@ -181,7 +182,9 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 cn: oo.implspec[3],
                 o2: oo.implspec[4],
             }),
-            OperandClass_CONDITION => Ok(Self::Condition(Condition::from_u32(oo.cond as u32).unwrap())),
+            OperandClass_CONDITION => Ok(Self::Condition(
+                Condition::from_u32(oo.cond as u32).unwrap(),
+            )),
             OperandClass_NAME => Ok(Self::Name(oo.name.clone())),
             _ => Err(()),
         }

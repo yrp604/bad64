@@ -3,6 +3,7 @@ use num_traits::ToPrimitive;
 
 use bad64_sys::*;
 
+/// Register
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, FromPrimitive, ToPrimitive)]
 #[repr(u32)]
 #[allow(non_camel_case_types)]
@@ -1341,7 +1342,6 @@ impl Reg {
             .unwrap()
     }
     */
-
 
     /// Get register size
     ///

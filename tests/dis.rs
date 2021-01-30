@@ -32,6 +32,13 @@ fn decode_iter_err() {
     assert_eq!(ii.next(), None);
 }
 
+#[test]
+fn decode_iter_short() {
+    let mut ii = disassemble(&[0x41_u8; 3], 0);
+
+    assert_eq!(ii.next().unwrap(), (0, Err(DecodeError::EndOfInstruction)));
+    assert_eq!(ii.next(), None);
+}
 
 #[test]
 fn decode_add() {

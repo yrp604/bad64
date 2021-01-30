@@ -1,3 +1,53 @@
+//! # bad64
+//!
+//! bad64 is a set of Rust bindings to the Binja Arm64 Disassembler.
+//!
+//! For more information about the disassembler, please see the
+//! [upstream](https://github.com/Vector35/arch-arm64/tree/dev/disassembler)
+//! repo.
+//!
+//! There are two main entry points:
+//! 1. [`decode`] for decoding a single instruction.
+//! ```
+//! use bad64::{decode, Operation};
+//! // nop - "\x1f\x20\x03\xd5"
+//! let decoded = decode(0xd503201f, 0x1000).unwrap();
+//! assert_eq!(decoded.operands(), 0);
+//! assert_eq!(decoded.operation(), Operation::NOP);
+//! assert_eq!(decoded.mnem(), "nop");
+//! ```
+//!
+//! 2. [`disassemble`] for disassembling a byte sequence.
+//! ```
+//! use bad64::{disassemble, Operation, Operand, Reg, Imm};
+//!
+//! // 1000: str   x0, [sp, #-16]! ; "\xe0\x0f\x1f\xf8"
+//! // 1004: ldr   x0, [sp], #16   ; "\xe0\x07\x41\xf8"
+//! let mut decoded_iter = disassemble(b"\xe0\x0f\x1f\xf8\xe0\x07\x41\xf8", 0x1000);
+//!
+//! let (push_addr, maybe_push_decode) = decoded_iter.next().unwrap();
+//! let push = maybe_push_decode.expect(&format!("Could not decode instruction at {:x}", push_addr));
+//!
+//! assert_eq!(push_addr, 0x1000);
+//! assert_eq!(push.operands(), 2);
+//! assert_eq!(push.operation(), Operation::STR);
+//! assert_eq!(push.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
+//! assert_eq!(push.operand(1), Some(Operand::MemPreIdx { reg: Reg::SP, offset: 16 }));
+//! assert_eq!(push.operand(2), None);
+//!
+//! let (pop_addr, maybe_pop_decode) = decoded_iter.next().unwrap();
+//! let pop = maybe_pop_decode.expect(&format!("Could not decode instruction at {:x}", pop_addr));
+//!
+//! assert_eq!(pop_addr, 0x1004);
+//! assert_eq!(pop.operands(), 2);
+//! assert_eq!(pop.operation(), Operation::LDR);
+//! assert_eq!(pop.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
+//! assert_eq!(pop.operand(1), Some(Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }}));
+//! assert_eq!(pop.operand(2), None);
+//!
+//! assert_eq!(decoded_iter.next(), None);
+//! ```
+
 #![no_std]
 
 #[macro_use]
@@ -26,7 +76,7 @@ pub use reg::Reg;
 pub use shift::Shift;
 pub use sysreg::SysReg;
 
-/// Structure containing a decoded instruction
+/// A decoded instruction
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Instruction(bad64_sys::Instruction);
 
@@ -36,6 +86,7 @@ impl Instruction {
     /// # Example
     /// ```
     /// use bad64::decode;
+    /// // nop - "\x1f\x20\x03\xd4"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
     /// assert_eq!(decoded.mnem(), "nop");
     // ```
@@ -50,6 +101,7 @@ impl Instruction {
     /// # Example
     /// ```
     /// use bad64::{decode, Operation};
+    /// // nop - "\x1f\x20\x03\xd4"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
     /// assert_eq!(decoded.operation(), Operation::NOP);
     // ```
@@ -60,6 +112,10 @@ impl Instruction {
     }
 
     /// Get an instruction operand
+    ///
+    /// # Arguments
+    ///
+    /// * `n` - return's the nth operand
     ///
     /// # Example
     /// ```
@@ -104,7 +160,7 @@ impl Instruction {
     }
 }
 
-/// Enum for decoding errors
+/// Decoding errors types
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive)]
 #[repr(i32)]
 pub enum DecodeError {
@@ -121,14 +177,14 @@ pub enum DecodeError {
 ///
 /// # Arguments
 ///
-/// * `ins` - A u32 of code to be decoded
+/// * `ins` - A little endian u32 of code to be decoded
 /// * `address` - Location of code in memory
 ///
 /// # Examples
 /// ```
 /// use bad64::{decode, Operation};
 ///
-/// // NOTE: little endian instruction
+/// // NOTE: little endian
 /// let decoded = decode(0xd503201f, 0x1000).unwrap();
 ///
 /// assert_eq!(decoded.operands(), 0);
@@ -146,7 +202,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     }
 }
 
-/// Disassemble bytes
+/// Disassemble byte slice
 ///
 /// # Arguments
 ///
@@ -169,15 +225,19 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 ///
 /// assert_eq!(decoded_iter.next(), None);
 /// ```
-pub fn disassemble(code: &[u8], address: u64) -> impl Iterator<Item=(u64, Result<Instruction, DecodeError>)> + '_ {
-    (address..).step_by(4).zip(code.chunks(4)).map(|(addr, bytes)| {
-        match bytes.try_into() {
+pub fn disassemble(
+    code: &[u8],
+    address: u64,
+) -> impl Iterator<Item = (u64, Result<Instruction, DecodeError>)> + '_ {
+    (address..)
+        .step_by(4)
+        .zip(code.chunks(4))
+        .map(|(addr, bytes)| match bytes.try_into() {
             Ok(v) => {
                 let vv = u32::from_le_bytes(v);
 
                 (addr, decode(vv, addr))
             }
-            Err(_) => (addr, Err(DecodeError::EndOfInstruction))
-        }
-    })
+            Err(_) => (addr, Err(DecodeError::EndOfInstruction)),
+        })
 }

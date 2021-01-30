@@ -664,6 +664,24 @@ pub enum SysReg {
 const_assert_eq!(SystemReg_SYSREG_END, 65301);
 
 impl SysReg {
+    /// Get system register name
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use bad64::{decode, Operand, SysReg};
+    /// // msr vbar_el3, x0
+    /// let decoded = decode(0xd51ec000, 0).unwrap();
+    ///
+    /// let op = decoded.operand(0).unwrap();
+    ///
+    /// assert_eq!(op, Operand::SysReg(SysReg::VBAR_EL3));
+    ///
+    /// match op {
+    ///     Operand::SysReg(sr) => assert_eq!(sr.name(), "vbar_el3"),
+    ///     _ => assert!(false),
+    /// };
+    /// ```
     pub fn name(&self) -> &'static str {
         #[cfg(target_os = "windows")]
         {

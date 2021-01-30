@@ -1342,6 +1342,25 @@ impl Reg {
     }
     */
 
+
+    /// Get register size
+    ///
+    /// # Examples
+    /// ```
+    /// use bad64::{decode, Operand, Reg};
+    ///
+    /// // add x0, x1, #0x41  - "\x20\x04\x01\x91"
+    /// let decoded = decode(0x91010420, 0x1000).unwrap();
+    ///
+    /// let op = decoded.operand(0).unwrap();
+    ///
+    /// assert_eq!(op, Operand::Reg { reg: Reg::X0, shift: None });
+    ///
+    /// match op {
+    ///     Operand::Reg { reg: r, .. } => assert_eq!(r.size(), 8),
+    ///     _ => assert!(false),
+    /// };
+    /// ```
     pub fn size(&self) -> usize {
         #[cfg(target_os = "windows")]
         {

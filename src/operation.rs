@@ -1031,6 +1031,23 @@ pub enum Operation {
 const_assert_eq!(Operation_ARM64_ZIP2, 1018);
 
 impl Operation {
+    /// Get the operation name
+    ///
+    /// This is an alias for the instruction mnemonic
+    ///
+    /// # Examples
+    /// ```
+    /// use bad64::{decode, Operation};
+    ///
+    /// // NOTE: little endian instruction
+    /// // nop
+    /// let decoded = decode(0xd503201f, 0x1000).unwrap();
+    ///
+    /// assert_eq!(decoded.operation(), Operation::NOP);
+    /// assert_eq!(decoded.operation().name(), "nop");
+    /// assert_eq!(decoded.mnem(), "nop");
+    /// assert_eq!(decoded.operation().name(), decoded.mnem());
+    /// ```
     pub fn name(&self) -> &'static str {
         #[cfg(target_os = "windows")] {
             unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap())) }

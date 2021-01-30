@@ -95,6 +95,7 @@ pub enum Operand {
 }
 
 #[allow(non_upper_case_globals)]
+#[doc(hidden)]
 impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
     type Error = ();
 

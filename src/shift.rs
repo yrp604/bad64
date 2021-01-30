@@ -22,6 +22,7 @@ pub enum Shift {
     MSL(u32),
 }
 
+#[doc(hidden)]
 #[allow(non_upper_case_globals)]
 impl TryFrom<&bad64_sys::InstructionOperand> for Shift {
     type Error = ();

@@ -2,6 +2,7 @@ use core::convert::TryFrom;
 
 use bad64_sys::*;
 
+/// A condition
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive, ToPrimitive)]
 #[repr(u32)]
 #[allow(non_camel_case_types)]

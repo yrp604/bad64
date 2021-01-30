@@ -171,6 +171,7 @@ pub enum DecodeError {
     EndOfInstruction = DECODE_STATUS_END_OF_INSTRUCTION,
     Lost = DECODE_STATUS_LOST,
     Unreachable = DECODE_STATUS_UNREACHABLE,
+    Short = -8, // bad64 introduced error code, for cases where a we dont have 4 bytes to decode
 }
 
 /// Decode a single instruction
@@ -238,6 +239,6 @@ pub fn disassemble(
 
                 (addr, decode(vv, addr))
             }
-            Err(_) => (addr, Err(DecodeError::EndOfInstruction)),
+            Err(_) => (addr, Err(DecodeError::Short)),
         })
 }

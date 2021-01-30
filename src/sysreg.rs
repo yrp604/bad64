@@ -665,8 +665,17 @@ const_assert_eq!(SystemReg_SYSREG_END, 65301);
 
 impl SysReg {
     pub fn name(&self) -> &'static str {
-        unsafe { CStr::from_ptr(bad64_sys::get_system_register_name(self.to_i32().unwrap())) }
-            .to_str()
-            .unwrap()
+        #[cfg(target_os = "windows")]
+        {
+            unsafe { CStr::from_ptr(bad64_sys::get_system_register_name(self.to_i32().unwrap())) }
+                .to_str()
+                .unwrap()
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            unsafe { CStr::from_ptr(bad64_sys::get_system_register_name(self.to_u32().unwrap())) }
+                .to_str()
+                .unwrap()
+        }
     }
 }

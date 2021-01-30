@@ -112,14 +112,14 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 shift: Shift::try_from(oo).ok(),
             }),
             OperandClass_REG => Ok(Self::Reg {
-                reg: Reg::from_i32(oo.reg[0]).unwrap(),
+                reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 shift: Shift::try_from(oo).ok(),
             }),
             OperandClass_MULTI_REG => {
                 let mut regs = [None; MAX_REGISTERS as usize];
 
                 for n in 0..MAX_REGISTERS as usize {
-                    regs[n] = Reg::from_i32(oo.reg[n]);
+                    regs[n] = Reg::from_u32(oo.reg[n] as u32);
                 }
 
                 let lane = match oo.laneUsed {
@@ -129,14 +129,14 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
 
                 Ok(Self::MultiReg { regs, lane })
             }
-            OperandClass_SYS_REG => Ok(Self::SysReg(SysReg::from_i32(oo.sysreg).unwrap())),
-            OperandClass_MEM_REG => Ok(Self::MemReg(Reg::from_i32(oo.reg[0]).unwrap())),
+            OperandClass_SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
+            OperandClass_MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
             OperandClass_STR_IMM => Ok(Self::StrImm {
                 str: oo.name.clone(),
                 imm: Imm::from(oo),
             }),
             OperandClass_MEM_OFFSET => Ok(Self::MemOffset {
-                reg: Reg::from_i32(oo.reg[0]).unwrap(),
+                reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 offset: oo.immediate,
                 mul_vl: oo.mul_vl,
             }),
@@ -148,14 +148,14 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 };
 
                 Ok(Self::MemPreIdx {
-                    reg: Reg::from_i32(oo.reg[0]).unwrap(),
+                    reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                     offset: off,
                 })
             }
             OperandClass_MEM_POST_IDX => {
-                let reg0 = Reg::from_i32(oo.reg[0]).unwrap();
+                let reg0 = Reg::from_u32(oo.reg[0] as u32).unwrap();
 
-                match Reg::from_i32(oo.reg[1]) {
+                match Reg::from_u32(oo.reg[1] as u32) {
                     Some(reg1) => Ok(Self::MemPostIdxReg { regs: [reg0, reg1] }),
                     None => Ok(Self::MemPostIdxImm {
                         reg: reg0,
@@ -165,8 +165,8 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             }
             OperandClass_MEM_EXTENDED => Ok(Self::MemExtended {
                 regs: [
-                    Reg::from_i32(oo.reg[0]).unwrap(),
-                    Reg::from_i32(oo.reg[1]).unwrap(),
+                    Reg::from_u32(oo.reg[0] as u32).unwrap(),
+                    Reg::from_u32(oo.reg[1] as u32).unwrap(),
                 ],
                 shift: Shift::try_from(oo).ok(),
             }),
@@ -181,7 +181,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 cn: oo.implspec[3],
                 o2: oo.implspec[4],
             }),
-            OperandClass_CONDITION => Ok(Self::Condition(Condition::from_i32(oo.cond).unwrap())),
+            OperandClass_CONDITION => Ok(Self::Condition(Condition::from_u32(oo.cond as u32).unwrap())),
             OperandClass_NAME => Ok(Self::Name(oo.name.clone())),
             _ => Err(()),
         }

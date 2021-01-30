@@ -48,7 +48,7 @@ impl Instruction {
     pub fn operation(&self) -> Operation {
         assert!(self.0.operation != 0);
 
-        Operation::from_i32(self.0.operation).unwrap()
+        Operation::from_u32(self.0.operation as u32).unwrap()
     }
 
     pub fn operand(&self, n: usize) -> Option<Operand> {

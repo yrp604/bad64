@@ -1032,8 +1032,15 @@ const_assert_eq!(Operation_ARM64_ZIP2, 1018);
 
 impl Operation {
     pub fn name(&self) -> &'static str {
-        unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap())) }
-            .to_str()
-            .unwrap()
+        #[cfg(target_os = "windows")] {
+            unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap())) }
+                .to_str()
+                .unwrap()
+        }
+        #[cfg(not(target_os = "windows"))] {
+            unsafe { CStr::from_ptr(operation_to_str(self.to_u32().unwrap())) }
+                .to_str()
+                .unwrap()
+        }
     }
 }

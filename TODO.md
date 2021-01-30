@@ -5,3 +5,4 @@
 - [ ] Docs
 - [ ] Figure out uarch system register support
 - [ ] Arrspec
+- [ ] Formatter

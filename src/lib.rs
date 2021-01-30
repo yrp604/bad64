@@ -40,7 +40,7 @@ impl Instruction {
     /// assert_eq!(decoded.mnem(), "nop");
     // ```
     pub fn mnem(&self) -> &'static str {
-        unsafe { CStr::from_ptr(get_operation(&self.0 as _)) }
+        unsafe { CStr::from_ptr(operation_to_str(self.0.operation)) }
             .to_str()
             .unwrap()
     }
@@ -97,41 +97,14 @@ pub enum DecodeError {
 /// assert_eq!(decoded.mnem(), "nop");
 /// ```
 pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
-    let mut ctx: context = unsafe { MaybeUninit::zeroed().assume_init() };
-
-    ctx.halted = true;
-    ctx.insword = ins;
-    ctx.address = address;
-    ctx.features0 = 0xFFFFFFFFFFFFFFFF;
-    ctx.features1 = 0xFFFFFFFFFFFFFFFF;
-    ctx.EDSCR_HDE = true;
-
     let mut decoded = MaybeUninit::zeroed();
 
-    let r = unsafe { decode_spec(&mut ctx as *mut context, decoded.as_mut_ptr()) };
+    let r = unsafe { aarch64_decompose(ins, decoded.as_mut_ptr(), address) };
 
-    if r != 0 {
-        return Err(DecodeError::from_i32(r).unwrap());
+    match r {
+        0 => Ok(Instruction(unsafe { decoded.assume_init() })),
+        _ => Err(DecodeError::from_i32(r).unwrap()),
     }
-
-    let mut decoded = unsafe { decoded.assume_init() };
-
-    if decoded.encoding == DECODE_STATUS_UNDEFINED {
-        return Err(DecodeError::Undefined);
-    }
-
-    let r = unsafe {
-        decode_scratchpad(
-            &mut ctx as *mut context,
-            &mut decoded as *mut bad64_sys::Instruction,
-        )
-    };
-
-    if r != 0 {
-        return Err(DecodeError::from_i32(r).unwrap());
-    }
-
-    Ok(Instruction(decoded))
 }
 /*
 pub fn disassemble(code: &[u8], address: u64) -> impl Iterator<Item=(u64, Result<Instruction, DecodeError>)> {

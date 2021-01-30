@@ -1334,11 +1334,13 @@ pub enum Reg {
 const_assert_eq!(Register_REG_END, 1322);
 
 impl Reg {
+    /*
     pub fn name(&self) -> &'static str {
         unsafe { CStr::from_ptr(bad64_sys::get_register_name(self.to_i32().unwrap())) }
             .to_str()
             .unwrap()
     }
+    */
 
     pub fn size(&self) -> usize {
         unsafe { bad64_sys::get_register_size(self.to_i32().unwrap()) as usize }

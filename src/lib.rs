@@ -26,8 +26,10 @@
 //! let mut decoded_iter = disassemble(b"\xe0\x0f\x1f\xf8\xe0\x07\x41\xf8", 0x1000);
 //!
 //! let (push_addr, maybe_push_decode) = decoded_iter.next().unwrap();
-//! let push = maybe_push_decode.expect(&format!("Could not decode instruction at {:x}", push_addr));
+//! let push = maybe_push_decode
+//!     .expect(&format!("Could not decode instruction at {:x}", push_addr));
 //!
+//! // check out the push
 //! assert_eq!(push_addr, 0x1000);
 //! assert_eq!(push.operands(), 2);
 //! assert_eq!(push.operation(), Operation::STR);
@@ -36,15 +38,22 @@
 //! assert_eq!(push.operand(2), None);
 //!
 //! let (pop_addr, maybe_pop_decode) = decoded_iter.next().unwrap();
-//! let pop = maybe_pop_decode.expect(&format!("Could not decode instruction at {:x}", pop_addr));
+//! let pop = maybe_pop_decode
+//!     .expect(&format!("Could not decode instruction at {:x}", pop_addr));
 //!
+//! // check out the pop
 //! assert_eq!(pop_addr, 0x1004);
 //! assert_eq!(pop.operands(), 2);
 //! assert_eq!(pop.operation(), Operation::LDR);
-//! assert_eq!(pop.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
-//! assert_eq!(pop.operand(1), Some(Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }}));
+//! assert_eq!(
+//!     pop.operand(0),
+//!     Some(Operand::Reg { reg: Reg::X0, shift: None }));
+//! assert_eq!(
+//!     pop.operand(1),
+//!     Some(Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }}));
 //! assert_eq!(pop.operand(2), None);
 //!
+//! // make sure there's nothing left
 //! assert_eq!(decoded_iter.next(), None);
 //! ```
 

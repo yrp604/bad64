@@ -12,7 +12,8 @@
 //! use bad64::{decode, Operation};
 //! // nop - "\x1f\x20\x03\xd5"
 //! let decoded = decode(0xd503201f, 0x1000).unwrap();
-//! assert_eq!(decoded.operands(), 0);
+//!
+//! assert_eq!(decoded.num_operands(), 0);
 //! assert_eq!(decoded.operation(), Operation::NOP);
 //! assert_eq!(decoded.mnem(), "nop");
 //! ```
@@ -31,7 +32,7 @@
 //!
 //! // check out the push
 //! assert_eq!(push_addr, 0x1000);
-//! assert_eq!(push.operands(), 2);
+//! assert_eq!(push.num_operands(), 2);
 //! assert_eq!(push.operation(), Operation::STR);
 //! assert_eq!(push.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
 //! assert_eq!(push.operand(1), Some(Operand::MemPreIdx { reg: Reg::SP, offset: 16 }));
@@ -43,7 +44,7 @@
 //!
 //! // check out the pop
 //! assert_eq!(pop_addr, 0x1004);
-//! assert_eq!(pop.operands(), 2);
+//! assert_eq!(pop.num_operands(), 2);
 //! assert_eq!(pop.operation(), Operation::LDR);
 //! assert_eq!(
 //!     pop.operand(0),
@@ -66,6 +67,7 @@ extern crate num_derive;
 extern crate static_assertions;
 
 use core::convert::{TryFrom, TryInto};
+use core::iter;
 use core::mem::MaybeUninit;
 
 use cstr_core::CStr;
@@ -90,7 +92,7 @@ pub use sysreg::SysReg;
 pub struct Instruction(bad64_sys::Instruction);
 
 impl Instruction {
-    /// Get the instruction mnemonic
+    /// Returns the instruction mnemonic
     ///
     /// # Example
     /// ```
@@ -105,7 +107,7 @@ impl Instruction {
             .unwrap()
     }
 
-    /// Get the instruction operation
+    /// Returns the instruction operation
     ///
     /// # Example
     /// ```
@@ -120,7 +122,7 @@ impl Instruction {
         Operation::from_u32(self.0.operation as u32).unwrap()
     }
 
-    /// Get an instruction operand
+    /// Returns an instruction operand
     ///
     /// # Arguments
     ///
@@ -133,7 +135,7 @@ impl Instruction {
     /// let decoded = decode(0x91010420, 0x1000).unwrap();
     ///
     /// assert_eq!(decoded.operation(), Operation::ADD);
-    /// assert_eq!(decoded.operands(), 3);
+    /// assert_eq!(decoded.num_operands(), 3);
     /// assert_eq!(decoded.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
     /// assert_eq!(decoded.operand(1), Some(Operand::Reg { reg: Reg::X1, shift: None }));
     /// assert_eq!(decoded.operand(2), Some(Operand::Imm64 { imm: Imm { neg: false, val: 0x41 }, shift: None }));
@@ -147,7 +149,7 @@ impl Instruction {
         Operand::try_from(&self.0.operands[n]).ok()
     }
 
-    /// Get the operand count
+    /// Returns the operand count
     ///
     /// # Example
     /// ```
@@ -155,17 +157,43 @@ impl Instruction {
     /// // eor x0, x1, x2  - "\x20\x00\x02\xca"
     /// let decoded = decode(0xca020020, 0x1000).unwrap();
     ///
-    /// assert_eq!(decoded.operation(), Operation::EOR);
-    /// assert_eq!(decoded.operands(), 3);
-    // ```
-    pub fn operands(&self) -> usize {
+    /// assert_eq!(decoded.num_operands(), 3);
+    /// ```
+    pub fn num_operands(&self) -> usize {
         for n in 0..MAX_OPERANDS as usize {
             if self.operand(n).is_none() {
                 return n;
             }
         }
 
-        5
+        MAX_OPERANDS as usize
+    }
+
+    /// Returns an iterator over the operands
+    ///
+    /// # Example
+    /// ```
+    /// use bad64::{decode, Operand, Reg};
+    ///
+    /// // eor x0, x1, x2  - "\x20\x00\x02\xca"
+    /// let decoded = decode(0xca020020, 0x1000).unwrap();
+    ///
+    /// let mut op_iter = decoded.operands();
+    ///
+    /// assert_eq!(op_iter.next(), Some(Operand::Reg { reg: Reg::X0, shift: None }));
+    /// assert_eq!(op_iter.next(), Some(Operand::Reg { reg: Reg::X1, shift: None }));
+    /// assert_eq!(op_iter.next(), Some(Operand::Reg { reg: Reg::X2, shift: None }));
+    /// assert_eq!(op_iter.next(), None);
+    /// ```
+    pub fn operands(&self) -> impl Iterator<Item = Operand> + '_ {
+        let mut n = 0;
+        iter::from_fn(move || {
+            let ii = n;
+
+            n += 1;
+
+            self.operand(ii)
+        })
     }
 }
 
@@ -197,7 +225,7 @@ pub enum DecodeError {
 /// // NOTE: little endian
 /// let decoded = decode(0xd503201f, 0x1000).unwrap();
 ///
-/// assert_eq!(decoded.operands(), 0);
+/// assert_eq!(decoded.num_operands(), 0);
 /// assert_eq!(decoded.operation(), Operation::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
 /// ```
@@ -229,7 +257,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 /// let decoded = maybe_decoded.expect(&format!("Could not decode instruction at {:x}", addr));
 ///
 /// assert_eq!(addr, 0x1000);
-/// assert_eq!(decoded.operands(), 0);
+/// assert_eq!(decoded.num_operands(), 0);
 /// assert_eq!(decoded.operation(), Operation::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
 ///

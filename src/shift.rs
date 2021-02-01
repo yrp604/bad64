@@ -2,7 +2,7 @@ use core::convert::TryFrom;
 
 use bad64_sys::*;
 
-/// Register or immediate shift in an operand
+/// A register or immediate shift in an operand
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq)]
 #[repr(i32)]
 #[allow(non_camel_case_types)]

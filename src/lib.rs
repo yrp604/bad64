@@ -13,6 +13,7 @@
 //! // nop - "\x1f\x20\x03\xd5"
 //! let decoded = decode(0xd503201f, 0x1000).unwrap();
 //!
+//! assert_eq!(decoded.address(), 0x1000);
 //! assert_eq!(decoded.num_operands(), 0);
 //! assert_eq!(decoded.operation(), Operation::NOP);
 //! assert_eq!(decoded.mnem(), "nop");
@@ -26,24 +27,20 @@
 //! // 1004: ldr   x0, [sp], #16   ; "\xe0\x07\x41\xf8"
 //! let mut decoded_iter = disassemble(b"\xe0\x0f\x1f\xf8\xe0\x07\x41\xf8", 0x1000);
 //!
-//! let (push_addr, maybe_push_decode) = decoded_iter.next().unwrap();
-//! let push = maybe_push_decode
-//!     .expect(&format!("Could not decode instruction at {:x}", push_addr));
+//! let push = decoded_iter.next().unwrap().unwrap();
 //!
 //! // check out the push
-//! assert_eq!(push_addr, 0x1000);
+//! assert_eq!(push.address(), 0x1000);
 //! assert_eq!(push.num_operands(), 2);
 //! assert_eq!(push.operation(), Operation::STR);
 //! assert_eq!(push.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
 //! assert_eq!(push.operand(1), Some(Operand::MemPreIdx { reg: Reg::SP, offset: 16 }));
 //! assert_eq!(push.operand(2), None);
 //!
-//! let (pop_addr, maybe_pop_decode) = decoded_iter.next().unwrap();
-//! let pop = maybe_pop_decode
-//!     .expect(&format!("Could not decode instruction at {:x}", pop_addr));
+//! let pop = decoded_iter.next().unwrap().unwrap();
 //!
 //! // check out the pop
-//! assert_eq!(pop_addr, 0x1004);
+//! assert_eq!(pop.address(), 0x1004);
 //! assert_eq!(pop.num_operands(), 2);
 //! assert_eq!(pop.operation(), Operation::LDR);
 //! assert_eq!(
@@ -89,7 +86,10 @@ pub use sysreg::SysReg;
 
 /// A decoded instruction
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
-pub struct Instruction(bad64_sys::Instruction);
+pub struct Instruction {
+    address: u64,
+    _inner: bad64_sys::Instruction
+}
 
 impl Instruction {
     /// Returns the instruction mnemonic
@@ -102,9 +102,22 @@ impl Instruction {
     /// assert_eq!(decoded.mnem(), "nop");
     // ```
     pub fn mnem(&self) -> &'static str {
-        unsafe { CStr::from_ptr(operation_to_str(self.0.operation)) }
+        unsafe { CStr::from_ptr(operation_to_str(self._inner.operation)) }
             .to_str()
             .unwrap()
+    }
+
+    /// Returns the instruction address
+    ///
+    /// # Example
+    /// ```
+    /// use bad64::decode;
+    /// // nop - "\x1f\x20\x03\xd4"
+    /// let decoded = decode(0xd503201f, 0x1000).unwrap();
+    /// assert_eq!(decoded.address(), 0x1000);
+    /// ```
+    pub fn address(&self) -> u64 {
+        self.address
     }
 
     /// Returns the instruction operation
@@ -117,9 +130,9 @@ impl Instruction {
     /// assert_eq!(decoded.operation(), Operation::NOP);
     // ```
     pub fn operation(&self) -> Operation {
-        assert!(self.0.operation != 0);
+        assert!(self._inner.operation != 0);
 
-        Operation::from_u32(self.0.operation as u32).unwrap()
+        Operation::from_u32(self._inner.operation as u32).unwrap()
     }
 
     /// Returns an instruction operand
@@ -146,7 +159,7 @@ impl Instruction {
             return None;
         }
 
-        Operand::try_from(&self.0.operands[n]).ok()
+        Operand::try_from(&self._inner.operands[n]).ok()
     }
 
     /// Returns the operand count
@@ -226,8 +239,10 @@ pub enum DecodeError {
 /// let decoded = decode(0xd503201f, 0x1000).unwrap();
 ///
 /// assert_eq!(decoded.num_operands(), 0);
+/// assert_eq!(decoded.operands().next(), None);
 /// assert_eq!(decoded.operation(), Operation::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
+/// assert_eq!(decoded.address(), 0x1000);
 /// ```
 pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     let mut decoded = MaybeUninit::zeroed();
@@ -235,7 +250,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     let r = unsafe { aarch64_decompose(ins, decoded.as_mut_ptr(), address) };
 
     match r {
-        0 => Ok(Instruction(unsafe { decoded.assume_init() })),
+        0 => Ok(Instruction { address, _inner: unsafe { decoded.assume_init() }}),
         _ => Err(DecodeError::from_i32(r).unwrap()),
     }
 }
@@ -253,10 +268,9 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 ///
 /// let mut decoded_iter = disassemble(b"\x1f\x20\x03\xd5", 0x1000);
 ///
-/// let (addr, maybe_decoded) = decoded_iter.next().unwrap();
-/// let decoded = maybe_decoded.expect(&format!("Could not decode instruction at {:x}", addr));
+/// let decoded = decoded_iter.next().unwrap().unwrap();
 ///
-/// assert_eq!(addr, 0x1000);
+/// assert_eq!(decoded.address(), 0x1000);
 /// assert_eq!(decoded.num_operands(), 0);
 /// assert_eq!(decoded.operation(), Operation::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
@@ -266,7 +280,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 pub fn disassemble(
     code: &[u8],
     address: u64,
-) -> impl Iterator<Item = (u64, Result<Instruction, DecodeError>)> + '_ {
+) -> impl Iterator<Item = Result<Instruction, (u64, DecodeError)>> + '_ {
     (address..)
         .step_by(4)
         .zip(code.chunks(4))
@@ -274,8 +288,8 @@ pub fn disassemble(
             Ok(v) => {
                 let vv = u32::from_le_bytes(v);
 
-                (addr, decode(vv, addr))
+                decode(vv, addr).map_err(|e| (addr, e))
             }
-            Err(_) => (addr, Err(DecodeError::Short)),
+            Err(_) => Err((addr, DecodeError::Short)),
         })
 }

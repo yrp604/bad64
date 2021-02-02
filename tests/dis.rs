@@ -15,10 +15,10 @@ fn decode_iter_nop() {
     let ins1 = decode(0xd503201f, 0).unwrap();
     let mut ii = disassemble(b"\x1f\x20\x03\xd5", 0);
 
-    let ins2 = ii.next().unwrap();
+    let ins2 = ii.next().unwrap().unwrap();
 
-    assert_eq!(0, ins2.0);
-    assert_eq!(ins1, ins2.1.unwrap());
+    assert_eq!(0, ins2.address());
+    assert_eq!(ins1, ins2);
 
     assert_eq!(ii.next(), None);
 }
@@ -27,8 +27,8 @@ fn decode_iter_nop() {
 fn decode_iter_err() {
     let mut ii = disassemble(&[0x41_u8; 8], 0);
 
-    assert_eq!(ii.next().unwrap(), (0, Err(DecodeError::Unallocated)));
-    assert_eq!(ii.next().unwrap(), (4, Err(DecodeError::Unallocated)));
+    assert_eq!(ii.next().unwrap(), Err((0, DecodeError::Unallocated)));
+    assert_eq!(ii.next().unwrap(), Err((4, DecodeError::Unallocated)));
     assert_eq!(ii.next(), None);
 }
 
@@ -36,7 +36,7 @@ fn decode_iter_err() {
 fn decode_iter_short() {
     let mut ii = disassemble(&[0x41_u8; 3], 0);
 
-    assert_eq!(ii.next().unwrap(), (0, Err(DecodeError::Short)));
+    assert_eq!(ii.next().unwrap(), Err((0, DecodeError::Short)));
     assert_eq!(ii.next(), None);
 }
 

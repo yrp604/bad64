@@ -27,8 +27,8 @@ fn decode_iter_nop() {
 fn decode_iter_err() {
     let mut ii = disassemble(&[0x41_u8; 8], 0);
 
-    assert_eq!(ii.next().unwrap(), Err((0, DecodeError::Unallocated)));
-    assert_eq!(ii.next().unwrap(), Err((4, DecodeError::Unallocated)));
+    assert_eq!(ii.next().unwrap(), Err(DecodeError::Unallocated(0)));
+    assert_eq!(ii.next().unwrap(), Err(DecodeError::Unallocated(4)));
     assert_eq!(ii.next(), None);
 }
 
@@ -36,7 +36,7 @@ fn decode_iter_err() {
 fn decode_iter_short() {
     let mut ii = disassemble(&[0x41_u8; 3], 0);
 
-    assert_eq!(ii.next().unwrap(), Err((0, DecodeError::Short)));
+    assert_eq!(ii.next().unwrap(), Err(DecodeError::Short(0)));
     assert_eq!(ii.next(), None);
 }
 
@@ -92,5 +92,5 @@ fn system_reg() {
 
 #[test]
 fn decode_failure() {
-    assert_eq!(decode(0x41414141, 0), Err(DecodeError::Unallocated));
+    assert_eq!(decode(0x41414141, 0), Err(DecodeError::Unallocated(0)));
 }

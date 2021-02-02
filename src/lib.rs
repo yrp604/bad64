@@ -211,17 +211,32 @@ impl Instruction {
 }
 
 /// Decoding errors types
-#[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive)]
+#[derive(Clone, Copy, Debug, Hash, Eq, PartialEq)]
 #[repr(i32)]
 pub enum DecodeError {
-    Reserved = DECODE_STATUS_RESERVED,
-    Unmatched = DECODE_STATUS_UNMATCHED,
-    Unallocated = DECODE_STATUS_UNALLOCATED,
-    Undefined = DECODE_STATUS_UNDEFINED,
-    EndOfInstruction = DECODE_STATUS_END_OF_INSTRUCTION,
-    Lost = DECODE_STATUS_LOST,
-    Unreachable = DECODE_STATUS_UNREACHABLE,
-    Short = -8, // bad64 introduced error code, for cases where a we dont have 4 bytes to decode
+    Reserved(u64),
+    Unmatched(u64),
+    Unallocated(u64),
+    Undefined(u64),
+    EndOfInstruction(u64),
+    Lost(u64),
+    Unreachable(u64),
+    Short(u64),
+}
+
+impl DecodeError {
+    fn new(code: i32, address: u64) -> Self {
+        match code {
+            DECODE_STATUS_RESERVED => Self::Reserved(address),
+            DECODE_STATUS_UNMATCHED => Self::Unmatched(address),
+            DECODE_STATUS_UNALLOCATED => Self::Unallocated(address),
+            DECODE_STATUS_UNDEFINED => Self::Undefined(address),
+            DECODE_STATUS_END_OF_INSTRUCTION => Self::EndOfInstruction(address),
+            DECODE_STATUS_LOST => Self::Lost(address),
+            DECODE_STATUS_UNREACHABLE => Self::Unreachable(address),
+            _ => panic!("unknown decode error code"),
+        }
+    }
 }
 
 /// Decode a single instruction
@@ -251,7 +266,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 
     match r {
         0 => Ok(Instruction { address, _inner: unsafe { decoded.assume_init() }}),
-        _ => Err(DecodeError::from_i32(r).unwrap()),
+        _ => Err(DecodeError::new(r, address)),
     }
 }
 
@@ -280,7 +295,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 pub fn disassemble(
     code: &[u8],
     address: u64,
-) -> impl Iterator<Item = Result<Instruction, (u64, DecodeError)>> + '_ {
+) -> impl Iterator<Item = Result<Instruction, DecodeError>> + '_ {
     (address..)
         .step_by(4)
         .zip(code.chunks(4))
@@ -288,8 +303,8 @@ pub fn disassemble(
             Ok(v) => {
                 let vv = u32::from_le_bytes(v);
 
-                decode(vv, addr).map_err(|e| (addr, e))
+                decode(vv, addr)
             }
-            Err(_) => Err((addr, DecodeError::Short)),
+            Err(_) => Err(DecodeError::Short(addr)),
         })
 }

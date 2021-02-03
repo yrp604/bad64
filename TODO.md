@@ -2,7 +2,7 @@
 - [x] Make `no_std` compat
 - [ ] Benchmarks
 - [ ] Tests
-- [ ] Docs
+- [x] Docs
 - [ ] Figure out uarch system register support
 - [ ] Arrspec
 - [ ] Formatter

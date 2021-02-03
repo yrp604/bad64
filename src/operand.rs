@@ -187,7 +187,6 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 Condition::from_u32(oo.cond as u32).unwrap(),
             )),
             OperandClass_NAME => Ok(Self::Name(oo.name.clone())),
-            _ => Err(()),
         }
     }
 }

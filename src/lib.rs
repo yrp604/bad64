@@ -64,7 +64,6 @@ extern crate num_derive;
 extern crate static_assertions;
 
 use core::convert::{TryFrom, TryInto};
-use core::iter;
 use core::mem::MaybeUninit;
 
 use cstr_core::CStr;
@@ -88,6 +87,8 @@ pub use sysreg::SysReg;
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct Instruction {
     address: u64,
+    num_operands: usize,
+    operands: [Operand; MAX_OPERANDS as usize],
     _inner: bad64_sys::Instruction
 }
 
@@ -139,7 +140,7 @@ impl Instruction {
     ///
     /// # Arguments
     ///
-    /// * `n` - return's the nth operand
+    /// * `n` - returns the nth operand
     ///
     /// # Example
     /// ```
@@ -155,11 +156,11 @@ impl Instruction {
     /// assert_eq!(decoded.operand(3), None);
     // ```
     pub fn operand(&self, n: usize) -> Option<Operand> {
-        if n >= MAX_OPERANDS as usize {
+        if n >= self.num_operands {
             return None;
         }
 
-        Operand::try_from(&self._inner.operands[n]).ok()
+        Some(self.operands[n])
     }
 
     /// Returns the operand count
@@ -173,13 +174,7 @@ impl Instruction {
     /// assert_eq!(decoded.num_operands(), 3);
     /// ```
     pub fn num_operands(&self) -> usize {
-        for n in 0..MAX_OPERANDS as usize {
-            if self.operand(n).is_none() {
-                return n;
-            }
-        }
-
-        MAX_OPERANDS as usize
+        self.num_operands
     }
 
     /// Returns an iterator over the operands
@@ -198,15 +193,8 @@ impl Instruction {
     /// assert_eq!(op_iter.next(), Some(Operand::Reg { reg: Reg::X2, shift: None }));
     /// assert_eq!(op_iter.next(), None);
     /// ```
-    pub fn operands(&self) -> impl Iterator<Item = Operand> + '_ {
-        let mut n = 0;
-        iter::from_fn(move || {
-            let ii = n;
-
-            n += 1;
-
-            self.operand(ii)
-        })
+    pub fn operands(&self) -> &[Operand] {
+        &self.operands[..self.num_operands]
     }
 }
 
@@ -265,7 +253,23 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     let r = unsafe { aarch64_decompose(ins, decoded.as_mut_ptr(), address) };
 
     match r {
-        0 => Ok(Instruction { address, _inner: unsafe { decoded.assume_init() }}),
+        0 => {
+            let decoded = unsafe { decoded.assume_init() };
+            let mut operands: [Operand; MAX_OPERANDS as usize] = unsafe { MaybeUninit::zeroed().assume_init() };
+            let mut num_operands = 0;
+
+            for n in 0..MAX_OPERANDS as usize {
+                match Operand::try_from(&decoded.operands[n]) {
+                    Ok(o) => {
+                        operands[n] = o;
+                        num_operands += 1;
+                    }
+                    Err(_) => break,
+                }
+            }
+
+            Ok(Instruction { address, num_operands, operands, _inner: decoded })
+        }
         _ => Err(DecodeError::new(r, address)),
     }
 }

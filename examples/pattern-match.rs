@@ -4,7 +4,7 @@ use std::process;
 
 use xmas_elf::ElfFile;
 
-use bad64::{disassemble, Operand, Reg};
+use bad64::{disassemble, Operation, Operand, Reg};
 
 fn main() {
     let argv: Vec<String> = env::args().collect();
@@ -25,11 +25,27 @@ fn main() {
 
     println!("disassembling {} bytes from .text @ {:#x}", size, base);
 
+    // pattern match on operands
     for decoded in disassemble(bytes, base).filter_map(Result::ok) {
         let ops = decoded.operands();
 
         match ops {
             &[Operand::Reg { reg: Reg::XZR, .. }, ..] => println!(
+                "64bit zero reg as first operand @ {:x} in {:?}",
+                decoded.address(),
+                decoded.operation()
+            ),
+            _ => (),
+        }
+    }
+
+    // pattern match on operation and operand
+    for decoded in disassemble(bytes, base).filter_map(Result::ok) {
+        let op = decoded.operation();
+        let ops = decoded.operands();
+
+        match (op, ops) {
+            (Operation::CMP, &[Operand::Reg { reg: Reg::XZR, .. }, ..]) => println!(
                 "64bit zero reg as first operand @ {:x} in {:?}",
                 decoded.address(),
                 decoded.operation()

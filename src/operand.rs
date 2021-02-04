@@ -45,10 +45,7 @@ pub enum Operand {
         imm: Imm,
         shift: Option<Shift>,
     },
-    FImm32 {
-        imm: Imm,
-        shift: Option<Shift>,
-    },
+    FImm32(Imm),
     Reg {
         reg: Reg,
         shift: Option<Shift>,
@@ -117,10 +114,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass::FIMM32 => Ok(Self::FImm32 {
-                imm: Imm::from(oo),
-                shift: Shift::try_from(oo).ok(),
-            }),
+            OperandClass::FIMM32 => Ok(Self::FImm32(Imm::from(oo))),
             OperandClass::REG => Ok(Self::Reg {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 shift: Shift::try_from(oo).ok(),

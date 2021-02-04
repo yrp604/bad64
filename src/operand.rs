@@ -101,23 +101,23 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
 
     fn try_from(oo: &bad64_sys::InstructionOperand) -> Result<Self, Self::Error> {
         match oo.operandClass {
-            OperandClass_IMM32 => Ok(Self::Imm32 {
+            OperandClass::IMM32 => Ok(Self::Imm32 {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass_IMM64 => Ok(Self::Imm64 {
+            OperandClass::IMM64 => Ok(Self::Imm64 {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass_FIMM32 => Ok(Self::FImm32 {
+            OperandClass::FIMM32 => Ok(Self::FImm32 {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass_REG => Ok(Self::Reg {
+            OperandClass::REG => Ok(Self::Reg {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass_MULTI_REG => {
+            OperandClass::MULTI_REG => {
                 let mut regs = [None; MAX_REGISTERS as usize];
 
                 for n in 0..MAX_REGISTERS as usize {
@@ -131,18 +131,18 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
 
                 Ok(Self::MultiReg { regs, lane })
             }
-            OperandClass_SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
-            OperandClass_MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
-            OperandClass_STR_IMM => Ok(Self::StrImm {
+            OperandClass::SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
+            OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
+            OperandClass::STR_IMM => Ok(Self::StrImm {
                 str: oo.name.clone(),
                 imm: Imm::from(oo),
             }),
-            OperandClass_MEM_OFFSET => Ok(Self::MemOffset {
+            OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 offset: oo.immediate,
                 mul_vl: oo.mul_vl,
             }),
-            OperandClass_MEM_PRE_IDX => {
+            OperandClass::MEM_PRE_IDX => {
                 let off = if oo.signedImm {
                     -(oo.immediate as i64)
                 } else {
@@ -154,7 +154,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                     offset: off,
                 })
             }
-            OperandClass_MEM_POST_IDX => {
+            OperandClass::MEM_POST_IDX => {
                 let reg0 = Reg::from_u32(oo.reg[0] as u32).unwrap();
 
                 match Reg::from_u32(oo.reg[1] as u32) {
@@ -165,28 +165,29 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                     }),
                 }
             }
-            OperandClass_MEM_EXTENDED => Ok(Self::MemExtended {
+            OperandClass::MEM_EXTENDED => Ok(Self::MemExtended {
                 regs: [
                     Reg::from_u32(oo.reg[0] as u32).unwrap(),
                     Reg::from_u32(oo.reg[1] as u32).unwrap(),
                 ],
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass_LABEL => Ok(Self::Label {
+            OperandClass::LABEL => Ok(Self::Label {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass_IMPLEMENTATION_SPECIFIC => Ok(Self::ImplementationSpecific {
+            OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplementationSpecific {
                 o0: oo.implspec[0],
                 o1: oo.implspec[1],
                 cm: oo.implspec[2],
                 cn: oo.implspec[3],
                 o2: oo.implspec[4],
             }),
-            OperandClass_CONDITION => Ok(Self::Condition(
+            OperandClass::CONDITION => Ok(Self::Condition(
                 Condition::from_u32(oo.cond as u32).unwrap(),
             )),
-            OperandClass_NAME => Ok(Self::Name(oo.name.clone())),
+            OperandClass::NAME => Ok(Self::Name(oo.name.clone())),
+            OperandClass::NONE => Err(()),
         }
     }
 }

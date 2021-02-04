@@ -9,7 +9,7 @@
 [Latest Docs]: https://docs.rs/bad64/badge.svg
 [docs.rs]: https://docs.rs/bad64
 
-Rust bindings for Binary Ninjas arm64 disassembler.
+Rust bindings for Binary Ninja's arm64 disassembler.
 
 ## Thanks
 

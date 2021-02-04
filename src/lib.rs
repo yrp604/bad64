@@ -56,6 +56,7 @@
 //! ```
 
 #![no_std]
+#![feature(maybe_uninit_uninit_array, maybe_uninit_extra, maybe_uninit_slice)]
 
 #[macro_use]
 extern crate num_derive;
@@ -84,11 +85,11 @@ pub use shift::Shift;
 pub use sysreg::SysReg;
 
 /// A decoded instruction
-#[derive(Clone, Debug, Eq, Hash, PartialEq)]
+#[derive(Clone, Debug)]
 pub struct Instruction {
     address: u64,
     num_operands: usize,
-    operands: [Operand; MAX_OPERANDS as usize],
+    operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize],
     _inner: bad64_sys::Instruction
 }
 
@@ -160,7 +161,7 @@ impl Instruction {
             return None;
         }
 
-        Some(self.operands[n])
+        Some(unsafe { self.operands[n].assume_init() })
     }
 
     /// Returns the operand count
@@ -194,7 +195,7 @@ impl Instruction {
     /// assert_eq!(op_iter.next(), None);
     /// ```
     pub fn operands(&self) -> &[Operand] {
-        &self.operands[..self.num_operands]
+        unsafe { MaybeUninit::slice_assume_init_ref(&self.operands[..self.num_operands]) }
     }
 }
 
@@ -255,13 +256,13 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     match r {
         0 => {
             let decoded = unsafe { decoded.assume_init() };
-            let mut operands: [Operand; MAX_OPERANDS as usize] = unsafe { MaybeUninit::zeroed().assume_init() };
+            let mut operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize] = MaybeUninit::uninit_array();
             let mut num_operands = 0;
 
             for n in 0..MAX_OPERANDS as usize {
                 match Operand::try_from(&decoded.operands[n]) {
                     Ok(o) => {
-                        operands[n] = o;
+                        operands[n] = MaybeUninit::new(o);
                         num_operands += 1;
                     }
                     Err(_) => break,

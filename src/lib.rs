@@ -93,6 +93,17 @@ pub struct Instruction {
     _inner: bad64_sys::Instruction
 }
 
+// Needed because MaybeUninit doesn't allow derives
+impl PartialEq for Instruction {
+    fn eq(&self, other: &Self) -> bool {
+        self.address() == other.address() &&
+        self.num_operands() == other.num_operands() &&
+        (0..self.num_operands()).all(|n| self.operand(n) == other.operand(n))
+    }
+}
+
+impl Eq for Instruction {}
+
 impl Instruction {
     /// Returns the instruction mnemonic
     ///

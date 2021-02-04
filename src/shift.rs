@@ -4,7 +4,6 @@ use bad64_sys::*;
 
 /// A shift applied to a register or immediate
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq)]
-#[repr(i32)]
 #[allow(non_camel_case_types)]
 pub enum Shift {
     LSL(u32),

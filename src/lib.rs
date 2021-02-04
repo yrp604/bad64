@@ -249,6 +249,19 @@ impl DecodeError {
             _ => panic!("unknown decode error code"),
         }
     }
+
+    pub fn address(&self) -> u64 {
+        match self {
+            Self::Reserved(a) => *a,
+            Self::Unmatched(a) => *a,
+            Self::Unallocated(a) => *a,
+            Self::Undefined(a) => *a,
+            Self::EndOfInstruction(a) => *a,
+            Self::Lost(a) => *a,
+            Self::Unreachable(a) => *a,
+            Self::Short(a) => *a,
+        }
+    }
 }
 
 /// Decode a single instruction

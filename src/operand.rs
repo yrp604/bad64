@@ -10,7 +10,9 @@ use crate::SysReg;
 /// An instruction immediate
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct Imm {
+    /// Did the disassembler consider this value negative
     pub neg: bool,
+    /// The immediate value
     pub val: u64,
 }
 
@@ -71,7 +73,7 @@ pub enum Operand {
         reg: Reg,
         imm: Imm,
     },
-    MemExtended {
+    MemExt {
         regs: [Reg; 2],
         shift: Option<Shift>,
     },
@@ -79,14 +81,14 @@ pub enum Operand {
         imm: Imm,
         shift: Option<Shift>,
     },
-    ImplementationSpecific {
+    ImplSpec {
         o0: u8,
         o1: u8,
         cm: u8,
         cn: u8,
         o2: u8,
     },
-    Condition(Condition),
+    Cond(Condition),
     Name([i8; MAX_NAME as usize]),
     StrImm {
         str: [i8; MAX_NAME as usize],
@@ -165,7 +167,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                     }),
                 }
             }
-            OperandClass::MEM_EXTENDED => Ok(Self::MemExtended {
+            OperandClass::MEM_EXTENDED => Ok(Self::MemExt {
                 regs: [
                     Reg::from_u32(oo.reg[0] as u32).unwrap(),
                     Reg::from_u32(oo.reg[1] as u32).unwrap(),
@@ -176,14 +178,14 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplementationSpecific {
+            OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplSpec {
                 o0: oo.implspec[0],
                 o1: oo.implspec[1],
                 cm: oo.implspec[2],
                 cn: oo.implspec[3],
                 o2: oo.implspec[4],
             }),
-            OperandClass::CONDITION => Ok(Self::Condition(
+            OperandClass::CONDITION => Ok(Self::Cond(
                 Condition::from_u32(oo.cond as u32).unwrap(),
             )),
             OperandClass::NAME => Ok(Self::Name(oo.name.clone())),

@@ -91,15 +91,15 @@ pub struct Instruction {
     address: u64,
     num_operands: usize,
     operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize],
-    _inner: bad64_sys::Instruction
+    _inner: bad64_sys::Instruction,
 }
 
 // Needed because MaybeUninit doesn't allow derives
 impl PartialEq for Instruction {
     fn eq(&self, other: &Self) -> bool {
-        self.address() == other.address() &&
-        self.num_operands() == other.num_operands() &&
-        (0..self.num_operands()).all(|n| self.operand(n) == other.operand(n))
+        self.address() == other.address()
+            && self.num_operands() == other.num_operands()
+            && (0..self.num_operands()).all(|n| self.operand(n) == other.operand(n))
     }
 }
 
@@ -292,7 +292,8 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     match r {
         0 => {
             let decoded = unsafe { decoded.assume_init() };
-            let mut operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize] = MaybeUninit::uninit_array();
+            let mut operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize] =
+                MaybeUninit::uninit_array();
             let mut num_operands = 0;
 
             for n in 0..MAX_OPERANDS as usize {
@@ -305,7 +306,12 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
                 }
             }
 
-            Ok(Instruction { address, num_operands, operands, _inner: decoded })
+            Ok(Instruction {
+                address,
+                num_operands,
+                operands,
+                _inner: decoded,
+            })
         }
         _ => Err(DecodeError::new(r, address)),
     }

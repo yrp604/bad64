@@ -3,6 +3,7 @@ use core::convert::TryFrom;
 use bad64_sys::*;
 use num_traits::FromPrimitive;
 
+use crate::ArrSpec;
 use crate::Condition;
 use crate::Reg;
 use crate::Shift;
@@ -51,10 +52,12 @@ pub enum Operand {
     Reg {
         reg: Reg,
         shift: Option<Shift>,
+        arrspec: Option<ArrSpec>,
     },
     MultiReg {
         regs: [Option<Reg>; MAX_REGISTERS as usize],
         lane: Option<u32>,
+        arrspec: Option<ArrSpec>,
     },
     SysReg(SysReg),
     MemReg(Reg),
@@ -62,6 +65,7 @@ pub enum Operand {
         reg: Reg,
         offset: u64,
         mul_vl: bool,
+        arrspec: Option<ArrSpec>,
     },
     MemPreIdx {
         reg: Reg,
@@ -77,6 +81,7 @@ pub enum Operand {
     MemExt {
         regs: [Reg; 2],
         shift: Option<Shift>,
+        arrspec: Option<ArrSpec>,
     },
     Label {
         imm: Imm,
@@ -119,6 +124,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::REG => Ok(Self::Reg {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 shift: Shift::try_from(oo).ok(),
+                arrspec: ArrSpec::try_from(oo).ok(),
             }),
             OperandClass::MULTI_REG => {
                 let mut regs = [None; MAX_REGISTERS as usize];
@@ -132,7 +138,9 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                     false => None,
                 };
 
-                Ok(Self::MultiReg { regs, lane })
+                let arrspec = ArrSpec::try_from(oo).ok();
+
+                Ok(Self::MultiReg { regs, lane, arrspec })
             }
             OperandClass::SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
             OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
@@ -144,6 +152,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 offset: oo.immediate,
                 mul_vl: oo.mul_vl,
+                arrspec: ArrSpec::try_from(oo).ok(),
             }),
             OperandClass::MEM_PRE_IDX => {
                 let off = if oo.signedImm {
@@ -174,6 +183,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                     Reg::from_u32(oo.reg[1] as u32).unwrap(),
                 ],
                 shift: Shift::try_from(oo).ok(),
+                arrspec: ArrSpec::try_from(oo).ok(),
             }),
             OperandClass::LABEL => Ok(Self::Label {
                 imm: Imm::from(oo),

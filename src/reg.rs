@@ -1375,7 +1375,7 @@ impl Reg {
     ///
     /// let op = decoded.operand(0).unwrap();
     ///
-    /// assert_eq!(op, Operand::Reg { reg: Reg::X0, shift: None });
+    /// assert_eq!(op, Operand::Reg { reg: Reg::X0, shift: None, arrspec: None });
     ///
     /// match op {
     ///     Operand::Reg { reg: r, .. } => assert_eq!(r.size(), 8),

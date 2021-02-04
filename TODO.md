@@ -4,5 +4,5 @@
 - [ ] Tests
 - [x] Docs
 - [ ] Figure out uarch system register support
-- [ ] Arrspec
+- [x] Arrspec
 - [ ] Formatter

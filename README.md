@@ -9,9 +9,5 @@
 [Latest Docs]: https://docs.rs/bad64/badge.svg
 [docs.rs]: https://docs.rs/bad64
 
-Rust bindings for Binary Ninja's arm64 disassembler.
-
-## Thanks
-
-These bindings obviously would not be possible without the excellent work of
-@lwerdna and the rest of the Vector35 crew.
+These are bindings to the [Binary Ninja](https://binary.ninja) arm64
+[architecture/disassembler plugin](https://github.com/Vector35/arch-arm64).

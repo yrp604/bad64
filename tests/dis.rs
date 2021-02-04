@@ -59,14 +59,16 @@ fn decode_add() {
         o0,
         Operand::Reg {
             reg: Reg::X0,
-            shift: None
+            shift: None,
+            arrspec: None,
         }
     );
     assert_eq!(
         o1,
         Operand::Reg {
             reg: Reg::X1,
-            shift: None
+            shift: None,
+            arrspec: None,
         }
     );
     assert_eq!(

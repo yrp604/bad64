@@ -33,7 +33,7 @@
 //! assert_eq!(push.address(), 0x1000);
 //! assert_eq!(push.num_operands(), 2);
 //! assert_eq!(push.operation(), Operation::STR);
-//! assert_eq!(push.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
+//! assert_eq!(push.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None, arrspec: None }));
 //! assert_eq!(push.operand(1), Some(Operand::MemPreIdx { reg: Reg::SP, offset: 16 }));
 //! assert_eq!(push.operand(2), None);
 //!
@@ -45,7 +45,7 @@
 //! assert_eq!(pop.operation(), Operation::LDR);
 //! assert_eq!(
 //!     pop.operand(0),
-//!     Some(Operand::Reg { reg: Reg::X0, shift: None }));
+//!     Some(Operand::Reg { reg: Reg::X0, shift: None, arrspec: None }));
 //! assert_eq!(
 //!     pop.operand(1),
 //!     Some(Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }}));
@@ -73,6 +73,7 @@ use num_traits::FromPrimitive;
 
 use bad64_sys::*;
 
+mod arrspec;
 mod condition;
 mod operand;
 mod operation;
@@ -80,6 +81,7 @@ mod reg;
 mod shift;
 mod sysreg;
 
+pub use arrspec::ArrSpec;
 pub use condition::Condition;
 pub use operand::{Imm, Operand};
 pub use operation::Operation;
@@ -176,8 +178,8 @@ impl Instruction {
     ///
     /// assert_eq!(decoded.operation(), Operation::ADD);
     /// assert_eq!(decoded.num_operands(), 3);
-    /// assert_eq!(decoded.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None }));
-    /// assert_eq!(decoded.operand(1), Some(Operand::Reg { reg: Reg::X1, shift: None }));
+    /// assert_eq!(decoded.operand(0), Some(Operand::Reg { reg: Reg::X0, shift: None, arrspec: None }));
+    /// assert_eq!(decoded.operand(1), Some(Operand::Reg { reg: Reg::X1, shift: None, arrspec: None }));
     /// assert_eq!(decoded.operand(2), Some(Operand::Imm64 { imm: Imm { neg: false, val: 0x41 }, shift: None }));
     /// assert_eq!(decoded.operand(3), None);
     // ```
@@ -214,10 +216,10 @@ impl Instruction {
     ///
     /// let mut ops = decoded.operands();
     ///
-    /// assert_eq!(ops.len(), decoded.num_operands());
-    /// assert_eq!(ops[0], Operand::Reg { reg: Reg::X0, shift: None });
-    /// assert_eq!(ops[1], Operand::Reg { reg: Reg::X1, shift: None });
-    /// assert_eq!(ops[2], Operand::Reg { reg: Reg::X2, shift: None });
+    /// assert_eq!(ops.len(), 3);
+    /// assert_eq!(ops[0], Operand::Reg { reg: Reg::X0, shift: None, arrspec: None });
+    /// assert_eq!(ops[1], Operand::Reg { reg: Reg::X1, shift: None, arrspec: None });
+    /// assert_eq!(ops[2], Operand::Reg { reg: Reg::X2, shift: None, arrspec: None });
     /// ```
     pub fn operands(&self) -> &[Operand] {
         unsafe { MaybeUninit::slice_assume_init_ref(&self.operands[..self.num_operands]) }

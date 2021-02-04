@@ -201,7 +201,7 @@ impl Instruction {
         self.num_operands
     }
 
-    /// Returns an iterator over the operands
+    /// Returns a slice of Operands
     ///
     /// # Example
     /// ```
@@ -210,12 +210,12 @@ impl Instruction {
     /// // eor x0, x1, x2  - "\x20\x00\x02\xca"
     /// let decoded = decode(0xca020020, 0x1000).unwrap();
     ///
-    /// let mut op_iter = decoded.operands();
+    /// let mut ops = decoded.operands();
     ///
-    /// assert_eq!(op_iter.next(), Some(Operand::Reg { reg: Reg::X0, shift: None }));
-    /// assert_eq!(op_iter.next(), Some(Operand::Reg { reg: Reg::X1, shift: None }));
-    /// assert_eq!(op_iter.next(), Some(Operand::Reg { reg: Reg::X2, shift: None }));
-    /// assert_eq!(op_iter.next(), None);
+    /// assert_eq!(ops.len(), decoded.num_operands());
+    /// assert_eq!(ops[0], Operand::Reg { reg: Reg::X0, shift: None });
+    /// assert_eq!(ops[1], Operand::Reg { reg: Reg::X1, shift: None });
+    /// assert_eq!(ops[2], Operand::Reg { reg: Reg::X2, shift: None });
     /// ```
     pub fn operands(&self) -> &[Operand] {
         unsafe { MaybeUninit::slice_assume_init_ref(&self.operands[..self.num_operands]) }
@@ -266,7 +266,7 @@ impl DecodeError {
 /// let decoded = decode(0xd503201f, 0x1000).unwrap();
 ///
 /// assert_eq!(decoded.num_operands(), 0);
-/// assert_eq!(decoded.operands().next(), None);
+/// assert_eq!(decoded.operands(), &[]);
 /// assert_eq!(decoded.operation(), Operation::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
 /// assert_eq!(decoded.address(), 0x1000);

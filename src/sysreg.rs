@@ -667,6 +667,10 @@ impl SysReg {
     /// Get system register name
     ///
     /// # Examples
+    /// ```
+    /// use bad64::SysReg;
+    /// assert_eq!(SysReg::VBAR_EL3.name(), "vbar_el3");
+    /// ```
     ///
     /// ```
     /// use bad64::{decode, Operand, SysReg};

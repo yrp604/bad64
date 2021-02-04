@@ -1334,17 +1334,39 @@ pub enum Reg {
 const_assert_eq!(Register_REG_END, Register_REG_PF31 + 1);
 
 impl Reg {
-    /*
+    /// Returns the register name
+    ///
+    /// # Examples
+    /// ```
+    /// use bad64::Reg;
+    ///
+    /// assert_eq!(Reg::X0.name(), "x0");
+    /// ```
     pub fn name(&self) -> &'static str {
-        unsafe { CStr::from_ptr(bad64_sys::get_register_name(self.to_u32().unwrap())) }
-            .to_str()
-            .unwrap()
+        #[cfg(target_os = "windows")]
+        {
+            unsafe { CStr::from_ptr(bad64_sys::get_register_name(self.to_i32().unwrap())) }
+                .to_str()
+                .unwrap()
+        }
+        #[cfg(not(target_os = "windows"))]
+        {
+            unsafe { CStr::from_ptr(bad64_sys::get_register_name(self.to_u32().unwrap())) }
+                .to_str()
+                .unwrap()
+        }
     }
-    */
 
     /// Get register size
     ///
     /// # Examples
+    /// ```
+    /// use bad64::Reg;
+    ///
+    /// assert_eq!(Reg::X0.size(), 8);
+    /// assert_eq!(Reg::V0.size(), 16);
+    /// ```
+    ///
     /// ```
     /// use bad64::{decode, Operand, Reg};
     ///

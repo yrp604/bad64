@@ -73,12 +73,14 @@ use num_traits::FromPrimitive;
 
 use bad64_sys::*;
 
+mod condition;
 mod operand;
 mod operation;
 mod reg;
 mod shift;
 mod sysreg;
 
+pub use condition::Condition;
 pub use operand::{Imm, Operand};
 pub use operation::Operation;
 pub use reg::Reg;

@@ -1,5 +1,3 @@
-use core::convert::TryFrom;
-
 use bad64_sys::*;
 
 /// A condition

@@ -3,6 +3,7 @@ use core::convert::TryFrom;
 use bad64_sys::*;
 use num_traits::FromPrimitive;
 
+use crate::Condition;
 use crate::Reg;
 use crate::Shift;
 use crate::SysReg;

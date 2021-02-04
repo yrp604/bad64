@@ -40,7 +40,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for ArrSpec {
             ArrangementSpec::ARRSPEC_1SINGLE => Ok(ArrSpec::OneSingle),
             ArrangementSpec::ARRSPEC_2HALVES => Ok(ArrSpec::TwoHalves),
             ArrangementSpec::ARRSPEC_4BYTES => Ok(ArrSpec::FourBytes),
-            ArrangementSpec::ARRSPEC_1HALF=> Ok(ArrSpec::OneHalf),
+            ArrangementSpec::ARRSPEC_1HALF => Ok(ArrSpec::OneHalf),
             ArrangementSpec::ARRSPEC_1BYTE => Ok(ArrSpec::OneByte),
             ArrangementSpec::ARRSPEC_NONE => Err(()),
         }

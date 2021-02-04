@@ -140,7 +140,11 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
 
                 let arrspec = ArrSpec::try_from(oo).ok();
 
-                Ok(Self::MultiReg { regs, lane, arrspec })
+                Ok(Self::MultiReg {
+                    regs,
+                    lane,
+                    arrspec,
+                })
             }
             OperandClass::SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
             OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
@@ -196,9 +200,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 cn: oo.implspec[3],
                 o2: oo.implspec[4],
             }),
-            OperandClass::CONDITION => Ok(Self::Cond(
-                Condition::from_u32(oo.cond as u32).unwrap(),
-            )),
+            OperandClass::CONDITION => Ok(Self::Cond(Condition::from_u32(oo.cond as u32).unwrap())),
             OperandClass::NAME => Ok(Self::Name(oo.name.clone())),
             OperandClass::NONE => Err(()),
         }

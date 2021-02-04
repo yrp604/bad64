@@ -65,6 +65,7 @@ extern crate num_derive;
 extern crate static_assertions;
 
 use core::convert::{TryFrom, TryInto};
+use core::hash::{Hash, Hasher};
 use core::mem::MaybeUninit;
 
 use cstr_core::CStr;
@@ -103,6 +104,17 @@ impl PartialEq for Instruction {
 }
 
 impl Eq for Instruction {}
+
+impl Hash for Instruction {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.address.hash(state);
+        self.num_operands.hash(state);
+
+        for o in self.operands() {
+            o.hash(state);
+        }
+    }
+}
 
 impl Instruction {
     /// Returns the instruction mnemonic

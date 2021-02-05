@@ -277,7 +277,7 @@ impl fmt::Display for Operand {
 
                 Ok(())
             }
-            Self::SysReg(sr) => write!(f, "{:.08}", sr),
+            Self::SysReg(sr) => write!(f, "{}", sr),
             Self::MemReg(mr) => write!(f, "[{}]", mr),
             Self::MemPreIdx { reg, imm } => write!(f, "[{}, #{}]!", reg, imm),
             Self::MemPostIdxImm { reg, imm } => write!(f, "[{}], #{}", reg, imm),

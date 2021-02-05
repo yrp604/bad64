@@ -1,3 +1,5 @@
+use core::fmt;
+
 use cstr_core::CStr;
 use num_traits::ToPrimitive;
 
@@ -699,5 +701,11 @@ impl SysReg {
                 .to_str()
                 .unwrap()
         }
+    }
+}
+
+impl fmt::Display for SysReg {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.name())
     }
 }

@@ -1,3 +1,5 @@
+use core::fmt;
+
 use cstr_core::CStr;
 use num_traits::ToPrimitive;
 
@@ -1391,5 +1393,11 @@ impl Reg {
         {
             unsafe { bad64_sys::get_register_size(self.to_u32().unwrap()) as usize }
         }
+    }
+}
+
+impl fmt::Display for Reg {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.name())
     }
 }

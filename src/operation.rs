@@ -1,3 +1,5 @@
+use core::fmt;
+
 use bad64_sys::*;
 
 use cstr_core::CStr;
@@ -1062,5 +1064,11 @@ impl Operation {
                 .to_str()
                 .unwrap()
         }
+    }
+}
+
+impl fmt::Display for Operation {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.name())
     }
 }

@@ -31,7 +31,7 @@ fn main() {
 
         match ops {
             &[Operand::Reg { reg: Reg::XZR, .. }, ..] => println!(
-                "64bit zero reg as first operand @ {:x} in {:?}",
+                "64bit zero reg as first operand @ {:x} in {}",
                 decoded.address(),
                 decoded.operation()
             ),
@@ -45,8 +45,9 @@ fn main() {
         let ops = decoded.operands();
 
         match (op, ops) {
-            (Operation::CMP, &[Operand::Reg { reg: Reg::XZR, .. }, ..]) => println!(
-                "64bit zero reg as first operand @ {:x} in {:?}",
+            (Operation::CMP, &[Operand::Reg { reg: Reg::XZR, .. }, ..]) |
+            (Operation::CMP, &[Operand::ShiftReg { reg: Reg::XZR, .. }, ..]) => println!(
+                "64bit zero reg as first operand @ {:x} in {}",
                 decoded.address(),
                 decoded.operation()
             ),

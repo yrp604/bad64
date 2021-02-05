@@ -70,7 +70,6 @@ use core::fmt;
 use core::hash::{Hash, Hasher};
 use core::mem::MaybeUninit;
 
-use cstr_core::CStr;
 use num_traits::FromPrimitive;
 
 use bad64_sys::*;
@@ -95,9 +94,10 @@ pub use sysreg::SysReg;
 #[derive(Clone)]
 pub struct Instruction {
     address: u64,
+    opcode: u32,
+    operation: Operation,
     num_operands: usize,
     operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize],
-    _inner: bad64_sys::Instruction,
 }
 
 // Needed because MaybeUninit doesn't allow derives
@@ -172,9 +172,7 @@ impl Instruction {
     /// assert_eq!(decoded.mnem(), "nop");
     // ```
     pub fn mnem(&self) -> &'static str {
-        unsafe { CStr::from_ptr(operation_to_str(self._inner.operation)) }
-            .to_str()
-            .unwrap()
+        self.operation.name()
     }
 
     /// Returns the instruction address
@@ -190,6 +188,19 @@ impl Instruction {
         self.address
     }
 
+    /// Returns the instruction opcode
+    ///
+    /// # Example
+    /// ```
+    /// use bad64::decode;
+    /// // nop - "\x1f\x20\x03\xd4"
+    /// let decoded = decode(0xd503201f, 0x1000).unwrap();
+    /// assert_eq!(decoded.opcode(), 0xd503201f);
+    /// ```
+    pub fn opcode(&self) -> u32 {
+        self.opcode
+    }
+
     /// Returns the instruction operation
     ///
     /// # Example
@@ -200,9 +211,7 @@ impl Instruction {
     /// assert_eq!(decoded.operation(), Operation::NOP);
     // ```
     pub fn operation(&self) -> Operation {
-        assert!(self._inner.operation != 0);
-
-        Operation::from_u32(self._inner.operation as u32).unwrap()
+        self.operation
     }
 
     /// Returns an instruction operand
@@ -336,6 +345,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     match r {
         0 => {
             let decoded = unsafe { decoded.assume_init() };
+            let operation = Operation::from_u32(decoded.operation as u32).unwrap();
             let mut operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize] =
                 MaybeUninit::uninit_array();
             let mut num_operands = 0;
@@ -352,9 +362,10 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 
             Ok(Instruction {
                 address,
+                opcode: decoded.insword,
+                operation,
                 num_operands,
                 operands,
-                _inner: decoded,
             })
         }
         _ => Err(DecodeError::new(r, address)),

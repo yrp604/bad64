@@ -142,7 +142,11 @@ impl fmt::Display for Instruction {
 
 impl fmt::Debug for Instruction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "Instruction {{ address: {:#x}, num_operands: {} operands: [", self.address, self.num_operands)?;
+        write!(
+            f,
+            "Instruction {{ address: {:#x}, num_operands: {} operands: [",
+            self.address, self.num_operands
+        )?;
         let ops = self.operands();
 
         for n in 0..ops.len() {
@@ -156,7 +160,6 @@ impl fmt::Debug for Instruction {
         write!(f, "] }}")
     }
 }
-
 
 impl Instruction {
     /// Returns the instruction mnemonic

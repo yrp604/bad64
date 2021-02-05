@@ -59,21 +59,21 @@ impl TryFrom<&bad64_sys::InstructionOperand> for ArrSpec {
 impl ArrSpec {
     pub fn lane(&self) -> Option<u32> {
         return match *self {
-            Self::Full(lane) |
-            Self::TwoDoubles(lane) |
-            Self::OneDouble(lane) |
-            Self::FourSingles(lane) |
-            Self::TwoSingles(lane) |
-            Self::OneSingle(lane) |
-            Self::EightHalves(lane) |
-            Self::FourHalves(lane) |
-            Self::TwoHalves(lane) |
-            Self::OneHalf(lane) |
-            Self::SixteenBytes(lane) |
-            Self::EightBytes(lane) |
-            Self::FourBytes(lane) |
-            Self::OneByte(lane) => lane
-        }
+            Self::Full(lane)
+            | Self::TwoDoubles(lane)
+            | Self::OneDouble(lane)
+            | Self::FourSingles(lane)
+            | Self::TwoSingles(lane)
+            | Self::OneSingle(lane)
+            | Self::EightHalves(lane)
+            | Self::FourHalves(lane)
+            | Self::TwoHalves(lane)
+            | Self::OneHalf(lane)
+            | Self::SixteenBytes(lane)
+            | Self::EightBytes(lane)
+            | Self::FourBytes(lane)
+            | Self::OneByte(lane) => lane,
+        };
     }
 
     pub fn suffix(&self, reg: Reg) -> &'static str {
@@ -92,8 +92,14 @@ impl ArrSpec {
                 Self::Full(_) => ".q",
                 Self::TwoDoubles(_) | Self::OneDouble(_) => ".d",
                 Self::FourSingles(_) | Self::TwoSingles(_) | Self::OneSingle(_) => ".s",
-                Self::EightHalves(_) | Self::FourHalves(_) | Self::TwoHalves(_) | Self::OneHalf(_) => ".h",
-                Self::SixteenBytes(_) | Self::EightBytes(_) | Self::FourBytes(_) | Self::OneByte(_) => ".b",
+                Self::EightHalves(_)
+                | Self::FourHalves(_)
+                | Self::TwoHalves(_)
+                | Self::OneHalf(_) => ".h",
+                Self::SixteenBytes(_)
+                | Self::EightBytes(_)
+                | Self::FourBytes(_)
+                | Self::OneByte(_) => ".b",
             };
         }
 

@@ -56,42 +56,58 @@ impl fmt::Display for Shift {
             Self::ROR(a) => write!(f, "ror #{:#x}", a),
             Self::UXTW(a) => {
                 write!(f, "uxtw")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::SXTW(a) => {
                 write!(f, "sxtw")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::UXTX(a) => {
                 write!(f, "uxtx")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::SXTX(a) => {
                 write!(f, "sxtx")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::SXTB(a) => {
                 write!(f, "sxtb")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::SXTH(a) => {
                 write!(f, "sxth")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::UXTH(a) => {
                 write!(f, "uxth")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::UXTB(a) => {
                 write!(f, "uxtb")?;
-                if a != 0 { write!(f, " #{:#x}", a)?; }
+                if a != 0 {
+                    write!(f, " #{:#x}", a)?;
+                }
                 Ok(())
             }
             Self::MSL(a) => write!(f, "msl #{:#x}", a),

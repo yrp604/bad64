@@ -1,7 +1,5 @@
 use core::convert::TryFrom;
 
-use num_traits::ToPrimitive;
-
 use bad64_sys::*;
 
 use crate::Reg;
@@ -77,13 +75,10 @@ impl ArrSpec {
     }
 
     pub fn suffix(&self, reg: Reg) -> &'static str {
-        let regno = reg.to_u32().unwrap();
+        let is_sve = reg.is_sve();
+        let is_pred = reg.is_pred();
 
-        let is_simd = regno >= Reg::V0.to_u32().unwrap() && regno <= Reg::V31.to_u32().unwrap();
-        let is_sve = regno >= Reg::Z0.to_u32().unwrap() && regno <= Reg::Z31.to_u32().unwrap();
-        let is_pred = regno >= Reg::P0.to_u32().unwrap() && regno <= Reg::P31.to_u32().unwrap();
-
-        if !is_simd && !is_sve && !is_pred {
+        if !reg.is_simd() && !is_sve && !is_pred {
             return "";
         }
 

@@ -134,6 +134,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 }
 
                 if oo.pred_qual != 0 {
+                    assert!(reg.is_pred());
                     return Ok(Self::PredReg {
                         reg,
                         qual: char::from_u32(oo.pred_qual as u32).unwrap(),

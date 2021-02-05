@@ -1394,6 +1394,19 @@ impl Reg {
             unsafe { bad64_sys::get_register_size(self.to_u32().unwrap()) as usize }
         }
     }
+
+    pub fn is_simd(&self) -> bool {
+        self.to_u32().unwrap() >= Reg::V0.to_u32().unwrap() && self.to_u32().unwrap() <= Reg::V31_D1.to_u32().unwrap()
+    }
+
+    pub fn is_sve(&self) -> bool {
+        self.to_u32().unwrap() >= Reg::Z0.to_u32().unwrap() && self.to_u32().unwrap() <= Reg::Z31.to_u32().unwrap()
+    }
+
+    pub fn is_pred(&self) -> bool {
+        // should the upper bound be PF31?
+        self.to_u32().unwrap() >= Reg::P0.to_u32().unwrap() && self.to_u32().unwrap() <= Reg::P31.to_u32().unwrap()
+    }
 }
 
 impl fmt::Display for Reg {

@@ -297,7 +297,6 @@ impl fmt::Display for Operand {
                 }
             }
             Self::MemPostIdxReg(regs) => write!(f, "[{}], {}", regs[0], regs[1]),
-            // TODO see if I need arrspec
             Self::MemOffset {
                 reg,
                 offset,

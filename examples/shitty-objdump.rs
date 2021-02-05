@@ -25,14 +25,7 @@ fn main() {
 
     for maybe_decoded in bad64::disassemble(bytes, base) {
         match maybe_decoded {
-            Ok(decoded) => {
-                print!("{:04x}: ", decoded.address());
-                print!("{:x?}", decoded.operation());
-                for o in decoded.operands() {
-                    print!(" {:x?}", o);
-                }
-                println!("");
-            }
+            Ok(decoded) => println!("{:04x}: {}", decoded.address(), decoded),
             Err(e) => println!("{:04x}: (bad)", e.address()),
         }
     }

@@ -2,6 +2,7 @@ use core::convert::TryFrom;
 use core::fmt;
 
 use bad64_sys::*;
+use cstr_core::CStr;
 use num_traits::FromPrimitive;
 
 use crate::ArrSpec;
@@ -53,10 +54,14 @@ pub enum Operand {
         imm: Imm,
         shift: Option<Shift>,
     },
-    FImm32(u64),
+    FImm32(u32),
+    ShiftReg {
+        reg: Reg,
+        shift: Shift,
+    },
     Reg {
         reg: Reg,
-        shift: Option<Shift>,
+        lane: Option<u32>,
         arrspec: Option<ArrSpec>,
     },
     MultiReg {
@@ -66,19 +71,17 @@ pub enum Operand {
     },
     SysReg(SysReg),
     MemReg(Reg),
+    // TODO we might need arrspec in memoffset
     MemOffset {
         reg: Reg,
         offset: u64,
         mul_vl: bool,
-        arrspec: Option<ArrSpec>,
     },
     MemPreIdx {
         reg: Reg,
-        offset: i64,
+        imm: Imm,
     },
-    MemPostIdxReg {
-        regs: [Reg; 2],
-    },
+    MemPostIdxReg([Reg; 2]),
     MemPostIdxImm {
         reg: Reg,
         imm: Imm,
@@ -88,10 +91,7 @@ pub enum Operand {
         shift: Option<Shift>,
         arrspec: Option<ArrSpec>,
     },
-    Label {
-        imm: Imm,
-        shift: Option<Shift>,
-    },
+    Label(u64),
     ImplSpec {
         o0: u8,
         o1: u8,
@@ -103,7 +103,7 @@ pub enum Operand {
     Name([i8; MAX_NAME as usize]),
     StrImm {
         str: [i8; MAX_NAME as usize],
-        imm: Imm,
+        imm: u64,
     },
 }
 
@@ -122,12 +122,23 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass::FIMM32 => Ok(Self::FImm32(oo.immediate)),
-            OperandClass::REG => Ok(Self::Reg {
-                reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                shift: Shift::try_from(oo).ok(),
-                arrspec: ArrSpec::try_from(oo).ok(),
-            }),
+            OperandClass::FIMM32 => Ok(Self::FImm32(oo.immediate as u32)),
+            OperandClass::REG => {
+                let reg = Reg::from_u32(oo.reg[0] as u32).unwrap();
+
+                match Shift::try_from(oo) {
+                    Ok(shift) => Ok(Self::ShiftReg { reg, shift }),
+                    Err(_) => {
+                        let arrspec = ArrSpec::try_from(oo).ok();
+
+                        let lane = match oo.laneUsed {
+                            true => Some(oo.lane),
+                            false => None,
+                        };
+                        Ok(Self::Reg { reg, lane, arrspec })
+                    }
+                }
+            },
             OperandClass::MULTI_REG => {
                 let mut regs = [None; MAX_REGISTERS as usize];
 
@@ -152,31 +163,24 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
             OperandClass::STR_IMM => Ok(Self::StrImm {
                 str: oo.name.clone(),
-                imm: Imm::from(oo),
+                imm: oo.immediate,
             }),
             OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 offset: oo.immediate,
                 mul_vl: oo.mul_vl,
-                arrspec: ArrSpec::try_from(oo).ok(),
             }),
             OperandClass::MEM_PRE_IDX => {
-                let off = if oo.signedImm {
-                    -(oo.immediate as i64)
-                } else {
-                    oo.immediate as i64
-                };
-
                 Ok(Self::MemPreIdx {
                     reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                    offset: off,
+                    imm: Imm::from(oo),
                 })
             }
             OperandClass::MEM_POST_IDX => {
                 let reg0 = Reg::from_u32(oo.reg[0] as u32).unwrap();
 
                 match Reg::from_u32(oo.reg[1] as u32) {
-                    Some(reg1) => Ok(Self::MemPostIdxReg { regs: [reg0, reg1] }),
+                    Some(reg1) => Ok(Self::MemPostIdxReg([reg0, reg1])),
                     None => Ok(Self::MemPostIdxImm {
                         reg: reg0,
                         imm: Imm::from(oo),
@@ -191,10 +195,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 shift: Shift::try_from(oo).ok(),
                 arrspec: ArrSpec::try_from(oo).ok(),
             }),
-            OperandClass::LABEL => Ok(Self::Label {
-                imm: Imm::from(oo),
-                shift: Shift::try_from(oo).ok(),
-            }),
+            OperandClass::LABEL => Ok(Self::Label(oo.immediate)),
             OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplSpec {
                 o0: oo.implspec[0],
                 o1: oo.implspec[1],
@@ -212,9 +213,88 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
 impl fmt::Display for Operand {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
+            Self::Imm64 { imm, shift } | Self::Imm32 { imm, shift } => {
+                write!(f, "{}", imm)?;
+
+                if let Some(s) = shift {
+                    write!(f, " {}", s)?;
+                }
+
+                Ok(())
+            }
+            Self::FImm32(ff) => write!(f, "#{}", f32::from_le_bytes(ff.to_le_bytes())),
+            Self::ShiftReg { reg, shift } => write!(f, "{} {}", reg, shift),
+            Self::Reg { reg, .. } => write!(f, "{}", reg), // XXX definitely wrong
+            Self::MultiReg { regs, lane, arrspec } => {
+                write!(f, "{{")?;
+
+                let mut num_regs = 0;
+
+                // count the reigsters...
+                for n in 0..MAX_REGISTERS as usize {
+                    if regs[n].is_some() {
+                        num_regs += 1;
+                    } else {
+                        break;
+                    }
+                }
+
+                for n in 0..num_regs {
+                    let reg = regs[n].unwrap();
+
+                    if n != num_regs - 1 {
+                        write!(f, "{}, ", reg)?;
+                    } else {
+                        // last
+                        write!(f, "{}}}", reg)?;
+                    }
+                }
+
+                if let Some(ll) = lane {
+                    write!(f, "[{}]", ll)?;
+                }
+
+                Ok(())
+            }
+            Self::SysReg(sr) => write!(f, "{:.08}", sr),
+            Self::MemReg(mr) => write!(f, "[{}]", mr),
+            Self::MemPreIdx { reg, imm } => write!(f, "[{}, {}]!", reg, imm),
+            Self::MemPostIdxImm { reg, imm } => write!(f, "[{}], {}", reg, imm),
+            Self::MemExt { regs, shift, arrspec } => {
+                write!(f, "[{}, {}", regs[0], regs[1])?;
+
+                match shift {
+                    Some(ss) => write!(f, ", {}]", ss),
+                    None => write!(f, "]"),
+                }
+            }
+            Self::MemPostIdxReg(regs) => write!(f, "[{}], {}", regs[0], regs[1]),
+            // TODO see if I need arrspec
+            Self::MemOffset { reg, offset, mul_vl } => {
+                write!(f, "[{}", reg)?;
+
+                if offset != 0 {
+                    write!(f, ", #{:#x}", offset)?;
+
+                    if mul_vl {
+                        write!(f, ", mul vl")?;
+                    }
+                }
+                write!(f, "]")
+            },
+            Self::Label(ll) => write!(f, "#{:#x}", ll),
             Self::ImplSpec { o0, o1, cm, cn, o2 } => write!(f, "s{}_{}_c{}_c{}_{}", o0, o1, cm, cn, o2),
             Self::Cond(c) => write!(f, "{}", c),
-            _ => write!(f, ""),
+            Self::Name(str) => {
+                let name = unsafe { CStr::from_ptr(str.as_ptr()) }.to_str().unwrap();
+
+                write!(f, "{}", name)
+            }
+            Self::StrImm { str, imm } => {
+                let name = unsafe { CStr::from_ptr(str.as_ptr()) }.to_str().unwrap();
+
+                write!(f, "{} #{:#x}", name, imm)
+            }
         }
     }
 }

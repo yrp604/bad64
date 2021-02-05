@@ -65,6 +65,7 @@ extern crate num_derive;
 extern crate static_assertions;
 
 use core::convert::{TryFrom, TryInto};
+use core::fmt;
 use core::hash::{Hash, Hasher};
 use core::mem::MaybeUninit;
 
@@ -223,6 +224,24 @@ impl Instruction {
     /// ```
     pub fn operands(&self) -> &[Operand] {
         unsafe { MaybeUninit::slice_assume_init_ref(&self.operands[..self.num_operands]) }
+    }
+}
+
+impl fmt::Display for Instruction {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.operation())?;
+
+        let ops = self.operands();
+
+        for n in 0..ops.len() {
+            if n != self.num_operands() - 1 {
+                write!(f, " {},", ops[n])?;
+            } else {
+                write!(f, " {}", ops[n])?;
+            }
+        }
+
+        Ok(())
     }
 }
 

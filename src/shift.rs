@@ -54,14 +54,46 @@ impl fmt::Display for Shift {
             Self::LSR(a) => write!(f, "lsr #{:#x}", a),
             Self::ASR(a) => write!(f, "asr #{:#x}", a),
             Self::ROR(a) => write!(f, "ror #{:#x}", a),
-            Self::UXTW(a) => write!(f, "uxtw #{:#x}", a),
-            Self::SXTW(a) => write!(f, "sxtw #{:#x}", a),
-            Self::UXTX(a) => write!(f, "uxtx #{:#x}", a),
-            Self::SXTX(a) => write!(f, "sxtx #{:#x}", a),
-            Self::SXTB(a) => write!(f, "sxtb #{:#x}", a),
-            Self::SXTH(a) => write!(f, "sxth #{:#x}", a),
-            Self::UXTH(a) => write!(f, "uxth #{:#x}", a),
-            Self::UXTB(a) => write!(f, "uxtb #{:#x}", a),
+            Self::UXTW(a) => {
+                write!(f, "uxtw")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
+            Self::SXTW(a) => {
+                write!(f, "sxtw")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
+            Self::UXTX(a) => {
+                write!(f, "uxtx")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
+            Self::SXTX(a) => {
+                write!(f, "sxtx")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
+            Self::SXTB(a) => {
+                write!(f, "sxtb")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
+            Self::SXTH(a) => {
+                write!(f, "sxth")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
+            Self::UXTH(a) => {
+                write!(f, "uxth")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
+            Self::UXTB(a) => {
+                write!(f, "uxtb")?;
+                if a != 0 { write!(f, " #{:#x}", a)?; }
+                Ok(())
+            }
             Self::MSL(a) => write!(f, "msl #{:#x}", a),
         }
     }

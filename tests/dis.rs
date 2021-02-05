@@ -59,7 +59,6 @@ fn decode_add() {
         o0,
         Operand::Reg {
             reg: Reg::X0,
-            shift: None,
             arrspec: None,
         }
     );
@@ -67,7 +66,6 @@ fn decode_add() {
         o1,
         Operand::Reg {
             reg: Reg::X1,
-            shift: None,
             arrspec: None,
         }
     );

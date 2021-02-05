@@ -1,8 +1,8 @@
 # TODO
 - [x] Make `no_std` compat
 - [ ] Benchmarks
-- [ ] Tests
+- [x] Tests
 - [x] Docs
 - [ ] Figure out uarch system register support
 - [x] Arrspec
-- [ ] Formatter
+- [x] Formatter

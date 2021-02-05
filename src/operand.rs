@@ -23,7 +23,7 @@ pub struct Imm {
 impl fmt::Display for Imm {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let sign = if self.neg { "-" } else { "" };
-        write!(f, "#{}{:#x}", sign, self.val)
+        write!(f, "{}{:#x}", sign, self.val)
     }
 }
 
@@ -32,7 +32,7 @@ impl From<&bad64_sys::InstructionOperand> for Imm {
         if oo.signedImm && (oo.immediate as i64) < 0 {
             Self {
                 neg: true,
-                val: !oo.immediate,
+                val: !oo.immediate + 1,
             }
         } else {
             Self {
@@ -59,14 +59,16 @@ pub enum Operand {
         reg: Reg,
         shift: Shift,
     },
+    PredReg {
+        reg: Reg,
+        qual: char,
+    },
     Reg {
         reg: Reg,
-        lane: Option<u32>,
         arrspec: Option<ArrSpec>,
     },
     MultiReg {
         regs: [Option<Reg>; MAX_REGISTERS as usize],
-        lane: Option<u32>,
         arrspec: Option<ArrSpec>,
     },
     SysReg(SysReg),
@@ -74,8 +76,9 @@ pub enum Operand {
     // TODO we might need arrspec in memoffset
     MemOffset {
         reg: Reg,
-        offset: u64,
+        offset: Imm,
         mul_vl: bool,
+        arrspec: Option<ArrSpec>,
     },
     MemPreIdx {
         reg: Reg,
@@ -91,7 +94,7 @@ pub enum Operand {
         shift: Option<Shift>,
         arrspec: Option<ArrSpec>,
     },
-    Label(u64),
+    Label(Imm),
     ImplSpec {
         o0: u8,
         o1: u8,
@@ -126,18 +129,17 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::REG => {
                 let reg = Reg::from_u32(oo.reg[0] as u32).unwrap();
 
-                match Shift::try_from(oo) {
-                    Ok(shift) => Ok(Self::ShiftReg { reg, shift }),
-                    Err(_) => {
-                        let arrspec = ArrSpec::try_from(oo).ok();
-
-                        let lane = match oo.laneUsed {
-                            true => Some(oo.lane),
-                            false => None,
-                        };
-                        Ok(Self::Reg { reg, lane, arrspec })
-                    }
+                if let Ok(shift) = Shift::try_from(oo) {
+                    return Ok(Self::ShiftReg { reg, shift });
                 }
+
+                if oo.pred_qual != 0 {
+                    return Ok(Self::PredReg { reg, qual: char::from_u32(oo.pred_qual as u32).unwrap() });
+                }
+
+                let arrspec = ArrSpec::try_from(oo).ok();
+
+                Ok(Self::Reg { reg, arrspec })
             },
             OperandClass::MULTI_REG => {
                 let mut regs = [None; MAX_REGISTERS as usize];
@@ -146,16 +148,10 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                     regs[n] = Reg::from_u32(oo.reg[n] as u32);
                 }
 
-                let lane = match oo.laneUsed {
-                    true => Some(oo.lane),
-                    false => None,
-                };
-
                 let arrspec = ArrSpec::try_from(oo).ok();
 
                 Ok(Self::MultiReg {
                     regs,
-                    lane,
                     arrspec,
                 })
             }
@@ -167,8 +163,9 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             }),
             OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                offset: oo.immediate,
+                offset: Imm::from(oo),
                 mul_vl: oo.mul_vl,
+                arrspec: ArrSpec::try_from(oo).ok(),
             }),
             OperandClass::MEM_PRE_IDX => {
                 Ok(Self::MemPreIdx {
@@ -195,7 +192,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 shift: Shift::try_from(oo).ok(),
                 arrspec: ArrSpec::try_from(oo).ok(),
             }),
-            OperandClass::LABEL => Ok(Self::Label(oo.immediate)),
+            OperandClass::LABEL => Ok(Self::Label(Imm::from(oo))),
             OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplSpec {
                 o0: oo.implspec[0],
                 o1: oo.implspec[1],
@@ -210,22 +207,42 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
     }
 }
 
+fn write_full_reg(f: &mut fmt::Formatter<'_>, reg: Reg, arrspec: Option<ArrSpec>) -> fmt::Result {
+    match arrspec {
+        Some(arsp) => write!(f, "{}{}", reg, arsp.suffix(reg)),
+        None => write!(f, "{}", reg),
+    }
+}
+
+fn write_full_reg_lane(f: &mut fmt::Formatter<'_>, reg: Reg, arrspec: Option<ArrSpec>) -> fmt::Result {
+    match arrspec {
+        Some(arsp) => {
+            match arsp.lane() {
+                Some(lane) => write!(f, "{}{}[{}]", reg, arsp.suffix(reg), lane),
+                None => write!(f, "{}{}", reg, arsp.suffix(reg)),
+            }
+        }
+        None => write!(f, "{}", reg),
+    }
+}
+
 impl fmt::Display for Operand {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
             Self::Imm64 { imm, shift } | Self::Imm32 { imm, shift } => {
-                write!(f, "{}", imm)?;
+                write!(f, "#{}", imm)?;
 
                 if let Some(s) = shift {
-                    write!(f, " {}", s)?;
+                    write!(f, ", {}", s)?;
                 }
 
                 Ok(())
             }
             Self::FImm32(ff) => write!(f, "#{}", f32::from_le_bytes(ff.to_le_bytes())),
-            Self::ShiftReg { reg, shift } => write!(f, "{} {}", reg, shift),
-            Self::Reg { reg, .. } => write!(f, "{}", reg), // XXX definitely wrong
-            Self::MultiReg { regs, lane, arrspec } => {
+            Self::ShiftReg { reg, shift } => write!(f, "{}, {}", reg, shift),
+            Self::PredReg { reg, qual } => write!(f, "{}/{}", reg, qual),
+            Self::Reg { reg, arrspec } => write_full_reg_lane(f, reg, arrspec),
+            Self::MultiReg { regs, arrspec } => {
                 write!(f, "{{")?;
 
                 let mut num_regs = 0;
@@ -243,25 +260,32 @@ impl fmt::Display for Operand {
                     let reg = regs[n].unwrap();
 
                     if n != num_regs - 1 {
-                        write!(f, "{}, ", reg)?;
+                        write_full_reg(f, reg, arrspec)?;
+                        write!(f, ", ")?;
                     } else {
                         // last
-                        write!(f, "{}}}", reg)?;
+                        write_full_reg(f, reg, arrspec)?;
+                        write!(f, "}}")?;
                     }
                 }
 
-                if let Some(ll) = lane {
-                    write!(f, "[{}]", ll)?;
+                if let Some(arsp) = arrspec {
+                    if let Some(lane) = arsp.lane() {
+                        write!(f, "[{}]", lane)?;
+                    }
                 }
 
                 Ok(())
             }
             Self::SysReg(sr) => write!(f, "{:.08}", sr),
             Self::MemReg(mr) => write!(f, "[{}]", mr),
-            Self::MemPreIdx { reg, imm } => write!(f, "[{}, {}]!", reg, imm),
-            Self::MemPostIdxImm { reg, imm } => write!(f, "[{}], {}", reg, imm),
+            Self::MemPreIdx { reg, imm } => write!(f, "[{}, #{}]!", reg, imm),
+            Self::MemPostIdxImm { reg, imm } => write!(f, "[{}], #{}", reg, imm),
             Self::MemExt { regs, shift, arrspec } => {
-                write!(f, "[{}, {}", regs[0], regs[1])?;
+                write!(f, "[")?;
+                write_full_reg(f, regs[0], arrspec )?;
+                write!(f, ", ")?;
+                write_full_reg(f, regs[1], arrspec )?;
 
                 match shift {
                     Some(ss) => write!(f, ", {}]", ss),
@@ -270,11 +294,12 @@ impl fmt::Display for Operand {
             }
             Self::MemPostIdxReg(regs) => write!(f, "[{}], {}", regs[0], regs[1]),
             // TODO see if I need arrspec
-            Self::MemOffset { reg, offset, mul_vl } => {
-                write!(f, "[{}", reg)?;
+            Self::MemOffset { reg, offset, arrspec, mul_vl } => {
+                write!(f, "[")?;
+                write_full_reg(f, reg, arrspec)?;
 
-                if offset != 0 {
-                    write!(f, ", #{:#x}", offset)?;
+                if offset.val != 0 {
+                    write!(f, ", #{}", offset)?;
 
                     if mul_vl {
                         write!(f, ", mul vl")?;
@@ -282,7 +307,7 @@ impl fmt::Display for Operand {
                 }
                 write!(f, "]")
             },
-            Self::Label(ll) => write!(f, "#{:#x}", ll),
+            Self::Label(imm) => write!(f, "{}", imm),
             Self::ImplSpec { o0, o1, cm, cn, o2 } => write!(f, "s{}_{}_c{}_c{}_{}", o0, o1, cm, cn, o2),
             Self::Cond(c) => write!(f, "{}", c),
             Self::Name(str) => {

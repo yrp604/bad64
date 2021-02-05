@@ -1,4 +1,5 @@
 use core::convert::TryFrom;
+use core::fmt;
 
 use bad64_sys::*;
 use num_traits::FromPrimitive;
@@ -16,6 +17,13 @@ pub struct Imm {
     pub neg: bool,
     /// The immediate value
     pub val: u64,
+}
+
+impl fmt::Display for Imm {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let sign = if self.neg { "-" } else { "" };
+        write!(f, "#{}{:#x}", sign, self.val)
+    }
 }
 
 impl From<&bad64_sys::InstructionOperand> for Imm {
@@ -45,7 +53,7 @@ pub enum Operand {
         imm: Imm,
         shift: Option<Shift>,
     },
-    FImm32(Imm),
+    FImm32(u64),
     Reg {
         reg: Reg,
         shift: Option<Shift>,
@@ -114,7 +122,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 imm: Imm::from(oo),
                 shift: Shift::try_from(oo).ok(),
             }),
-            OperandClass::FIMM32 => Ok(Self::FImm32(Imm::from(oo))),
+            OperandClass::FIMM32 => Ok(Self::FImm32(oo.immediate)),
             OperandClass::REG => Ok(Self::Reg {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
                 shift: Shift::try_from(oo).ok(),
@@ -197,6 +205,16 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::CONDITION => Ok(Self::Cond(Condition::from_u32(oo.cond as u32).unwrap())),
             OperandClass::NAME => Ok(Self::Name(oo.name.clone())),
             OperandClass::NONE => Err(()),
+        }
+    }
+}
+
+impl fmt::Display for Operand {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            Self::ImplSpec { o0, o1, cm, cn, o2 } => write!(f, "s{}_{}_c{}_c{}_{}", o0, o1, cm, cn, o2),
+            Self::Cond(c) => write!(f, "{}", c),
+            _ => write!(f, ""),
         }
     }
 }

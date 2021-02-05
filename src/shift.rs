@@ -1,4 +1,5 @@
 use core::convert::TryFrom;
+use core::fmt;
 
 use bad64_sys::*;
 
@@ -42,6 +43,26 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Shift {
             ShiftType::ShiftType_UXTB => Ok(Shift::UXTB(oo.shiftValue)),
             ShiftType::ShiftType_MSL => Ok(Shift::MSL(oo.shiftValue)),
             ShiftType::ShiftType_NONE | ShiftType::ShiftType_END => Err(()),
+        }
+    }
+}
+
+impl fmt::Display for Shift {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            Self::LSL(a) => write!(f, "lsl #{:#x}", a),
+            Self::LSR(a) => write!(f, "lsr #{:#x}", a),
+            Self::ASR(a) => write!(f, "asr #{:#x}", a),
+            Self::ROR(a) => write!(f, "ror #{:#x}", a),
+            Self::UXTW(a) => write!(f, "uxtw #{:#x}", a),
+            Self::SXTW(a) => write!(f, "sxtw #{:#x}", a),
+            Self::UXTX(a) => write!(f, "uxtx #{:#x}", a),
+            Self::SXTX(a) => write!(f, "sxtx #{:#x}", a),
+            Self::SXTB(a) => write!(f, "sxtb #{:#x}", a),
+            Self::SXTH(a) => write!(f, "sxth #{:#x}", a),
+            Self::UXTH(a) => write!(f, "uxth #{:#x}", a),
+            Self::UXTB(a) => write!(f, "uxtb #{:#x}", a),
+            Self::MSL(a) => write!(f, "msl #{:#x}", a),
         }
     }
 }

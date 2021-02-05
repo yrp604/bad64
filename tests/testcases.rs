@@ -47,7 +47,7 @@ fn testcases() {
                             println!("couldnt parse: {}", a);
                             false
                         }
-                        (Err(x), Err(y)) => {
+                        (Err(_), Err(_)) => {
                             println!("couldnt parse: {} / {}", a, b);
                             false
                         }
@@ -89,7 +89,7 @@ fn testcases() {
             continue;
         }
 
-        let chunks: Vec<&str> = line.trim_right().split_whitespace().collect();
+        let chunks: Vec<&str> = line.trim_end().split_whitespace().collect();
 
         let op = u32::from_str_radix(chunks[0], 16).unwrap();
         let expected = chunks[1..].join(" ");

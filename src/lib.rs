@@ -104,6 +104,8 @@ pub struct Instruction {
 impl PartialEq for Instruction {
     fn eq(&self, other: &Self) -> bool {
         self.address() == other.address()
+            && self.operation() == other.operation()
+            && self.opcode() == other.opcode()
             && self.num_operands() == other.num_operands()
             && (0..self.num_operands()).all(|n| self.operand(n) == other.operand(n))
     }
@@ -114,6 +116,8 @@ impl Eq for Instruction {}
 impl Hash for Instruction {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.address.hash(state);
+        self.opcode.hash(state);
+        self.operation.hash(state);
         self.num_operands.hash(state);
 
         for o in self.operands() {
@@ -144,8 +148,8 @@ impl fmt::Debug for Instruction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "Instruction {{ address: {:#x}, num_operands: {} operands: [",
-            self.address, self.num_operands
+            "Instruction {{ address: {:#x}, opcode: {:x}, operation: {:?}, num_operands: {}, operands: [",
+            self.address, self.opcode, self.operation, self.num_operands
         )?;
         let ops = self.operands();
 

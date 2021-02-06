@@ -148,8 +148,8 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::MULTI_REG => {
                 let mut regs = [None; MAX_REGISTERS as usize];
 
-                for n in 0..MAX_REGISTERS as usize {
-                    regs[n] = Reg::from_u32(oo.reg[n] as u32);
+                for (n, regno) in oo.reg.iter().enumerate() {
+                    regs[n] = Reg::from_u32(*regno as u32);
                 }
 
                 let arrspec = ArrSpec::try_from(oo).ok();
@@ -159,7 +159,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
             OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
             OperandClass::STR_IMM => Ok(Self::StrImm {
-                str: oo.name.clone(),
+                str: oo.name,
                 imm: oo.immediate,
             }),
             OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
@@ -200,7 +200,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 o2: oo.implspec[4],
             }),
             OperandClass::CONDITION => Ok(Self::Cond(Condition::from_u32(oo.cond as u32).unwrap())),
-            OperandClass::NAME => Ok(Self::Name(oo.name.clone())),
+            OperandClass::NAME => Ok(Self::Name(oo.name)),
             OperandClass::NONE => Err(()),
         }
     }
@@ -249,23 +249,20 @@ impl fmt::Display for Operand {
                 let mut num_regs = 0;
 
                 // count the reigsters...
-                for n in 0..MAX_REGISTERS as usize {
-                    if regs[n].is_some() {
-                        num_regs += 1;
-                    } else {
-                        break;
+                for reg in regs.iter() {
+                    match reg {
+                        Some(_) => num_regs += 1,
+                        None => break,
                     }
                 }
 
-                for n in 0..num_regs {
-                    let reg = regs[n].unwrap();
-
+                for (n, reg) in regs.iter().filter_map(|x| x.as_ref()).enumerate() {
                     if n != num_regs - 1 {
-                        write_full_reg(f, reg, arrspec)?;
+                        write_full_reg(f, *reg, arrspec)?;
                         write!(f, ", ")?;
                     } else {
                         // last
-                        write_full_reg(f, reg, arrspec)?;
+                        write_full_reg(f, *reg, arrspec)?;
                         write!(f, "}}")?;
                     }
                 }

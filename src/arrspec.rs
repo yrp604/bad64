@@ -56,7 +56,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for ArrSpec {
 
 impl ArrSpec {
     pub fn lane(&self) -> Option<u32> {
-        return match *self {
+        match *self {
             Self::Full(lane)
             | Self::TwoDoubles(lane)
             | Self::OneDouble(lane)
@@ -71,7 +71,7 @@ impl ArrSpec {
             | Self::EightBytes(lane)
             | Self::FourBytes(lane)
             | Self::OneByte(lane) => lane,
-        };
+        }
     }
 
     pub fn suffix(&self, reg: Reg) -> &'static str {
@@ -98,7 +98,7 @@ impl ArrSpec {
             };
         }
 
-        return match *self {
+        match *self {
             Self::Full(_) => ".1q",
             Self::TwoDoubles(_) => ".2d",
             Self::OneDouble(_) => ".1d",
@@ -113,6 +113,6 @@ impl ArrSpec {
             Self::EightBytes(_) => ".8b",
             Self::FourBytes(_) => ".4b",
             Self::OneByte(_) => ".1b",
-        };
+        }
     }
 }

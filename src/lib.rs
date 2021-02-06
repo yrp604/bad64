@@ -132,11 +132,11 @@ impl fmt::Display for Instruction {
 
         let ops = self.operands();
 
-        for n in 0..ops.len() {
+        for (n, op) in ops.iter().enumerate() {
             if n != self.num_operands() - 1 {
-                write!(f, " {},", ops[n])?;
+                write!(f, " {},", op)?;
             } else {
-                write!(f, " {}", ops[n])?;
+                write!(f, " {}", op)?;
             }
         }
 
@@ -355,8 +355,8 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
                 MaybeUninit::uninit_array();
             let mut num_operands = 0;
 
-            for n in 0..MAX_OPERANDS as usize {
-                match Operand::try_from(&decoded.operands[n]) {
+            for (n, operand) in decoded.operands.iter().enumerate() {
+                match Operand::try_from(operand) {
                     Ok(o) => {
                         operands[n] = MaybeUninit::new(o);
                         num_operands += 1;

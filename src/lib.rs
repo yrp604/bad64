@@ -33,8 +33,14 @@
 //! assert_eq!(push.address(), 0x1000);
 //! assert_eq!(push.num_operands(), 2);
 //! assert_eq!(push.op(), Op::STR);
-//! assert_eq!(push.operand(0), Some(Operand::Reg { reg: Reg::X0, arrspec: None }));
-//! assert_eq!(push.operand(1), Some(Operand::MemPreIdx { reg: Reg::SP, imm: Imm { neg: true, val: 16 }}));
+//! assert_eq!(
+//!     push.operand(0),
+//!     Some(Operand::Reg { reg: Reg::X0, arrspec: None })
+//! );
+//! assert_eq!(
+//!     push.operand(1),
+//!     Some(Operand::MemPreIdx { reg: Reg::SP, imm: Imm { neg: true, val: 16 }})
+//! );
 //! assert_eq!(push.operand(2), None);
 //!
 //! let pop = decoded_iter.next().unwrap().unwrap();
@@ -45,10 +51,12 @@
 //! assert_eq!(pop.op(), Op::LDR);
 //! assert_eq!(
 //!     pop.operand(0),
-//!     Some(Operand::Reg { reg: Reg::X0, arrspec: None }));
+//!     Some(Operand::Reg { reg: Reg::X0, arrspec: None })
+//! );
 //! assert_eq!(
 //!     pop.operand(1),
-//!     Some(Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }}));
+//!     Some(Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }})
+//! );
 //! assert_eq!(pop.operand(2), None);
 //!
 //! // make sure there's nothing left

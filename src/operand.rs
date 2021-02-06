@@ -59,7 +59,7 @@ pub enum Operand {
         reg: Reg,
         shift: Shift,
     },
-    PredReg {
+    QualReg {
         reg: Reg,
         qual: char,
     },
@@ -135,7 +135,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
 
                 if oo.pred_qual != 0 {
                     assert!(reg.is_pred());
-                    return Ok(Self::PredReg {
+                    return Ok(Self::QualReg {
                         reg,
                         qual: char::from_u32(oo.pred_qual as u32).unwrap(),
                     });
@@ -241,7 +241,7 @@ impl fmt::Display for Operand {
             }
             Self::FImm32(ff) => write!(f, "#{}", f32::from_le_bytes(ff.to_le_bytes())),
             Self::ShiftReg { reg, shift } => write!(f, "{}, {}", reg, shift),
-            Self::PredReg { reg, qual } => write!(f, "{}/{}", reg, qual),
+            Self::QualReg { reg, qual } => write!(f, "{}/{}", reg, qual),
             Self::Reg { reg, arrspec } => write_full_reg_lane(f, reg, arrspec),
             Self::MultiReg { regs, arrspec } => {
                 write!(f, "{{")?;

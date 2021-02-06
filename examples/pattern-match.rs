@@ -26,30 +26,30 @@ fn main() {
     println!("disassembling {} bytes from .text @ {:#x}", size, base);
 
     // pattern match on operands
-    for decoded in disassemble(bytes, base).filter_map(Result::ok) {
+    for decoded in disasm(bytes, base).filter_map(Result::ok) {
         let ops = decoded.operands();
 
         match ops {
             &[Operand::Reg { reg: Reg::XZR, .. }, ..] => println!(
                 "64bit zero reg as first operand @ {:x} in {}",
                 decoded.address(),
-                decoded.operation()
+                decoded.op()
             ),
             _ => (),
         }
     }
 
     // pattern match on operation and operand
-    for decoded in disassemble(bytes, base).filter_map(Result::ok) {
-        let op = decoded.operation();
+    for decoded in disasm(bytes, base).filter_map(Result::ok) {
+        let op = decoded.op();
         let ops = decoded.operands();
 
         match (op, ops) {
-            (Operation::CMP, &[Operand::Reg { reg: Reg::XZR, .. }, ..]) |
-            (Operation::CMP, &[Operand::ShiftReg { reg: Reg::XZR, .. }, ..]) => println!(
+            (Op::CMP, &[Operand::Reg { reg: Reg::XZR, .. }, ..]) |
+            (Op::CMP, &[Operand::ShiftReg { reg: Reg::XZR, .. }, ..]) => println!(
                 "64bit zero reg as first operand @ {:x} in {}",
                 decoded.address(),
-                decoded.operation()
+                decoded.op()
             ),
             _ => (),
         }

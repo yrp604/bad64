@@ -13,7 +13,7 @@ fn decode_nop() {
 #[test]
 fn decode_iter_nop() {
     let ins1 = decode(0xd503201f, 0).unwrap();
-    let mut ii = disassemble(b"\x1f\x20\x03\xd5", 0);
+    let mut ii = disasm(b"\x1f\x20\x03\xd5", 0);
 
     let ins2 = ii.next().unwrap().unwrap();
 
@@ -25,7 +25,7 @@ fn decode_iter_nop() {
 
 #[test]
 fn decode_iter_err() {
-    let mut ii = disassemble(&[0x41_u8; 8], 0);
+    let mut ii = disasm(&[0x41_u8; 8], 0);
 
     assert_eq!(ii.next().unwrap(), Err(DecodeError::Unallocated(0)));
     assert_eq!(ii.next().unwrap(), Err(DecodeError::Unallocated(4)));
@@ -34,7 +34,7 @@ fn decode_iter_err() {
 
 #[test]
 fn decode_iter_short() {
-    let mut ii = disassemble(&[0x41_u8; 3], 0);
+    let mut ii = disasm(&[0x41_u8; 3], 0);
 
     assert_eq!(ii.next().unwrap(), Err(DecodeError::Short(0)));
     assert_eq!(ii.next(), None);

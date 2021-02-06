@@ -23,7 +23,7 @@ fn main() {
 
     println!("disassembling {} bytes from .text @ {:#x}", size, base);
 
-    for maybe_decoded in bad64::disassemble(bytes, base) {
+    for maybe_decoded in bad64::disasm(bytes, base) {
         match maybe_decoded {
             Ok(decoded) => println!("{:04x}: {}", decoded.address(), decoded),
             Err(e) => println!("{:04x}: (bad)", e.address()),

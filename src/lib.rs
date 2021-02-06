@@ -249,11 +249,12 @@ impl Instruction {
     ///
     /// # Example
     /// ```
-    /// use bad64::{decode, Operation};
+    /// use bad64::decode;
     /// // eor x0, x1, x2  - "\x20\x00\x02\xca"
     /// let decoded = decode(0xca020020, 0x1000).unwrap();
     ///
     /// assert_eq!(decoded.num_operands(), 3);
+    /// assert_eq!(decoded.operands().len(), 3);
     /// ```
     pub fn num_operands(&self) -> usize {
         self.num_operands

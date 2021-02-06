@@ -155,22 +155,13 @@ impl fmt::Display for Instruction {
 
 impl fmt::Debug for Instruction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "Instruction {{ address: {:#x}, opcode: {:#x}, op: {:?}, num_operands: {}, operands: [",
-            self.address, self.opcode, self.op, self.num_operands
-        )?;
-        let ops = self.operands();
-
-        for (n, op) in ops.iter().enumerate() {
-            if n != ops.len() - 1 {
-                write!(f, "{:?}, ", op)?;
-            } else {
-                write!(f, "{:?}", op)?;
-            }
-        }
-
-        write!(f, "] }}")
+        f.debug_struct("Instruction")
+            .field("address", &self.address)
+            .field("opcode", &self.opcode)
+            .field("op", &self.op)
+            .field("num_operands", &self.num_operands)
+            .field("operands", &self.operands())
+            .finish()
     }
 }
 

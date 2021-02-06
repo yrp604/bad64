@@ -21,6 +21,28 @@ For docs and usage, please see [docs.rs](http://docs.rs/bad64) and the
 
 ```
 $ cargo run --example decode 0x91010420
-Instruction { address: 0x1000, opcode: 0x91010420, op: ADD, num_operands: 3, operands: [Reg { reg: X0, arrspec: None }, Reg { reg: X1, arrspec: None }, Imm64 { imm: Imm { neg: false, val: 65 }, shift: None }] }
+Instruction {
+    address: 0x1000,
+    opcode: 0x91010420,
+    op: ADD,
+    num_operands: 0x3,
+    operands: [
+        Reg {
+            reg: X0,
+            arrspec: None,
+        },
+        Reg {
+            reg: X1,
+            arrspec: None,
+        },
+        Imm64 {
+            imm: Imm {
+                neg: false,
+                val: 0x41,
+            },
+            shift: None,
+        },
+    ],
+}
 add x0, x1, #0x41
 ```

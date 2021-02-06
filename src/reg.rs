@@ -416,7 +416,8 @@ impl Reg {
     /// assert_eq!(Reg::P0.is_simd(), false);
     /// ```
     pub fn is_simd(&self) -> bool {
-        self.to_u32().unwrap() >= Reg::V0.to_u32().unwrap() && self.to_u32().unwrap() <= Reg::V31.to_u32().unwrap()
+        self.to_u32().unwrap() >= Reg::V0.to_u32().unwrap()
+            && self.to_u32().unwrap() <= Reg::V31.to_u32().unwrap()
     }
 
     /// Returns register's SVE status
@@ -432,7 +433,8 @@ impl Reg {
     /// assert_eq!(Reg::P0.is_simd(), false);
     /// ```
     pub fn is_sve(&self) -> bool {
-        self.to_u32().unwrap() >= Reg::Z0.to_u32().unwrap() && self.to_u32().unwrap() <= Reg::Z31.to_u32().unwrap()
+        self.to_u32().unwrap() >= Reg::Z0.to_u32().unwrap()
+            && self.to_u32().unwrap() <= Reg::Z31.to_u32().unwrap()
     }
 
     /// Returns register's predicate status
@@ -448,7 +450,8 @@ impl Reg {
     /// assert_eq!(Reg::Z0.is_pred(), false);
     /// ```
     pub fn is_pred(&self) -> bool {
-        self.to_u32().unwrap() >= Reg::P0.to_u32().unwrap() && self.to_u32().unwrap() <= Reg::P31.to_u32().unwrap()
+        self.to_u32().unwrap() >= Reg::P0.to_u32().unwrap()
+            && self.to_u32().unwrap() <= Reg::P31.to_u32().unwrap()
     }
 }
 

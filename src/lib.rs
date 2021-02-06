@@ -76,16 +76,16 @@ use bad64_sys::*;
 
 mod arrspec;
 mod condition;
-mod operand;
 mod op;
+mod operand;
 mod reg;
 mod shift;
 mod sysreg;
 
 pub use arrspec::ArrSpec;
 pub use condition::Condition;
-pub use operand::{Imm, Operand};
 pub use op::Op;
+pub use operand::{Imm, Operand};
 pub use reg::Reg;
 pub use shift::Shift;
 pub use sysreg::SysReg;

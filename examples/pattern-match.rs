@@ -4,7 +4,7 @@ use std::process;
 
 use xmas_elf::ElfFile;
 
-use bad64::{disasm, Operand, Op, Reg};
+use bad64::{disasm, Op, Operand, Reg};
 
 fn main() {
     let argv: Vec<String> = env::args().collect();
@@ -45,8 +45,8 @@ fn main() {
         let ops = decoded.operands();
 
         match (op, ops) {
-            (Op::CMP, &[Operand::Reg { reg: Reg::XZR, .. }, ..]) |
-            (Op::CMP, &[Operand::ShiftReg { reg: Reg::XZR, .. }, ..]) => println!(
+            (Op::CMP, &[Operand::Reg { reg: Reg::XZR, .. }, ..])
+            | (Op::CMP, &[Operand::ShiftReg { reg: Reg::XZR, .. }, ..]) => println!(
                 "64bit zero reg as first operand @ {:x} in {}",
                 decoded.address(),
                 decoded.op()

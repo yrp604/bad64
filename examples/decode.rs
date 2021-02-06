@@ -12,8 +12,7 @@ fn main() {
     let op = u32::from_str_radix(args[1].trim_start_matches("0x"), 16)
         .expect(&format!("Could not parse {} as hex u32", args[1]));
 
-    let decoded = bad64::decode(op, 0x1000)
-        .expect(&format!("Could not decode {:#x}", op));
+    let decoded = bad64::decode(op, 0x1000).expect(&format!("Could not decode {:#x}", op));
 
     println!("{:#x?}", decoded);
     println!("{}", decoded);

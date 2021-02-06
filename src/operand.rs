@@ -102,9 +102,9 @@ pub enum Operand {
         o2: u8,
     },
     Cond(Condition),
-    Name([i8; MAX_NAME as usize]),
+    Name([u8; MAX_NAME as usize]),
     StrImm {
-        str: [i8; MAX_NAME as usize],
+        str: [u8; MAX_NAME as usize],
         imm: u64,
     },
 }
@@ -158,7 +158,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
             OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
             OperandClass::STR_IMM => Ok(Self::StrImm {
-                str: oo.name,
+                str: oo.name.map(|x| x as u8),
                 imm: oo.immediate,
             }),
             OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
@@ -199,7 +199,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 o2: oo.implspec[4],
             }),
             OperandClass::CONDITION => Ok(Self::Cond(Condition::from_u32(oo.cond as u32).unwrap())),
-            OperandClass::NAME => Ok(Self::Name(oo.name)),
+            OperandClass::NAME => Ok(Self::Name(oo.name.map(|x| x as u8))),
             OperandClass::NONE => Err(()),
         }
     }

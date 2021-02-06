@@ -1054,13 +1054,13 @@ impl Op {
     pub fn name(&self) -> &'static str {
         #[cfg(target_os = "windows")]
         {
-            unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap())) }
+            unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap()) as _) }
                 .to_str()
                 .unwrap()
         }
         #[cfg(not(target_os = "windows"))]
         {
-            unsafe { CStr::from_ptr(operation_to_str(self.to_u32().unwrap())) }
+            unsafe { CStr::from_ptr(operation_to_str(self.to_u32().unwrap()) as _) }
                 .to_str()
                 .unwrap()
         }

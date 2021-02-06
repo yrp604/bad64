@@ -691,13 +691,13 @@ impl SysReg {
     pub fn name(&self) -> &'static str {
         #[cfg(target_os = "windows")]
         {
-            unsafe { CStr::from_ptr(bad64_sys::get_system_register_name(self.to_i32().unwrap())) }
+            unsafe { CStr::from_ptr(bad64_sys::get_system_register_name(self.to_i32().unwrap()) as _) }
                 .to_str()
                 .unwrap()
         }
         #[cfg(not(target_os = "windows"))]
         {
-            unsafe { CStr::from_ptr(bad64_sys::get_system_register_name(self.to_u32().unwrap())) }
+            unsafe { CStr::from_ptr(bad64_sys::get_system_register_name(self.to_u32().unwrap()) as _) }
                 .to_str()
                 .unwrap()
         }

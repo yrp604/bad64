@@ -9,30 +9,30 @@
 //! There are two main entry points:
 //! 1. [`decode`] for decoding a single instruction.
 //! ```
-//! use bad64::{decode, Operation};
+//! use bad64::{decode, Op};
 //! // nop - "\x1f\x20\x03\xd5"
 //! let decoded = decode(0xd503201f, 0x1000).unwrap();
 //!
 //! assert_eq!(decoded.address(), 0x1000);
 //! assert_eq!(decoded.num_operands(), 0);
-//! assert_eq!(decoded.operation(), Operation::NOP);
+//! assert_eq!(decoded.op(), Op::NOP);
 //! assert_eq!(decoded.mnem(), "nop");
 //! ```
 //!
-//! 2. [`disassemble`] for disassembling a byte sequence.
+//! 2. [`disasm`] for disassembling a byte sequence.
 //! ```
-//! use bad64::{disassemble, Operation, Operand, Reg, Imm};
+//! use bad64::{disasm, Op, Operand, Reg, Imm};
 //!
 //! // 1000: str   x0, [sp, #-16]! ; "\xe0\x0f\x1f\xf8"
 //! // 1004: ldr   x0, [sp], #16   ; "\xe0\x07\x41\xf8"
-//! let mut decoded_iter = disassemble(b"\xe0\x0f\x1f\xf8\xe0\x07\x41\xf8", 0x1000);
+//! let mut decoded_iter = disasm(b"\xe0\x0f\x1f\xf8\xe0\x07\x41\xf8", 0x1000);
 //!
 //! let push = decoded_iter.next().unwrap().unwrap();
 //!
 //! // check out the push
 //! assert_eq!(push.address(), 0x1000);
 //! assert_eq!(push.num_operands(), 2);
-//! assert_eq!(push.operation(), Operation::STR);
+//! assert_eq!(push.op(), Op::STR);
 //! assert_eq!(push.operand(0), Some(Operand::Reg { reg: Reg::X0, arrspec: None }));
 //! assert_eq!(push.operand(1), Some(Operand::MemPreIdx { reg: Reg::SP, imm: Imm { neg: true, val: 16 }}));
 //! assert_eq!(push.operand(2), None);
@@ -42,7 +42,7 @@
 //! // check out the pop
 //! assert_eq!(pop.address(), 0x1004);
 //! assert_eq!(pop.num_operands(), 2);
-//! assert_eq!(pop.operation(), Operation::LDR);
+//! assert_eq!(pop.op(), Op::LDR);
 //! assert_eq!(
 //!     pop.operand(0),
 //!     Some(Operand::Reg { reg: Reg::X0, arrspec: None }));
@@ -77,7 +77,7 @@ use bad64_sys::*;
 mod arrspec;
 mod condition;
 mod operand;
-mod operation;
+mod op;
 mod reg;
 mod shift;
 mod sysreg;
@@ -85,7 +85,7 @@ mod sysreg;
 pub use arrspec::ArrSpec;
 pub use condition::Condition;
 pub use operand::{Imm, Operand};
-pub use operation::Operation;
+pub use op::Op;
 pub use reg::Reg;
 pub use shift::Shift;
 pub use sysreg::SysReg;
@@ -95,7 +95,7 @@ pub use sysreg::SysReg;
 pub struct Instruction {
     address: u64,
     opcode: u32,
-    operation: Operation,
+    op: Op,
     num_operands: usize,
     operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize],
 }
@@ -104,7 +104,7 @@ pub struct Instruction {
 impl PartialEq for Instruction {
     fn eq(&self, other: &Self) -> bool {
         self.address() == other.address()
-            && self.operation() == other.operation()
+            && self.op() == other.op()
             && self.opcode() == other.opcode()
             && self.num_operands() == other.num_operands()
             && (0..self.num_operands()).all(|n| self.operand(n) == other.operand(n))
@@ -117,7 +117,7 @@ impl Hash for Instruction {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.address.hash(state);
         self.opcode.hash(state);
-        self.operation.hash(state);
+        self.op.hash(state);
         self.num_operands.hash(state);
 
         for o in self.operands() {
@@ -128,7 +128,7 @@ impl Hash for Instruction {
 
 impl fmt::Display for Instruction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.operation())?;
+        write!(f, "{}", self.op())?;
 
         let ops = self.operands();
 
@@ -149,7 +149,7 @@ impl fmt::Debug for Instruction {
         write!(
             f,
             "Instruction {{ address: {:#x}, opcode: {:x}, operation: {:?}, num_operands: {}, operands: [",
-            self.address, self.opcode, self.operation, self.num_operands
+            self.address, self.opcode, self.op, self.num_operands
         )?;
         let ops = self.operands();
 
@@ -176,7 +176,7 @@ impl Instruction {
     /// assert_eq!(decoded.mnem(), "nop");
     // ```
     pub fn mnem(&self) -> &'static str {
-        self.operation.name()
+        self.op.name()
     }
 
     /// Returns the instruction address
@@ -209,13 +209,13 @@ impl Instruction {
     ///
     /// # Example
     /// ```
-    /// use bad64::{decode, Operation};
+    /// use bad64::{decode, Op};
     /// // nop - "\x1f\x20\x03\xd4"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
-    /// assert_eq!(decoded.operation(), Operation::NOP);
+    /// assert_eq!(decoded.op(), Op::NOP);
     // ```
-    pub fn operation(&self) -> Operation {
-        self.operation
+    pub fn op(&self) -> Op {
+        self.op
     }
 
     /// Returns an instruction operand
@@ -226,11 +226,11 @@ impl Instruction {
     ///
     /// # Example
     /// ```
-    /// use bad64::{decode, Imm, Operation, Operand, Reg};
+    /// use bad64::{decode, Imm, Op, Operand, Reg};
     /// // add x0, x1, #0x41  - "\x20\x04\x01\x91"
     /// let decoded = decode(0x91010420, 0x1000).unwrap();
     ///
-    /// assert_eq!(decoded.operation(), Operation::ADD);
+    /// assert_eq!(decoded.op(), Op::ADD);
     /// assert_eq!(decoded.num_operands(), 3);
     /// assert_eq!(decoded.operand(0), Some(Operand::Reg { reg: Reg::X0, arrspec: None }));
     /// assert_eq!(decoded.operand(1), Some(Operand::Reg { reg: Reg::X1, arrspec: None }));
@@ -330,14 +330,14 @@ impl DecodeError {
 ///
 /// # Examples
 /// ```
-/// use bad64::{decode, Operation};
+/// use bad64::{decode, Op};
 ///
 /// // NOTE: little endian
 /// let decoded = decode(0xd503201f, 0x1000).unwrap();
 ///
 /// assert_eq!(decoded.num_operands(), 0);
 /// assert_eq!(decoded.operands(), &[]);
-/// assert_eq!(decoded.operation(), Operation::NOP);
+/// assert_eq!(decoded.op(), Op::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
 /// assert_eq!(decoded.address(), 0x1000);
 /// ```
@@ -349,7 +349,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
     match r {
         0 => {
             let decoded = unsafe { decoded.assume_init() };
-            let operation = Operation::from_u32(decoded.operation as u32).unwrap();
+            let op = Op::from_u32(decoded.operation as u32).unwrap();
             let mut operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize] =
                 MaybeUninit::uninit_array();
             let mut num_operands = 0;
@@ -367,7 +367,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
             Ok(Instruction {
                 address,
                 opcode: decoded.insword,
-                operation,
+                op,
                 num_operands,
                 operands,
             })
@@ -385,20 +385,20 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 ///
 /// # Examples
 /// ```
-/// use bad64::{disassemble, Operation};
+/// use bad64::{disasm, Op};
 ///
-/// let mut decoded_iter = disassemble(b"\x1f\x20\x03\xd5", 0x1000);
+/// let mut decoded_iter = disasm(b"\x1f\x20\x03\xd5", 0x1000);
 ///
 /// let decoded = decoded_iter.next().unwrap().unwrap();
 ///
 /// assert_eq!(decoded.address(), 0x1000);
 /// assert_eq!(decoded.num_operands(), 0);
-/// assert_eq!(decoded.operation(), Operation::NOP);
+/// assert_eq!(decoded.op(), Op::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
 ///
 /// assert_eq!(decoded_iter.next(), None);
 /// ```
-pub fn disassemble(
+pub fn disasm(
     code: &[u8],
     address: u64,
 ) -> impl Iterator<Item = Result<Instruction, DecodeError>> + '_ {

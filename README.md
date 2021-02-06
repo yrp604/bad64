@@ -14,3 +14,13 @@ These are bindings to the [Binary Ninja](https://binary.ninja) arm64
 
 Note that while Binary Ninja is an (excellent) commercial product, the
 disassembler is entirely Apache 2 licensed and may be used without a license.
+To install, just add bad64 as a normal dependency in Cargo.toml.
+
+For docs and usage, please see [docs.rs](http://docs.rs/bad64) and the
+[examples](examples).
+
+```
+$ cargo run --example decode 0x91010420
+Instruction { address: 0x1000, opcode: 0x91010420, op: ADD, num_operands: 3, operands: [Reg { reg: X0, arrspec: None }, Reg { reg: X1, arrspec: None }, Imm64 { imm: Imm { neg: false, val: 65 }, shift: None }] }
+add x0, x1, #0x41
+```

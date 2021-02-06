@@ -148,16 +148,16 @@ impl fmt::Debug for Instruction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "Instruction {{ address: {:#x}, opcode: {:x}, operation: {:?}, num_operands: {}, operands: [",
+            "Instruction {{ address: {:#x}, opcode: {:#x}, op: {:?}, num_operands: {}, operands: [",
             self.address, self.opcode, self.op, self.num_operands
         )?;
         let ops = self.operands();
 
-        for n in 0..ops.len() {
+        for (n, op) in ops.iter().enumerate() {
             if n != ops.len() - 1 {
-                write!(f, "{:?}, ", ops[n])?;
+                write!(f, "{:?}, ", op)?;
             } else {
-                write!(f, "{:?}", ops[n])?;
+                write!(f, "{:?}", op)?;
             }
         }
 

@@ -783,7 +783,7 @@ EA42106B ands x11, x3, x2, lsr #0x4
 // AT_SYS_CR_systeminstrs 1101010100001xxx0111100xxxxxxxxx
 D50B795C sys #0x3, c7, c9, #0x2, x28
 D50E79D8 sys #0x6, c7, c9, #0x6, x24
-D508792A at S1E1WP, x10
+D508792A at s1e1wp, x10
 D50A7842 sys #0x2, c7, c8, #0x2, x2
 D50B782D sys #0x3, c7, c8, #0x1, x13
 D50C7976 sys #0x4, c7, c9, #0x3, x22
@@ -3391,22 +3391,22 @@ D4BA1CC3 dcps3 #0xd0e6
 D4B8ED43 dcps3 #0xc76a
 D4AF88E3 dcps3 #0x7c47
 // DC_SYS_CR_systeminstrs 1101010100001xxx0111xxxxxxxxxxxx
-D50F7696 sys #0x7, c7, c6, #0x4, x22
-D50E73F6 sys #0x6, c7, c3, #0x7, x22
-D50C7C9B sys #0x4, c7, c12, #0x4, x27
-D509761F sys #0x1, c7, c6, #0x0
-D50B7E8B sys #0x3, c7, c14, #0x4, x11
-D50D7F30 sys #0x5, c7, c15, #0x1, x16
-D5087242 sys #0x0, c7, c2, #0x2, x2
-D50C7B27 sys #0x4, c7, c11, #0x1, x7
-D50F7679 sys #0x7, c7, c6, #0x3, x25
-D50D77F2 sys #0x5, c7, c7, #0x7, x18
-D50B7797 sys #0x3, c7, c7, #0x4, x23
-D50F7106 sys #0x7, c7, c1, #0x0, x6
-D50B7EDE sys #0x3, c7, c14, #0x6, x30
-D50E7A71 sys #0x6, c7, c10, #0x3, x17
-D509751B sys #0x1, c7, c5, #0x0, x27
-D5087222 sys #0x0, c7, c2, #0x1, x2
+D50B7D3A dc cvadp, x26
+D50B7438 dc zva, x24
+D50B743F dc zva, xzr
+D5087E52 dc cisw, x18
+D50B7D23 dc cvadp, x3
+D5087A55 dc csw, x21
+D50B7D22 dc cvadp, x2
+D5087E57 dc cisw, x23
+D5087A53 dc csw, x19
+D5087645 dc isw, x5
+D50B7E38 dc civac, x24
+D50B7B24 dc cvau, x4
+D5087A4E dc csw, x14
+D5087A45 dc csw, x5
+D5087643 dc isw, x3
+D50B7A2E dc cvac, x14
 // DGH_HI_hints 11010101000000110010000011xxxxxx
 D50320DF hint #0x6
 // DMB_BO_barriers 11010101000000110011xxxx1xxxxxxx

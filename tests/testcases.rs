@@ -60,7 +60,6 @@ fn testcases() {
         match actual {
             "axflag" if expected.starts_with("msr") => true,
             "xaflag" if expected.starts_with("msr") => true,
-            "bti " => true, // BTI has an all-zero NAME argument?
             "cfinv" if expected.starts_with("msr") => true,
             "dgh" if expected.starts_with("hint") => true,
             _ if actual.ends_with("sxtx]") && expected.ends_with("sxtx #0x0]") => true,
@@ -74,6 +73,7 @@ fn testcases() {
             _ if actual.starts_with("sdot") => true,
             _ if actual.starts_with("udot") => true,
             _ if actual == expected => true,
+            _ if actual.to_lowercase() == expected.to_lowercase() => true,
             _ => expected
                 .split(' ')
                 .zip(actual.split(' '))

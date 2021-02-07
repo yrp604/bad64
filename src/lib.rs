@@ -14,7 +14,7 @@
 //! let decoded = decode(0xd503201f, 0x1000).unwrap();
 //!
 //! assert_eq!(decoded.address(), 0x1000);
-//! assert_eq!(decoded.num_operands(), 0);
+//! assert_eq!(decoded.operands().len(), 0);
 //! assert_eq!(decoded.op(), Op::NOP);
 //! assert_eq!(decoded.mnem(), "nop");
 //! ```
@@ -31,33 +31,33 @@
 //!
 //! // check out the push
 //! assert_eq!(push.address(), 0x1000);
-//! assert_eq!(push.num_operands(), 2);
+//! assert_eq!(push.operands().len(), 2);
 //! assert_eq!(push.op(), Op::STR);
 //! assert_eq!(
-//!     push.operand(0),
-//!     Some(Operand::Reg { reg: Reg::X0, arrspec: None })
+//!     push.operands()[0],
+//!     Operand::Reg { reg: Reg::X0, arrspec: None }
 //! );
 //! assert_eq!(
-//!     push.operand(1),
-//!     Some(Operand::MemPreIdx { reg: Reg::SP, imm: Imm { neg: true, val: 16 }})
+//!     push.operands()[1],
+//!     Operand::MemPreIdx { reg: Reg::SP, imm: Imm { neg: true, val: 16 }}
 //! );
-//! assert_eq!(push.operand(2), None);
+//! assert_eq!(push.operands().get(2), None);
 //!
 //! let pop = decoded_iter.next().unwrap().unwrap();
 //!
 //! // check out the pop
 //! assert_eq!(pop.address(), 0x1004);
-//! assert_eq!(pop.num_operands(), 2);
+//! assert_eq!(pop.operands().len(), 2);
 //! assert_eq!(pop.op(), Op::LDR);
 //! assert_eq!(
-//!     pop.operand(0),
-//!     Some(Operand::Reg { reg: Reg::X0, arrspec: None })
+//!     pop.operands().get(0),
+//!     Some(&Operand::Reg { reg: Reg::X0, arrspec: None })
 //! );
 //! assert_eq!(
-//!     pop.operand(1),
-//!     Some(Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }})
+//!     pop.operands().get(1),
+//!     Some(&Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }})
 //! );
-//! assert_eq!(pop.operand(2), None);
+//! assert_eq!(pop.operands().get(2), None);
 //!
 //! // make sure there's nothing left
 //! assert_eq!(decoded_iter.next(), None);
@@ -115,8 +115,8 @@ impl PartialEq for Instruction {
         self.address() == other.address()
             && self.op() == other.op()
             && self.opcode() == other.opcode()
-            && self.num_operands() == other.num_operands()
-            && (0..self.num_operands()).all(|n| self.operand(n) == other.operand(n))
+            && self.num_operands == other.num_operands
+            && self.operands().iter().zip(other.operands().iter()).all(|(a, b)| a == b)
     }
 }
 
@@ -139,13 +139,13 @@ impl fmt::Display for Instruction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.op())?;
 
-        let ops = self.operands();
+        let mut ops = self.operands().iter();
 
-        for (n, op) in ops.iter().enumerate() {
-            if n != self.num_operands() - 1 {
-                write!(f, " {},", op)?;
-            } else {
-                write!(f, " {}", op)?;
+        if let Some(op) = ops.next() {
+           write!(f, " {}", op)?;
+
+            for op in ops {
+                write!(f, ", {}", op)?;
             }
         }
 
@@ -176,7 +176,7 @@ impl Instruction {
     /// assert_eq!(decoded.mnem(), "nop");
     // ```
     pub fn mnem(&self) -> &'static str {
-        self.op.name()
+        self.op.mnem()
     }
 
     /// Returns the instruction address
@@ -216,48 +216,6 @@ impl Instruction {
     // ```
     pub fn op(&self) -> Op {
         self.op
-    }
-
-    /// Returns an instruction operand
-    ///
-    /// # Arguments
-    ///
-    /// * `n` - returns the nth operand
-    ///
-    /// # Example
-    /// ```
-    /// use bad64::{decode, Imm, Op, Operand, Reg};
-    /// // add x0, x1, #0x41  - "\x20\x04\x01\x91"
-    /// let decoded = decode(0x91010420, 0x1000).unwrap();
-    ///
-    /// assert_eq!(decoded.op(), Op::ADD);
-    /// assert_eq!(decoded.num_operands(), 3);
-    /// assert_eq!(decoded.operand(0), Some(Operand::Reg { reg: Reg::X0, arrspec: None }));
-    /// assert_eq!(decoded.operand(1), Some(Operand::Reg { reg: Reg::X1, arrspec: None }));
-    /// assert_eq!(decoded.operand(2), Some(Operand::Imm64 { imm: Imm { neg: false, val: 0x41 }, shift: None }));
-    /// assert_eq!(decoded.operand(3), None);
-    // ```
-    pub fn operand(&self, n: usize) -> Option<Operand> {
-        if n >= self.num_operands {
-            return None;
-        }
-
-        Some(unsafe { self.operands[n].assume_init() })
-    }
-
-    /// Returns the operand count
-    ///
-    /// # Example
-    /// ```
-    /// use bad64::decode;
-    /// // eor x0, x1, x2  - "\x20\x00\x02\xca"
-    /// let decoded = decode(0xca020020, 0x1000).unwrap();
-    ///
-    /// assert_eq!(decoded.num_operands(), 3);
-    /// assert_eq!(decoded.operands().len(), 3);
-    /// ```
-    pub fn num_operands(&self) -> usize {
-        self.num_operands
     }
 
     /// Returns a slice of Operands
@@ -336,7 +294,7 @@ impl DecodeError {
 /// // NOTE: little endian
 /// let decoded = decode(0xd503201f, 0x1000).unwrap();
 ///
-/// assert_eq!(decoded.num_operands(), 0);
+/// assert_eq!(decoded.operands().len(), 0);
 /// assert_eq!(decoded.operands(), &[]);
 /// assert_eq!(decoded.op(), Op::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
@@ -393,7 +351,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 /// let decoded = decoded_iter.next().unwrap().unwrap();
 ///
 /// assert_eq!(decoded.address(), 0x1000);
-/// assert_eq!(decoded.num_operands(), 0);
+/// assert_eq!(decoded.operands().len(), 0);
 /// assert_eq!(decoded.op(), Op::NOP);
 /// assert_eq!(decoded.mnem(), "nop");
 ///

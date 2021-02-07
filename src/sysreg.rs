@@ -679,7 +679,7 @@ impl SysReg {
     /// // msr vbar_el3, x0
     /// let decoded = decode(0xd51ec000, 0).unwrap();
     ///
-    /// let op = decoded.operand(0).unwrap();
+    /// let op = decoded.operands()[0];
     ///
     /// assert_eq!(op, Operand::SysReg(SysReg::VBAR_EL3));
     ///

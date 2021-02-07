@@ -1042,16 +1042,14 @@ impl Op {
     /// ```
     /// use bad64::{decode, Op};
     ///
-    /// // NOTE: little endian instruction
     /// // nop
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
     ///
     /// assert_eq!(decoded.op(), Op::NOP);
-    /// assert_eq!(decoded.op().name(), "nop");
+    /// assert_eq!(decoded.op().mnem(), "nop");
     /// assert_eq!(decoded.mnem(), "nop");
-    /// assert_eq!(decoded.op().name(), decoded.mnem());
     /// ```
-    pub fn name(&self) -> &'static str {
+    pub fn mnem(&self) -> &'static str {
         #[cfg(target_os = "windows")]
         {
             unsafe { CStr::from_ptr(operation_to_str(self.to_i32().unwrap()) as _) }
@@ -1069,6 +1067,6 @@ impl Op {
 
 impl fmt::Display for Op {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.name())
+        write!(f, "{}", self.mnem())
     }
 }

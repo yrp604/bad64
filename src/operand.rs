@@ -245,26 +245,18 @@ impl fmt::Display for Operand {
             Self::MultiReg { regs, arrspec } => {
                 write!(f, "{{")?;
 
-                let mut num_regs = 0;
+                let mut regs_iter = regs.iter().filter_map(|x| x.as_ref());
 
-                // count the reigsters...
-                for reg in regs.iter() {
-                    match reg {
-                        Some(_) => num_regs += 1,
-                        None => break,
-                    }
-                }
+                if let Some(reg) = regs_iter.next() {
+                    write_full_reg(f, *reg, arrspec)?;
 
-                for (n, reg) in regs.iter().filter_map(|x| x.as_ref()).enumerate() {
-                    if n != num_regs - 1 {
-                        write_full_reg(f, *reg, arrspec)?;
+                    for reg in regs_iter {
                         write!(f, ", ")?;
-                    } else {
-                        // last
                         write_full_reg(f, *reg, arrspec)?;
-                        write!(f, "}}")?;
                     }
                 }
+
+                write!(f, "}}")?;
 
                 if let Some(arsp) = arrspec {
                     if let Some(lane) = arsp.lane() {

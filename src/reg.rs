@@ -383,7 +383,7 @@ impl Reg {
     /// // add x0, x1, #0x41  - "\x20\x04\x01\x91"
     /// let decoded = decode(0x91010420, 0x1000).unwrap();
     ///
-    /// let op = decoded.operand(0).unwrap();
+    /// let op = decoded.operands()[0];
     ///
     /// assert_eq!(op, Operand::Reg { reg: Reg::X0, arrspec: None });
     ///

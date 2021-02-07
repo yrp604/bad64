@@ -5,7 +5,7 @@ fn decode_nop() {
     let ins = decode(0xd503201f, 0).unwrap();
 
     assert_eq!(ins.op(), Op::NOP);
-    assert_eq!(ins.num_operands(), 0);
+    assert_eq!(ins.operands().len(), 0);
 
     assert_eq!(ins.mnem(), "nop");
 }
@@ -46,14 +46,14 @@ fn decode_add() {
     let ins = decode(0x91010420, 0).unwrap();
 
     assert_eq!(ins.op(), Op::ADD);
-    assert_eq!(ins.num_operands(), 3);
+    assert_eq!(ins.operands().len(), 3);
     assert_eq!(ins.mnem(), "add");
 
-    let o0 = ins.operand(0).unwrap();
-    let o1 = ins.operand(1).unwrap();
-    let o2 = ins.operand(2).unwrap();
-    assert_eq!(ins.operand(3), None);
-    assert_eq!(ins.operand(5), None);
+    let o0 = ins.operands()[0];
+    let o1 = ins.operands()[1];
+    let o2 = ins.operands()[2];
+    assert_eq!(ins.operands().get(3), None);
+    assert_eq!(ins.operands().get(5), None);
 
     assert_eq!(
         o0,
@@ -86,8 +86,8 @@ fn system_reg() {
     // msr vbar_el3, x0
     let ins = decode(0xd51ec000, 0).unwrap();
 
-    let o0 = ins.operand(0).unwrap();
-    assert_eq!(o0, Operand::SysReg(SysReg::VBAR_EL3));
+    let o0 = ins.operands().get(0);
+    assert_eq!(o0, Some(&Operand::SysReg(SysReg::VBAR_EL3)));
 }
 
 #[test]

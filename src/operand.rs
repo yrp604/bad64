@@ -310,12 +310,16 @@ impl fmt::Display for Operand {
             }
             Self::Cond(c) => write!(f, "{}", c),
             Self::Name(str) => {
-                let name = unsafe { CStr::from_ptr(str.as_ptr() as _) }.to_str().unwrap();
+                let name = unsafe { CStr::from_ptr(str.as_ptr() as _) }
+                    .to_str()
+                    .unwrap();
 
                 write!(f, "{}", name)
             }
             Self::StrImm { str, imm } => {
-                let name = unsafe { CStr::from_ptr(str.as_ptr() as _) }.to_str().unwrap();
+                let name = unsafe { CStr::from_ptr(str.as_ptr() as _) }
+                    .to_str()
+                    .unwrap();
 
                 write!(f, "{} #{:#x}", name, imm)
             }

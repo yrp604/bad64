@@ -116,7 +116,11 @@ impl PartialEq for Instruction {
             && self.op() == other.op()
             && self.opcode() == other.opcode()
             && self.num_operands == other.num_operands
-            && self.operands().iter().zip(other.operands().iter()).all(|(a, b)| a == b)
+            && self
+                .operands()
+                .iter()
+                .zip(other.operands().iter())
+                .all(|(a, b)| a == b)
     }
 }
 
@@ -142,7 +146,7 @@ impl fmt::Display for Instruction {
         let mut ops = self.operands().iter();
 
         if let Some(op) = ops.next() {
-           write!(f, " {}", op)?;
+            write!(f, " {}", op)?;
 
             for op in ops {
                 write!(f, ", {}", op)?;

@@ -1047,7 +1047,6 @@ impl Op {
     ///
     /// assert_eq!(decoded.op(), Op::NOP);
     /// assert_eq!(decoded.op().mnem(), "nop");
-    /// assert_eq!(decoded.mnem(), "nop");
     /// ```
     pub fn mnem(&self) -> &'static str {
         #[cfg(target_os = "windows")]

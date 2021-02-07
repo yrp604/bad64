@@ -16,7 +16,7 @@
 //! assert_eq!(decoded.address(), 0x1000);
 //! assert_eq!(decoded.operands().len(), 0);
 //! assert_eq!(decoded.op(), Op::NOP);
-//! assert_eq!(decoded.mnem(), "nop");
+//! assert_eq!(decoded.op().mnem(), "nop");
 //! ```
 //!
 //! 2. [`disasm`] for disassembling a byte sequence.
@@ -166,19 +166,6 @@ impl fmt::Debug for Instruction {
 }
 
 impl Instruction {
-    /// Returns the instruction mnemonic
-    ///
-    /// # Example
-    /// ```
-    /// use bad64::decode;
-    /// // nop - "\x1f\x20\x03\xd4"
-    /// let decoded = decode(0xd503201f, 0x1000).unwrap();
-    /// assert_eq!(decoded.mnem(), "nop");
-    // ```
-    pub fn mnem(&self) -> &'static str {
-        self.op.mnem()
-    }
-
     /// Returns the instruction address
     ///
     /// # Example
@@ -297,7 +284,7 @@ impl DecodeError {
 /// assert_eq!(decoded.operands().len(), 0);
 /// assert_eq!(decoded.operands(), &[]);
 /// assert_eq!(decoded.op(), Op::NOP);
-/// assert_eq!(decoded.mnem(), "nop");
+/// assert_eq!(decoded.op().mnem(), "nop");
 /// assert_eq!(decoded.address(), 0x1000);
 /// ```
 pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
@@ -353,7 +340,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 /// assert_eq!(decoded.address(), 0x1000);
 /// assert_eq!(decoded.operands().len(), 0);
 /// assert_eq!(decoded.op(), Op::NOP);
-/// assert_eq!(decoded.mnem(), "nop");
+/// assert_eq!(decoded.op().mnem(), "nop");
 ///
 /// assert_eq!(decoded_iter.next(), None);
 /// ```

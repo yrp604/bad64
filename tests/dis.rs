@@ -5,9 +5,8 @@ fn decode_nop() {
     let ins = decode(0xd503201f, 0).unwrap();
 
     assert_eq!(ins.op(), Op::NOP);
+    assert_eq!(ins.op().mnem(), "nop");
     assert_eq!(ins.operands().len(), 0);
-
-    assert_eq!(ins.mnem(), "nop");
 }
 
 #[test]
@@ -46,8 +45,8 @@ fn decode_add() {
     let ins = decode(0x91010420, 0).unwrap();
 
     assert_eq!(ins.op(), Op::ADD);
+    assert_eq!(ins.op().mnem(), "add");
     assert_eq!(ins.operands().len(), 3);
-    assert_eq!(ins.mnem(), "add");
 
     let o0 = ins.operands()[0];
     let o1 = ins.operands()[1];

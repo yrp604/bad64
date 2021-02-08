@@ -18,15 +18,6 @@ pub enum Imm {
     Unsigned(u64),
 }
 
-impl Imm {
-    fn is_zero(&self) -> bool {
-        match *self {
-            Self::Signed(imm)  => imm == 0,
-            Self::Unsigned(imm) => imm == 0,
-        }
-    }
-}
-
 impl fmt::Display for Imm {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
@@ -298,7 +289,12 @@ impl fmt::Display for Operand {
                 write!(f, "[")?;
                 write_full_reg(f, reg, arrspec)?;
 
-                if !offset.is_zero() {
+                let zero_offset = match offset {
+                    Imm::Signed(0) | Imm::Unsigned(0) => true,
+                    _ => false,
+                };
+
+                if !zero_offset {
                     write!(f, ", #{}", offset)?;
 
                     if mul_vl {

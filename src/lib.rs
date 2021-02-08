@@ -39,7 +39,7 @@
 //! );
 //! assert_eq!(
 //!     push.operands()[1],
-//!     Operand::MemPreIdx { reg: Reg::SP, imm: Imm { neg: true, val: 16 }}
+//!     Operand::MemPreIdx { reg: Reg::SP, imm: Imm::Signed(-16) }
 //! );
 //! assert_eq!(push.operands().get(2), None);
 //!
@@ -55,7 +55,7 @@
 //! );
 //! assert_eq!(
 //!     pop.operands().get(1),
-//!     Some(&Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm { neg: false, val: 16 }})
+//!     Some(&Operand::MemPostIdxImm { reg: Reg::SP, imm: Imm::Signed(16) })
 //! );
 //! assert_eq!(pop.operands().get(2), None);
 //!

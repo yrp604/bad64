@@ -71,10 +71,7 @@ fn decode_add() {
     assert_eq!(
         o2,
         Operand::Imm64 {
-            imm: Imm {
-                neg: false,
-                val: 0x41
-            },
+            imm: Imm::Unsigned(0x41),
             shift: None
         }
     );

@@ -13,32 +13,35 @@ use crate::SysReg;
 
 /// An instruction immediate
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-pub struct Imm {
-    /// Did the disassembler consider this value negative
-    pub neg: bool,
-    /// The immediate value
-    pub val: u64,
+pub enum Imm {
+    Signed(i64),
+    Unsigned(u64),
+}
+
+impl Imm {
+    fn is_zero(&self) -> bool {
+        match *self {
+            Self::Signed(imm)  => imm == 0,
+            Self::Unsigned(imm) => imm == 0,
+        }
+    }
 }
 
 impl fmt::Display for Imm {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let sign = if self.neg { "-" } else { "" };
-        write!(f, "{}{:#x}", sign, self.val)
+        match *self {
+            Self::Signed(imm) => write!(f, "{:#x}", imm),
+            Self::Unsigned(imm) => write!(f, "{:#x}", imm),
+        }
     }
 }
 
 impl From<&bad64_sys::InstructionOperand> for Imm {
     fn from(oo: &bad64_sys::InstructionOperand) -> Self {
-        if oo.signedImm && (oo.immediate as i64) < 0 {
-            Self {
-                neg: true,
-                val: !oo.immediate + 1,
-            }
+        if oo.signedImm {
+            Self::Signed(oo.immediate as i64)
         } else {
-            Self {
-                neg: false,
-                val: oo.immediate,
-            }
+            Self::Unsigned(oo.immediate)
         }
     }
 }
@@ -295,7 +298,7 @@ impl fmt::Display for Operand {
                 write!(f, "[")?;
                 write_full_reg(f, reg, arrspec)?;
 
-                if offset.val != 0 {
+                if !offset.is_zero() {
                     write!(f, ", #{}", offset)?;
 
                     if mul_vl {

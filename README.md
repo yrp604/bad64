@@ -36,10 +36,9 @@ Instruction {
             arrspec: None,
         },
         Imm64 {
-            imm: Imm {
-                neg: false,
-                val: 0x41,
-            },
+            imm: Unsigned(
+                0x41,
+            ),
             shift: None,
         },
     ],

@@ -289,12 +289,7 @@ impl fmt::Display for Operand {
                 write!(f, "[")?;
                 write_full_reg(f, reg, arrspec)?;
 
-                let zero_offset = match offset {
-                    Imm::Signed(0) | Imm::Unsigned(0) => true,
-                    _ => false,
-                };
-
-                if !zero_offset {
+                if !matches!(offset, Imm::Signed(0) | Imm::Unsigned(0)) {
                     write!(f, ", #{}", offset)?;
 
                     if mul_vl {

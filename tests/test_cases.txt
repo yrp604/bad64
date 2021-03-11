@@ -1,3 +1,64 @@
+// added in 2020-09 spec
+// LD64B_64L_memop 1111100000111111110100xxxxxxxxxx
+F83FD290 ld64b x16, [x20]
+F83FD104 ld64b x4, [x8]
+F83FD18A ld64b x10, [x12]
+F83FD240 ld64b x0, [x18]
+F83FD084 ld64b x4, [x4]
+F83FD128 ld64b x8, [x9]
+F83FD172 ld64b x18, [x11]
+F83FD132 ld64b x18, [x9]
+// ST64B_64L_memop 1111100000111111100100xxxxxxxxxx
+F83F9104 st64b x4, [x8]
+F83F9344 st64b x4, [x26]
+F83F9220 st64b x0, [x17]
+F83F90A4 st64b x4, [x5]
+F83F90CE st64b x14, [x6]
+F83F9240 st64b x0, [x18]
+F83F926A st64b x10, [x19]
+F83F90D6 st64b x22, [x6]
+// ST64BV_64_memop 11111000001xxxxx101100xxxxxxxxxx
+F833B24A st64bv x19, x10, [x18]
+F830B226 st64bv x16, x6, [x17]
+F820B06C st64bv x0, x12, [x3]
+F83FB3E2 st64bv xzr, x2, [sp]
+F82CB0C4 st64bv x12, x4, [x6]
+F82FB076 st64bv x15, x22, [x3]
+F827B10E st64bv x7, x14, [x8]
+F83BB160 st64bv x27, x0, [x11]
+// ST64BV0_64_memop 11111000001xxxxx101000xxxxxxxxxx
+F832A2F6 st64bv0 x18, x22, [x23]
+F820A0E8 st64bv0 x0, x8, [x7]
+F820A194 st64bv0 x0, x20, [x12]
+F823A236 st64bv0 x3, x22, [x17]
+F831A3A0 st64bv0 x17, x0, [x29]
+F83CA194 st64bv0 x28, x20, [x12]
+F821A2A0 st64bv0 x1, x0, [x21]
+F839A14A st64bv0 x25, x10, [x10]
+// DSB_BOn_barriers 11010101000000110011xx1000111111
+D5033E3F dsb synxs
+D503363F dsb nshnxs
+D503323F dsb oshnxs
+D5033A3F dsb ishnxs
+// WFET_only_systeminstrswithreg 110101010000001100010000000xxxxx
+D503100F wfet x15
+D5031004 wfet x4
+D5031007 wfet x7
+D5031001 wfet x1
+D503100E wfet x14
+D5031008 wfet x8
+D5031014 wfet x20
+D5031006 wfet x6
+// WFIT_only_systeminstrswithreg 110101010000001100010000001xxxxx
+D503103E wfit x30
+D5031036 wfit x22
+D503103C wfit x28
+D503103A wfit x26
+D5031027 wfit x7
+D503102F wfit x15
+D503102B wfit x11
+D5031030 wfit x16
+// 2020-03 spec
 // ASR_SBFM_32M_bitfield 0001001100xxxxxxxxxxxxxxxxxxxxxx
 13077CF5 asr w21, w7, #0x7
 131E7CAF asr w15, w5, #0x1e

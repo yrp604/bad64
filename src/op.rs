@@ -57,10 +57,13 @@ pub enum Op {
     BFCVT = Operation_ARM64_BFCVT as u32,
     BFCVTN = Operation_ARM64_BFCVTN as u32,
     BFCVTN2 = Operation_ARM64_BFCVTN2 as u32,
+    BFCVTNT = Operation_ARM64_BFCVTNT as u32,
     BFDOT = Operation_ARM64_BFDOT as u32,
     BFI = Operation_ARM64_BFI as u32,
     BFM = Operation_ARM64_BFM as u32,
     BFMLAL = Operation_ARM64_BFMLAL as u32,
+    BFMLALB = Operation_ARM64_BFMLALB as u32,
+    BFMLALT = Operation_ARM64_BFMLALT as u32,
     BFMMLA = Operation_ARM64_BFMMLA as u32,
     BFXIL = Operation_ARM64_BFXIL as u32,
     BIC = Operation_ARM64_BIC as u32,
@@ -279,6 +282,7 @@ pub enum Op {
     FMLS = Operation_ARM64_FMLS as u32,
     FMLSL = Operation_ARM64_FMLSL as u32,
     FMLSL2 = Operation_ARM64_FMLSL2 as u32,
+    FMMLA = Operation_ARM64_FMMLA as u32,
     FMOV = Operation_ARM64_FMOV as u32,
     FMSB = Operation_ARM64_FMSB as u32,
     FMSUB = Operation_ARM64_FMSUB as u32,
@@ -340,6 +344,10 @@ pub enum Op {
     LD1RB = Operation_ARM64_LD1RB as u32,
     LD1RD = Operation_ARM64_LD1RD as u32,
     LD1RH = Operation_ARM64_LD1RH as u32,
+    LD1ROB = Operation_ARM64_LD1ROB as u32,
+    LD1ROD = Operation_ARM64_LD1ROD as u32,
+    LD1ROH = Operation_ARM64_LD1ROH as u32,
+    LD1ROW = Operation_ARM64_LD1ROW as u32,
     LD1RQB = Operation_ARM64_LD1RQB as u32,
     LD1RQD = Operation_ARM64_LD1RQD as u32,
     LD1RQH = Operation_ARM64_LD1RQH as u32,
@@ -1029,7 +1037,7 @@ pub enum Op {
 }
 
 // this is a guard to try to detect if new instructions get added
-const_assert_eq!(Operation_ARM64_ZIP2, 1016);
+const_assert_eq!(Operation_ARM64_ZIP2, 1024);
 
 impl Op {
     /// Get the operation name

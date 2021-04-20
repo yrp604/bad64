@@ -16,6 +16,12 @@ Note that while Binary Ninja is an (excellent) commercial product, the
 disassembler is entirely Apache 2 licensed and may be used without a license.
 To install, just add bad64 as a normal dependency in Cargo.toml.
 
+For more information on how this disassembler was created, see [this blogpost][blogpost]
+by [Andrew Lamoureux][andrew].
+
+[blogpost]: https://binary.ninja/2021/04/05/groundup-aarch64.html
+[andrew]: https://github.com/lwerdna
+
 For docs and usage, please see [docs.rs](http://docs.rs/bad64) and the
 [examples](examples).
 

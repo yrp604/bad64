@@ -19,4 +19,4 @@ static_assertions = "1"
 
 [dev-dependencies]
 rand = "0.8"
-xmas-elf = "0.7"
+xmas-elf = "0.8"

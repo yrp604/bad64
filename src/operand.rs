@@ -152,7 +152,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             OperandClass::SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
             OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
             OperandClass::STR_IMM => Ok(Self::StrImm {
-                str: oo.name.map(|x| x as u8),
+                str: unsafe { ::core::mem::transmute(oo.name) },
                 imm: oo.immediate,
             }),
             OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
@@ -193,7 +193,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 o2: oo.implspec[4],
             }),
             OperandClass::CONDITION => Ok(Self::Cond(Condition::from_u32(oo.cond as u32).unwrap())),
-            OperandClass::NAME => Ok(Self::Name(oo.name.map(|x| x as u8))),
+            OperandClass::NAME => Ok(Self::Name(unsafe { ::core::mem::transmute(oo.name) })),
             OperandClass::NONE => Err(()),
         }
     }

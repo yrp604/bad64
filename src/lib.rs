@@ -65,7 +65,6 @@
 
 #![no_std]
 #![feature(maybe_uninit_uninit_array, maybe_uninit_extra, maybe_uninit_slice)]
-#![feature(array_map)]
 
 #[macro_use]
 extern crate num_derive;

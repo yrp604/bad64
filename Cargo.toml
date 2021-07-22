@@ -1,6 +1,6 @@
 [package]
 name = "bad64"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["yrp <yrp604@protonmail.com>"]
 edition = "2018"
 description = "Rust bindings for Binja's arm64 disassembler"
@@ -11,7 +11,7 @@ keywords = ["disassembler", "armv8", "arm64", "aarch64", "binja"]
 
 
 [dependencies]
-bad64-sys = "0.2"
+bad64-sys = "0.3"
 cstr_core = "0.2"
 num-traits = "0.2"
 num-derive = "0.3"

@@ -1,3 +1,3612 @@
+// added in 2021-03 v9 spec
+// TCANCEL_EX_exception 11010100|opc=011|imm16=xxxxxxxxxxxxxxxx|op2=000|LL=00
+// TCANCEL #<imm>
+D478DA60 tcancel #0xc6d3
+D469F740 tcancel #0x4fba
+D47B3CC0 tcancel #0xd9e6
+D47EC080 tcancel #0xf604
+D475F200 tcancel #0xaf90
+D46AAE20 tcancel #0x5571
+D4666BE0 tcancel #0x335f
+D47DA280 tcancel #0xed14
+// TCOMMIT_only_barriers 1101010100|L=0|op0=00|op1=011|CRn=0011|CRm=0000|op2=011|Rt=11111
+// TCOMMIT
+D503307F tcommit
+// TSTART_BR_systemresult 1101010100|L=1|op0=00|op1=011|CRn=0011|CRm=0000|op2=011|Rt=xxxxx
+// TSTART <Xt>
+D5233070 tstart x16
+D5233068 tstart x8
+D523307C tstart x28
+D5233062 tstart x2
+D523307F tstart xzr
+D523306B tstart x11
+D523307A tstart x26
+D5233076 tstart x22
+// TTEST_BR_systemresult 1101010100|L=1|op0=00|op1=011|CRn=0011|CRm=0001|op2=011|Rt=xxxxx
+// TTEST <Xt>
+D5233178 ttest x24
+D5233177 ttest x23
+D523317C ttest x28
+D5233169 ttest x9
+D523317D ttest x29
+D523317F ttest xzr
+D5233162 ttest x2
+D5233172 ttest x18
+// adclb_z_zzz_ 01000101|0|sz=x|0|Zm=xxxxx|11010|T=0|Zn=xxxxx|Zda=xxxxx
+// ADCLB <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+4540D2D6 adclb z22.d, z22.d, z0.d
+4513D09E adclb z30.s, z4.s, z19.s
+4557D298 adclb z24.d, z20.d, z23.d
+450ED104 adclb z4.s, z8.s, z14.s
+455BD0CB adclb z11.d, z6.d, z27.d
+4554D23B adclb z27.d, z17.d, z20.d
+4549D3FB adclb z27.d, z31.d, z9.d
+455BD2CF adclb z15.d, z22.d, z27.d
+// adclt_z_zzz_ 01000101|0|sz=x|0|Zm=xxxxx|11010|T=1|Zn=xxxxx|Zda=xxxxx
+// ADCLT <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+4541D456 adclt z22.d, z2.d, z1.d
+4514D7B5 adclt z21.s, z29.s, z20.s
+450BD653 adclt z19.s, z18.s, z11.s
+455AD4FA adclt z26.d, z7.d, z26.d
+450CD6BB adclt z27.s, z21.s, z12.s
+454CD41B adclt z27.d, z0.d, z12.d
+450FD76C adclt z12.s, z27.s, z15.s
+450ED6A1 adclt z1.s, z21.s, z14.s
+// addhnb_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=0|R=0|T=0|Zn=xxxxx|Zd=xxxxx
+// ADDHNB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45FD62F2 addhnb z18.s, z23.d, z29.d
+45736394 addhnb z20.b, z28.h, z19.h
+45FB6129 addhnb z9.s, z9.d, z27.d
+45B36355 addhnb z21.h, z26.s, z19.s
+457461BE addhnb z30.b, z13.h, z20.h
+45EE611E addhnb z30.s, z8.d, z14.d
+457961E4 addhnb z4.b, z15.h, z25.h
+45EF6227 addhnb z7.s, z17.d, z15.d
+// addhnt_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=0|R=0|T=1|Zn=xxxxx|Zd=xxxxx
+// ADDHNT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45F866A7 addhnt z7.s, z21.d, z24.d
+45A965B5 addhnt z21.h, z13.s, z9.s
+45B36651 addhnt z17.h, z18.s, z19.s
+45E6679D addhnt z29.s, z28.d, z6.d
+45716658 addhnt z24.b, z18.h, z17.h
+45BD6438 addhnt z24.h, z1.s, z29.s
+45F36449 addhnt z9.s, z2.d, z19.d
+4578668E addhnt z14.b, z20.h, z24.h
+// addp_z_p_zz_ 01000100|size=xx|010|opc=00|U=1|101|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// ADDP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+4491A99E addp z30.s, p2/m, z30.s, z12.s
+4451A42B addp z11.h, p1/m, z11.h, z1.h
+4491ABBE addp z30.s, p2/m, z30.s, z29.s
+4491B360 addp z0.s, p4/m, z0.s, z27.s
+4491B09D addp z29.s, p4/m, z29.s, z4.s
+44D1BE05 addp z5.d, p7/m, z5.d, z16.d
+4411B38B addp z11.b, p4/m, z11.b, z28.b
+4411A447 addp z7.b, p1/m, z7.b, z2.b
+// aesd_z_zz_ 01000101|size=00|10001|op=0|11100|o2=1|Zm=xxxxx|Zdn=xxxxx
+// AESD <Zdn>.B,<Zdn>.B,<Zm>.B
+4522E5DE aesd z30.b, z30.b, z14.b
+4522E7ED aesd z13.b, z13.b, z31.b
+4522E734 aesd z20.b, z20.b, z25.b
+4522E67E aesd z30.b, z30.b, z19.b
+4522E6E8 aesd z8.b, z8.b, z23.b
+4522E569 aesd z9.b, z9.b, z11.b
+4522E628 aesd z8.b, z8.b, z17.b
+4522E667 aesd z7.b, z7.b, z19.b
+// aese_z_zz_ 01000101|size=00|10001|op=0|11100|o2=0|Zm=xxxxx|Zdn=xxxxx
+// AESE <Zdn>.B,<Zdn>.B,<Zm>.B
+4522E116 aese z22.b, z22.b, z8.b
+4522E271 aese z17.b, z17.b, z19.b
+4522E2EA aese z10.b, z10.b, z23.b
+4522E348 aese z8.b, z8.b, z26.b
+4522E38C aese z12.b, z12.b, z28.b
+4522E356 aese z22.b, z22.b, z26.b
+4522E32A aese z10.b, z10.b, z25.b
+4522E398 aese z24.b, z24.b, z28.b
+// aesimc_z_z_ 01000101|size=00|10000011100|op=1|00000|Zdn=xxxxx
+// AESIMC <Zdn>.B,<Zdn>.B
+4520E410 aesimc z16.b, z16.b
+4520E406 aesimc z6.b, z6.b
+4520E40A aesimc z10.b, z10.b
+4520E414 aesimc z20.b, z20.b
+4520E411 aesimc z17.b, z17.b
+4520E408 aesimc z8.b, z8.b
+4520E41D aesimc z29.b, z29.b
+4520E405 aesimc z5.b, z5.b
+// aesmc_z_z_ 01000101|size=00|10000011100|op=0|00000|Zdn=xxxxx
+// AESMC <Zdn>.B,<Zdn>.B
+4520E008 aesmc z8.b, z8.b
+4520E009 aesmc z9.b, z9.b
+4520E000 aesmc z0.b, z0.b
+4520E01F aesmc z31.b, z31.b
+4520E017 aesmc z23.b, z23.b
+4520E00F aesmc z15.b, z15.b
+4520E015 aesmc z21.b, z21.b
+4520E012 aesmc z18.b, z18.b
+// bcax_z_zzz_ 00000100|opc=01|1|Zm=xxxxx|00111|o2=0|Zk=xxxxx|Zdn=xxxxx
+// BCAX <Zdn>.D,<Zdn>.D,<Zm>.D,<Zk>.D
+046A3AEA bcax z10.d, z10.d, z10.d, z23.d
+046B3868 bcax z8.d, z8.d, z11.d, z3.d
+04773B72 bcax z18.d, z18.d, z23.d, z27.d
+04623814 bcax z20.d, z20.d, z2.d, z0.d
+047A3A3C bcax z28.d, z28.d, z26.d, z17.d
+046F388A bcax z10.d, z10.d, z15.d, z4.d
+0461394A bcax z10.d, z10.d, z1.d, z10.d
+046239A2 bcax z2.d, z2.d, z2.d, z13.d
+// bdep_z_zz_ 01000101|size=xx|0|Zm=xxxxx|1011|opc=01|Zn=xxxxx|Zd=xxxxx
+// BDEP <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+4506B777 bdep z23.b, z27.b, z6.b
+4509B4D4 bdep z20.b, z6.b, z9.b
+4549B440 bdep z0.h, z2.h, z9.h
+45C1B6E7 bdep z7.d, z23.d, z1.d
+459BB4DE bdep z30.s, z6.s, z27.s
+4507B504 bdep z4.b, z8.b, z7.b
+45CDB4FE bdep z30.d, z7.d, z13.d
+4599B58A bdep z10.s, z12.s, z25.s
+// bext_z_zz_ 01000101|size=xx|0|Zm=xxxxx|1011|opc=00|Zn=xxxxx|Zd=xxxxx
+// BEXT <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+4559B2A4 bext z4.h, z21.h, z25.h
+459DB054 bext z20.s, z2.s, z29.s
+4588B061 bext z1.s, z3.s, z8.s
+454AB340 bext z0.h, z26.h, z10.h
+4503B0C9 bext z9.b, z6.b, z3.b
+4544B163 bext z3.h, z11.h, z4.h
+459AB2EF bext z15.s, z23.s, z26.s
+45D1B22D bext z13.d, z17.d, z17.d
+// bgrp_z_zz_ 01000101|size=xx|0|Zm=xxxxx|1011|opc=10|Zn=xxxxx|Zd=xxxxx
+// BGRP <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+45C4BB2F bgrp z15.d, z25.d, z4.d
+458BB948 bgrp z8.s, z10.s, z11.s
+45C7BA7C bgrp z28.d, z19.d, z7.d
+45C9B8B4 bgrp z20.d, z5.d, z9.d
+45D9BB40 bgrp z0.d, z26.d, z25.d
+4593BB79 bgrp z25.s, z27.s, z19.s
+4504BAAB bgrp z11.b, z21.b, z4.b
+4513B91D bgrp z29.b, z8.b, z19.b
+// bsl1n_z_zzz_ 00000100|opc=01|1|Zm=xxxxx|00111|o2=1|Zk=xxxxx|Zdn=xxxxx
+// BSL1N <Zdn>.D,<Zdn>.D,<Zm>.D,<Zk>.D
+046C3FCA bsl1n z10.d, z10.d, z12.d, z30.d
+046D3F18 bsl1n z24.d, z24.d, z13.d, z24.d
+04623FCE bsl1n z14.d, z14.d, z2.d, z30.d
+04653DC0 bsl1n z0.d, z0.d, z5.d, z14.d
+04603F0B bsl1n z11.d, z11.d, z0.d, z24.d
+046A3EC2 bsl1n z2.d, z2.d, z10.d, z22.d
+04703FE1 bsl1n z1.d, z1.d, z16.d, z31.d
+04703C3F bsl1n z31.d, z31.d, z16.d, z1.d
+// bsl2n_z_zzz_ 00000100|opc=10|1|Zm=xxxxx|00111|o2=1|Zk=xxxxx|Zdn=xxxxx
+// BSL2N <Zdn>.D,<Zdn>.D,<Zm>.D,<Zk>.D
+04B33EEC bsl2n z12.d, z12.d, z19.d, z23.d
+04A33E70 bsl2n z16.d, z16.d, z3.d, z19.d
+04A63E71 bsl2n z17.d, z17.d, z6.d, z19.d
+04B93F3F bsl2n z31.d, z31.d, z25.d, z25.d
+04A43E1B bsl2n z27.d, z27.d, z4.d, z16.d
+04B63FB8 bsl2n z24.d, z24.d, z22.d, z29.d
+04B83E5E bsl2n z30.d, z30.d, z24.d, z18.d
+04B33C39 bsl2n z25.d, z25.d, z19.d, z1.d
+// bsl_z_zzz_ 00000100|opc=00|1|Zm=xxxxx|00111|o2=1|Zk=xxxxx|Zdn=xxxxx
+// BSL <Zdn>.D,<Zdn>.D,<Zm>.D,<Zk>.D
+04273DFA bsl z26.d, z26.d, z7.d, z15.d
+04323CF0 bsl z16.d, z16.d, z18.d, z7.d
+043B3D31 bsl z17.d, z17.d, z27.d, z9.d
+04373CCF bsl z15.d, z15.d, z23.d, z6.d
+04373D95 bsl z21.d, z21.d, z23.d, z12.d
+04253D81 bsl z1.d, z1.d, z5.d, z12.d
+04363D51 bsl z17.d, z17.d, z22.d, z10.d
+04283FD7 bsl z23.d, z23.d, z8.d, z30.d
+// cadd_z_zz_ 01000101|size=xx|00000|op=0|11011|rot=x|Zm=xxxxx|Zdn=xxxxx
+// CADD <Zdn>.<T>,<Zdn>.<T>,<Zm>.<T>,<const>
+45C0DE38 cadd z24.d, z24.d, z17.d, #0x10e
+4540DBCE cadd z14.h, z14.h, z30.h, #0x5a
+4580DCC9 cadd z9.s, z9.s, z6.s, #0x10e
+45C0D9BD cadd z29.d, z29.d, z13.d, #0x5a
+45C0D873 cadd z19.d, z19.d, z3.d, #0x5a
+4580DCDF cadd z31.s, z31.s, z6.s, #0x10e
+4540DAC9 cadd z9.h, z9.h, z22.h, #0x5a
+4500DF23 cadd z3.b, z3.b, z25.b, #0x10e
+// cdot_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|0001|rot=xx|Zn=xxxxx|Zda=xxxxx
+// CDOT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>,<const>
+44DF17BD cdot z29.d, z29.h, z31.h, #0x5a
+44D311C3 cdot z3.d, z14.h, z19.h, #0x0
+44C410CF cdot z15.d, z6.h, z4.h, #0x0
+44C013FF cdot z31.d, z31.h, z0.h, #0x0
+44C01AB1 cdot z17.d, z21.h, z0.h, #0xb4
+44851E50 cdot z16.s, z18.b, z5.b, #0x10e
+44C61116 cdot z22.d, z8.h, z6.h, #0x0
+44C51E86 cdot z6.d, z20.h, z5.h, #0x10e
+// cdot_z_zzzi_s 01000100|size=10|1|i2=xx|Zm=xxx|0100|rot=xx|Zn=xxxxx|Zda=xxxxx
+// CDOT <Zda>.S,<Zn>.B,<Zm>.B[<imm>],<const>
+44A7468B cdot z11.s, z20.b, z7.b[0], #0x5a
+44AD451C cdot z28.s, z8.b, z5.b[1], #0x5a
+44B54E12 cdot z18.s, z16.b, z5.b[2], #0x10e
+44AA4EE2 cdot z2.s, z23.b, z2.b[1], #0x10e
+44AD4C47 cdot z7.s, z2.b, z5.b[1], #0x10e
+44BB4CCC cdot z12.s, z6.b, z3.b[3], #0x10e
+44AA473C cdot z28.s, z25.b, z2.b[1], #0x5a
+44A9411C cdot z28.s, z8.b, z1.b[1], #0x0
+// cdot_z_zzzi_d 01000100|size=11|1|i1=x|Zm=xxxx|0100|rot=xx|Zn=xxxxx|Zda=xxxxx
+// CDOT <Zda>.D,<Zn>.H,<Zm>.H[<imm>],<const>
+44EB42C7 cdot z7.d, z22.h, z11.h[0], #0x0
+44F84B3C cdot z28.d, z25.h, z8.h[1], #0xb4
+44FE4ED9 cdot z25.d, z22.h, z14.h[1], #0x10e
+44E44273 cdot z19.d, z19.h, z4.h[0], #0x0
+44F74048 cdot z8.d, z2.h, z7.h[1], #0x0
+44F7430B cdot z11.d, z24.h, z7.h[1], #0x0
+44E347F8 cdot z24.d, z31.h, z3.h[0], #0x5a
+44E14991 cdot z17.d, z12.h, z1.h[0], #0xb4
+// cmla_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|001|op=0|rot=xx|Zn=xxxxx|Zda=xxxxx
+// CMLA <Zda>.<T>,<Zn>.<T>,<Zm>.<T>,<const>
+441C2661 cmla z1.b, z19.b, z28.b, #0x5a
+441A213D cmla z29.b, z9.b, z26.b, #0x0
+44D32467 cmla z7.d, z3.d, z19.d, #0x5a
+440C295E cmla z30.b, z10.b, z12.b, #0xb4
+44CE263F cmla z31.d, z17.d, z14.d, #0x5a
+44CD2946 cmla z6.d, z10.d, z13.d, #0xb4
+441825E4 cmla z4.b, z15.b, z24.b, #0x5a
+44192899 cmla z25.b, z4.b, z25.b, #0xb4
+// cmla_z_zzzi_h 01000100|size=10|1|i2=xx|Zm=xxx|0110|rot=xx|Zn=xxxxx|Zda=xxxxx
+// CMLA <Zda>.H,<Zn>.H,<Zm>.H[<imm>],<const>
+44B56F3D cmla z29.h, z25.h, z5.h[2], #0x10e
+44A3674C cmla z12.h, z26.h, z3.h[0], #0x5a
+44A56ADD cmla z29.h, z22.h, z5.h[0], #0xb4
+44AD6D4E cmla z14.h, z10.h, z5.h[1], #0x10e
+44B46FF8 cmla z24.h, z31.h, z4.h[2], #0x10e
+44BA6A05 cmla z5.h, z16.h, z2.h[3], #0xb4
+44A36AD1 cmla z17.h, z22.h, z3.h[0], #0xb4
+44BA6EE1 cmla z1.h, z23.h, z2.h[3], #0x10e
+// cmla_z_zzzi_s 01000100|size=11|1|i1=x|Zm=xxxx|0110|rot=xx|Zn=xxxxx|Zda=xxxxx
+// CMLA <Zda>.S,<Zn>.S,<Zm>.S[<imm>],<const>
+44F46E32 cmla z18.s, z17.s, z4.s[1], #0x10e
+44EA6A46 cmla z6.s, z18.s, z10.s[0], #0xb4
+44F2675C cmla z28.s, z26.s, z2.s[1], #0x5a
+44F86745 cmla z5.s, z26.s, z8.s[1], #0x5a
+44FE6F5C cmla z28.s, z26.s, z14.s[1], #0x10e
+44E468D8 cmla z24.s, z6.s, z4.s[0], #0xb4
+44F76899 cmla z25.s, z4.s, z7.s[1], #0xb4
+44E960AE cmla z14.s, z5.s, z9.s[0], #0x0
+// eor3_z_zzz_ 00000100|opc=00|1|Zm=xxxxx|00111|o2=0|Zk=xxxxx|Zdn=xxxxx
+// EOR3 <Zdn>.D,<Zdn>.D,<Zm>.D,<Zk>.D
+04323BB0 eor3 z16.d, z16.d, z18.d, z29.d
+042C3B31 eor3 z17.d, z17.d, z12.d, z25.d
+043C3974 eor3 z20.d, z20.d, z28.d, z11.d
+04233B32 eor3 z18.d, z18.d, z3.d, z25.d
+043C3A55 eor3 z21.d, z21.d, z28.d, z18.d
+043F3838 eor3 z24.d, z24.d, z31.d, z1.d
+04353AA4 eor3 z4.d, z4.d, z21.d, z21.d
+04203854 eor3 z20.d, z20.d, z0.d, z2.d
+// eorbt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|10010|tb=0|Zn=xxxxx|Zd=xxxxx
+// EORBT <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+45CF90B6 eorbt z22.d, z5.d, z15.d
+4597938B eorbt z11.s, z28.s, z23.s
+4580915A eorbt z26.s, z10.s, z0.s
+450292D6 eorbt z22.b, z22.b, z2.b
+45969017 eorbt z23.s, z0.s, z22.s
+450E92E7 eorbt z7.b, z23.b, z14.b
+45409270 eorbt z16.h, z19.h, z0.h
+45839244 eorbt z4.s, z18.s, z3.s
+// eortb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|10010|tb=1|Zn=xxxxx|Zd=xxxxx
+// EORTB <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+45CE96EA eortb z10.d, z23.d, z14.d
+45DB96C7 eortb z7.d, z22.d, z27.d
+45429477 eortb z23.h, z3.h, z2.h
+450794D8 eortb z24.b, z6.b, z7.b
+45C1965C eortb z28.d, z18.d, z1.d
+458D9558 eortb z24.s, z10.s, z13.s
+45D196D8 eortb z24.d, z22.d, z17.d
+459C95F6 eortb z22.s, z15.s, z28.s
+// ext_z_zi_con 00000101011|imm8h=xxxxx|000|imm8l=xxx|Zn=xxxxx|Zd=xxxxx
+// EXT <Zd>.B,{<Zn1>.B,<Zn2>.B},#<imm>
+057617D8 ext z24.b, {z30.b, z31.b}, z0.b, #0xb5
+05790BAF ext z15.b, {z29.b, z30.b}, z0.b, #0xca
+0567103E ext z30.b, {z1.b, z2.b}, z0.b, #0x3c
+0575014A ext z10.b, {z10.b, z11.b}, z0.b, #0xa8
+05771FA9 ext z9.b, {z29.b, z30.b}, z0.b, #0xbf
+05761A7A ext z26.b, {z19.b, z20.b}, z0.b, #0xb6
+056B10B2 ext z18.b, {z5.b, z6.b}, z0.b, #0x5c
+057401C1 ext z1.b, {z14.b, z15.b}, z0.b, #0xa0
+// faddp_z_p_zz_ 01100100|size=xx|010|opc<2:1>=00|opc<0>=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// FADDP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+645094C5 faddp z5.h, p5/m, z5.h, z6.h
+64909330 faddp z16.s, p4/m, z16.s, z25.s
+64D081D8 faddp z24.d, p0/m, z24.d, z14.d
+645099C5 faddp z5.h, p6/m, z5.h, z14.h
+64908928 faddp z8.s, p2/m, z8.s, z9.s
+64D087A9 faddp z9.d, p1/m, z9.d, z29.d
+64908350 faddp z16.s, p0/m, z16.s, z26.s
+64D08824 faddp z4.d, p2/m, z4.d, z1.d
+// fcvtlt_z_p_z_h2s 01100100|opc=10|0010|opc2=01|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// FCVTLT <Zd>.S,<Pg>/M,<Zn>.H
+6489B691 fcvtlt z17.s, p5/m, z20.h
+6489A90D fcvtlt z13.s, p2/m, z8.h
+6489BF48 fcvtlt z8.s, p7/m, z26.h
+6489A12B fcvtlt z11.s, p0/m, z9.h
+6489B69D fcvtlt z29.s, p5/m, z20.h
+6489B872 fcvtlt z18.s, p6/m, z3.h
+6489B68D fcvtlt z13.s, p5/m, z20.h
+6489B629 fcvtlt z9.s, p5/m, z17.h
+// fcvtlt_z_p_z_s2d 01100100|opc=11|0010|opc2=11|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// FCVTLT <Zd>.D,<Pg>/M,<Zn>.S
+64CBAB43 fcvtlt z3.d, p2/m, z26.s
+64CBAF65 fcvtlt z5.d, p3/m, z27.s
+64CBB15A fcvtlt z26.d, p4/m, z10.s
+64CBA059 fcvtlt z25.d, p0/m, z2.s
+64CBB88E fcvtlt z14.d, p6/m, z4.s
+64CBA05F fcvtlt z31.d, p0/m, z2.s
+64CBA5D8 fcvtlt z24.d, p1/m, z14.s
+64CBABB8 fcvtlt z24.d, p2/m, z29.s
+// fcvtnt_z_p_z_s2h 01100100|opc=10|0010|opc2=00|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// FCVTNT <Zd>.H,<Pg>/M,<Zn>.S
+64CBAB43 fcvtlt z3.d, p2/m, z26.s
+64CBAF65 fcvtlt z5.d, p3/m, z27.s
+64CBB15A fcvtlt z26.d, p4/m, z10.s
+64CBA059 fcvtlt z25.d, p0/m, z2.s
+64CBB88E fcvtlt z14.d, p6/m, z4.s
+64CBA05F fcvtlt z31.d, p0/m, z2.s
+64CBA5D8 fcvtlt z24.d, p1/m, z14.s
+64CBABB8 fcvtlt z24.d, p2/m, z29.s
+// fcvtnt_z_p_z_d2s 01100100|opc=11|0010|opc2=10|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// FCVTNT <Zd>.S,<Pg>/M,<Zn>.D
+64CBAB43 fcvtlt z3.d, p2/m, z26.s
+64CBAF65 fcvtlt z5.d, p3/m, z27.s
+64CBB15A fcvtlt z26.d, p4/m, z10.s
+64CBA059 fcvtlt z25.d, p0/m, z2.s
+64CBB88E fcvtlt z14.d, p6/m, z4.s
+64CBA05F fcvtlt z31.d, p0/m, z2.s
+64CBA5D8 fcvtlt z24.d, p1/m, z14.s
+64CBABB8 fcvtlt z24.d, p2/m, z29.s
+// fcvtx_z_p_z_d2s 01100101|opc=00|0010|opc2=10|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// FCVTX <Zd>.S,<Pg>/M,<Zn>.D
+650AB30A fcvtx z10.s, p4/m, z24.d
+650AAB4E fcvtx z14.s, p2/m, z26.d
+650AB1C2 fcvtx z2.s, p4/m, z14.d
+650AAC4D fcvtx z13.s, p3/m, z2.d
+650AB9D6 fcvtx z22.s, p6/m, z14.d
+650ABE85 fcvtx z5.s, p7/m, z20.d
+650AB966 fcvtx z6.s, p6/m, z11.d
+650AB528 fcvtx z8.s, p5/m, z9.d
+// fcvtxnt_z_p_z_d2s 01100100|opc=00|0010|opc2=10|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// FCVTXNT <Zd>.S,<Pg>/M,<Zn>.D
+640AA4C9 fcvtxnt z9.s, p1/m, z6.d
+640AB85D fcvtxnt z29.s, p6/m, z2.d
+640AA084 fcvtxnt z4.s, p0/m, z4.d
+640AA352 fcvtxnt z18.s, p0/m, z26.d
+640AABC5 fcvtxnt z5.s, p2/m, z30.d
+640AA1CA fcvtxnt z10.s, p0/m, z14.d
+640AA903 fcvtxnt z3.s, p2/m, z8.d
+640AA940 fcvtxnt z0.s, p2/m, z10.d
+// flogb_z_p_z_ 01100101|opc=00|011|size=xx|U=0|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// FLOGB <Zd>.<T>,<Pg>/M,<Zn>.<T>
+651EA7F4 flogb z20.d, p1/m, z31.d
+651EA4B9 flogb z25.d, p1/m, z5.d
+651AB988 flogb z8.h, p6/m, z12.h
+651CA913 flogb z19.s, p2/m, z8.s
+651EB757 flogb z23.d, p5/m, z26.d
+651EABD4 flogb z20.d, p2/m, z30.d
+651AB63D flogb z29.h, p5/m, z17.h
+651EACFD flogb z29.d, p3/m, z7.d
+// fmaxnmp_z_p_zz_ 01100100|size=xx|010|opc<2:1>=10|opc<0>=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// FMAXNMP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+6454838D fmaxnmp z13.h, p0/m, z13.h, z28.h
+64948F57 fmaxnmp z23.s, p3/m, z23.s, z26.s
+64D495B5 fmaxnmp z21.d, p5/m, z21.d, z13.d
+64D48CAE fmaxnmp z14.d, p3/m, z14.d, z5.d
+64D4921E fmaxnmp z30.d, p4/m, z30.d, z16.d
+64D49BDF fmaxnmp z31.d, p6/m, z31.d, z30.d
+64548D85 fmaxnmp z5.h, p3/m, z5.h, z12.h
+64D48C55 fmaxnmp z21.d, p3/m, z21.d, z2.d
+// fmaxp_z_p_zz_ 01100100|size=xx|010|opc<2:1>=11|opc<0>=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// FMAXP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+64D68215 fmaxp z21.d, p0/m, z21.d, z16.d
+64D68E13 fmaxp z19.d, p3/m, z19.d, z16.d
+64568597 fmaxp z23.h, p1/m, z23.h, z12.h
+64969FA2 fmaxp z2.s, p7/m, z2.s, z29.s
+649693C3 fmaxp z3.s, p4/m, z3.s, z30.s
+6496812D fmaxp z13.s, p0/m, z13.s, z9.s
+64568653 fmaxp z19.h, p1/m, z19.h, z18.h
+6456841C fmaxp z28.h, p1/m, z28.h, z0.h
+// fminnmp_z_p_zz_ 01100100|size=xx|010|opc<2:1>=10|opc<0>=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// FMINNMP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+64959EC6 fminnmp z6.s, p7/m, z6.s, z22.s
+645585F0 fminnmp z16.h, p1/m, z16.h, z15.h
+64D58A82 fminnmp z2.d, p2/m, z2.d, z20.d
+64558C4F fminnmp z15.h, p3/m, z15.h, z2.h
+64558DEC fminnmp z12.h, p3/m, z12.h, z15.h
+64958954 fminnmp z20.s, p2/m, z20.s, z10.s
+64D59B89 fminnmp z9.d, p6/m, z9.d, z28.d
+64D59CD2 fminnmp z18.d, p7/m, z18.d, z6.d
+// fminp_z_p_zz_ 01100100|size=xx|010|opc<2:1>=11|opc<0>=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// FMINP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+64D79F4D fminp z13.d, p7/m, z13.d, z26.d
+64578F8E fminp z14.h, p3/m, z14.h, z28.h
+64579FFF fminp z31.h, p7/m, z31.h, z31.h
+64D7940F fminp z15.d, p5/m, z15.d, z0.d
+64578B64 fminp z4.h, p2/m, z4.h, z27.h
+64979D74 fminp z20.s, p7/m, z20.s, z11.s
+64D797EA fminp z10.d, p5/m, z10.d, z31.d
+64D792C4 fminp z4.d, p4/m, z4.d, z22.d
+// fmlalb_z_zzz_ 011001001|o2=0|1|Zm=xxxxx|10|op=0|00|T=0|Zn=xxxxx|Zda=xxxxx
+// FMLALB <Zda>.S,<Zn>.H,<Zm>.H
+64B083C3 fmlalb z3.s, z30.h, z16.h
+64BE803D fmlalb z29.s, z1.h, z30.h
+64A68019 fmlalb z25.s, z0.h, z6.h
+64BA8388 fmlalb z8.s, z28.h, z26.h
+64BC826F fmlalb z15.s, z19.h, z28.h
+64BD81E7 fmlalb z7.s, z15.h, z29.h
+64AA8271 fmlalb z17.s, z19.h, z10.h
+64AC80DD fmlalb z29.s, z6.h, z12.h
+// fmlalb_z_zzzi_s 011001001|o2=0|1|i3h=xx|Zm=xxx|01|op=0|0|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// FMLALB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+64A185C4 fmlalt z4.s, z14.h, z1.h
+64BF8716 fmlalt z22.s, z24.h, z31.h
+64A486D6 fmlalt z22.s, z22.h, z4.h
+64B38445 fmlalt z5.s, z2.h, z19.h
+64BB8594 fmlalt z20.s, z12.h, z27.h
+64AF860A fmlalt z10.s, z16.h, z15.h
+64AF85AF fmlalt z15.s, z13.h, z15.h
+64A9851F fmlalt z31.s, z8.h, z9.h
+// fmlalt_z_zzz_ 011001001|o2=0|1|Zm=xxxxx|10|op=0|00|T=1|Zn=xxxxx|Zda=xxxxx
+// FMLALT <Zda>.S,<Zn>.H,<Zm>.H
+64A185C4 fmlalt z4.s, z14.h, z1.h
+64BF8716 fmlalt z22.s, z24.h, z31.h
+64A486D6 fmlalt z22.s, z22.h, z4.h
+64B38445 fmlalt z5.s, z2.h, z19.h
+64BB8594 fmlalt z20.s, z12.h, z27.h
+64AF860A fmlalt z10.s, z16.h, z15.h
+64AF85AF fmlalt z15.s, z13.h, z15.h
+64A9851F fmlalt z31.s, z8.h, z9.h
+// fmlalt_z_zzzi_s 011001001|o2=0|1|i3h=xx|Zm=xxx|01|op=0|0|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// FMLALT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+64BDA07A fmlslb z26.s, z3.h, z29.h
+64A5A082 fmlslb z2.s, z4.h, z5.h
+64A3A2E0 fmlslb z0.s, z23.h, z3.h
+64A6A3CB fmlslb z11.s, z30.h, z6.h
+64A1A253 fmlslb z19.s, z18.h, z1.h
+64A5A185 fmlslb z5.s, z12.h, z5.h
+64A0A107 fmlslb z7.s, z8.h, z0.h
+64A9A17B fmlslb z27.s, z11.h, z9.h
+// fmlslb_z_zzz_ 011001001|o2=0|1|Zm=xxxxx|10|op=1|00|T=0|Zn=xxxxx|Zda=xxxxx
+// FMLSLB <Zda>.S,<Zn>.H,<Zm>.H
+64BDA07A fmlslb z26.s, z3.h, z29.h
+64A5A082 fmlslb z2.s, z4.h, z5.h
+64A3A2E0 fmlslb z0.s, z23.h, z3.h
+64A6A3CB fmlslb z11.s, z30.h, z6.h
+64A1A253 fmlslb z19.s, z18.h, z1.h
+64A5A185 fmlslb z5.s, z12.h, z5.h
+64A0A107 fmlslb z7.s, z8.h, z0.h
+64A9A17B fmlslb z27.s, z11.h, z9.h
+// fmlslb_z_zzzi_s 011001001|o2=0|1|i3h=xx|Zm=xxx|01|op=1|0|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// FMLSLB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+64A5A64F fmlslt z15.s, z18.h, z5.h
+64B9A72A fmlslt z10.s, z25.h, z25.h
+64AFA4E5 fmlslt z5.s, z7.h, z15.h
+64A7A710 fmlslt z16.s, z24.h, z7.h
+64A7A612 fmlslt z18.s, z16.h, z7.h
+64AEA7F4 fmlslt z20.s, z31.h, z14.h
+64B0A719 fmlslt z25.s, z24.h, z16.h
+64A3A5D2 fmlslt z18.s, z14.h, z3.h
+// fmlslt_z_zzz_ 011001001|o2=0|1|Zm=xxxxx|10|op=1|00|T=1|Zn=xxxxx|Zda=xxxxx
+// FMLSLT <Zda>.S,<Zn>.H,<Zm>.H
+64A5A64F fmlslt z15.s, z18.h, z5.h
+64B9A72A fmlslt z10.s, z25.h, z25.h
+64AFA4E5 fmlslt z5.s, z7.h, z15.h
+64A7A710 fmlslt z16.s, z24.h, z7.h
+64A7A612 fmlslt z18.s, z16.h, z7.h
+64AEA7F4 fmlslt z20.s, z31.h, z14.h
+64B0A719 fmlslt z25.s, z24.h, z16.h
+64A3A5D2 fmlslt z18.s, z14.h, z3.h
+// fmlslt_z_zzzi_s 011001001|o2=0|1|i3h=xx|Zm=xxx|01|op=1|0|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// FMLSLT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+64AB6C46 fmlslt z6.s, z2.h, z3.h[3]
+64B16C54 fmlslt z20.s, z2.h, z1.h[5]
+64A46CB1 fmlslt z17.s, z5.h, z4.h[1]
+64B66CAF fmlslt z15.s, z5.h, z6.h[5]
+64BC6FE8 fmlslt z8.s, z31.h, z4.h[7]
+64AA6C7E fmlslt z30.s, z3.h, z2.h[3]
+64AF67E3 fmlslt z3.s, z31.h, z7.h[2]
+64B76C9A fmlslt z26.s, z4.h, z7.h[5]
+// histcnt_z_p_zz_ 01000101|size=xx|1|Zm=xxxxx|110|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// HISTCNT <Zd>.<T>,<Pg>/Z,<Zn>.<T>,<Zm>.<T>
+45AFD686 histcnt z6.s, p5/z, z20.s, z15.s
+45F8DF28 histcnt z8.d, p7/z, z25.d, z24.d
+45EBD43E histcnt z30.d, p5/z, z1.d, z11.d
+45E1D585 histcnt z5.d, p5/z, z12.d, z1.d
+45FAC3E1 histcnt z1.d, p0/z, z31.d, z26.d
+45AECDFD histcnt z29.s, p3/z, z15.s, z14.s
+45E8CEB1 histcnt z17.d, p3/z, z21.d, z8.d
+45FCD67E histcnt z30.d, p5/z, z19.d, z28.d
+// histseg_z_zz_ 01000101|size=xx|1|Zm=xxxxx|101000|Zn=xxxxx|Zd=xxxxx
+// HISTSEG <Zd>.B,<Zn>.B,<Zm>.B
+4533A017 histseg z0.b, z0.b, z19.b
+4524A279 histseg z0.b, z19.b, z4.b
+452CA0A7 histseg z0.b, z5.b, z12.b
+453EA3DE histseg z0.b, z30.b, z30.b
+4527A25E histseg z0.b, z18.b, z7.b
+4523A190 histseg z0.b, z12.b, z3.b
+4539A1D2 histseg z0.b, z14.b, z25.b
+453EA286 histseg z0.b, z20.b, z30.b
+// ldnt1b_z_p_ar_s_x32_unscaled 1000010|msz=00|00|Rm=xxxxx|10|U=1|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1B {<Zt>.S},<Pg>/Z, [<Zn>.S{,<Xm>}]
+841FB98A ldnt1b {z10.s}, p6/z, [z12.s, xzr]
+8414B98A ldnt1b {z10.s}, p6/z, [z12.s, x20]
+8415BFAA ldnt1b {z10.s}, p7/z, [z29.s, x21]
+840CB38D ldnt1b {z13.s}, p4/z, [z28.s, x12]
+8408B76C ldnt1b {z12.s}, p5/z, [z27.s, x8]
+8410B2BE ldnt1b {z30.s}, p4/z, [z21.s, x16]
+8413BF17 ldnt1b {z23.s}, p7/z, [z24.s, x19]
+840AB702 ldnt1b {z2.s}, p5/z, [z24.s, x10]
+8411A33A ldnt1b {z26.s}, p0/z, [z25.s, x17]
+// ldnt1b_z_p_ar_d_64_unscaled 1100010|msz=00|00|Rm=xxxxx|1|U=1|0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1B {<Zt>.D},<Pg>/Z, [<Zn>.D{,<Xm>}]
+C41BDD4A ldnt1b {z10.d}, p7/z, [z10.d, x27]
+C40AC3A2 ldnt1b {z2.d}, p0/z, [z29.d, x10]
+C408CA68 ldnt1b {z8.d}, p2/z, [z19.d, x8]
+C40EC39E ldnt1b {z30.d}, p0/z, [z28.d, x14]
+C413D1CE ldnt1b {z14.d}, p4/z, [z14.d, x19]
+C41DCBB8 ldnt1b {z24.d}, p2/z, [z29.d, x29]
+C407DD60 ldnt1b {z0.d}, p7/z, [z11.d, x7]
+C402C4FC ldnt1b {z28.d}, p1/z, [z7.d, x2]
+// ldnt1d_z_p_ar_d_64_unscaled 1100010|msz=11|00|Rm=xxxxx|1|U=1|0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1D {<Zt>.D},<Pg>/Z, [<Zn>.D{,<Xm>}]
+C587D1D1 ldnt1d {z17.d}, p4/z, [z14.d, x7]
+C584C4C2 ldnt1d {z2.d}, p1/z, [z6.d, x4]
+C594D90B ldnt1d {z11.d}, p6/z, [z8.d, x20]
+C58AD0F8 ldnt1d {z24.d}, p4/z, [z7.d, x10]
+C58CDEDC ldnt1d {z28.d}, p7/z, [z22.d, x12]
+C59FC4B6 ldnt1d {z22.d}, p1/z, [z5.d, xzr]
+C58EC869 ldnt1d {z9.d}, p2/z, [z3.d, x14]
+C592D176 ldnt1d {z22.d}, p4/z, [z11.d, x18]
+// ldnt1h_z_p_ar_s_x32_unscaled 1000010|msz=01|00|Rm=xxxxx|10|U=1|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1H {<Zt>.S},<Pg>/Z, [<Zn>.S{,<Xm>}]
+8498BA96 ldnt1h {z22.s}, p6/z, [z20.s, x24]
+8494BDAE ldnt1h {z14.s}, p7/z, [z13.s, x20]
+8488BF2B ldnt1h {z11.s}, p7/z, [z25.s, x8]
+8488A791 ldnt1h {z17.s}, p1/z, [z28.s, x8]
+8497B106 ldnt1h {z6.s}, p4/z, [z8.s, x23]
+848DB76A ldnt1h {z10.s}, p5/z, [z27.s, x13]
+8486A165 ldnt1h {z5.s}, p0/z, [z11.s, x6]
+848EA88B ldnt1h {z11.s}, p2/z, [z4.s, x14]
+// ldnt1h_z_p_ar_d_64_unscaled 1100010|msz=01|00|Rm=xxxxx|1|U=1|0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1H {<Zt>.D},<Pg>/Z, [<Zn>.D{,<Xm>}]
+C482C4D2 ldnt1h {z18.d}, p1/z, [z6.d, x2]
+C49AC172 ldnt1h {z18.d}, p0/z, [z11.d, x26]
+C483D154 ldnt1h {z20.d}, p4/z, [z10.d, x3]
+C48DC3A9 ldnt1h {z9.d}, p0/z, [z29.d, x13]
+C496DD26 ldnt1h {z6.d}, p7/z, [z9.d, x22]
+C498D2D7 ldnt1h {z23.d}, p4/z, [z22.d, x24]
+C48AD1A6 ldnt1h {z6.d}, p4/z, [z13.d, x10]
+C48BCEAF ldnt1h {z15.d}, p3/z, [z21.d, x11]
+// ldnt1sb_z_p_ar_s_x32_unscaled 1000010|msz=00|00|Rm=xxxxx|10|U=0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1SB {<Zt>.S},<Pg>/Z, [<Zn>.S{,<Xm>}]
+84189D4F ldnt1sb {z15.s}, p7/z, [z10.s, x24]
+841286E4 ldnt1sb {z4.s}, p1/z, [z23.s, x18]
+841283F9 ldnt1sb {z25.s}, p0/z, [z31.s, x18]
+841C8F26 ldnt1sb {z6.s}, p3/z, [z25.s, x28]
+84058FE3 ldnt1sb {z3.s}, p3/z, [z31.s, x5]
+841495BF ldnt1sb {z31.s}, p5/z, [z13.s, x20]
+8400879D ldnt1sb {z29.s}, p1/z, [z28.s, x0]
+840C91BE ldnt1sb {z30.s}, p4/z, [z13.s, x12]
+// ldnt1sb_z_p_ar_d_64_unscaled 1100010|msz=00|00|Rm=xxxxx|1|U=0|0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1SB {<Zt>.D},<Pg>/Z, [<Zn>.D{,<Xm>}]
+C4069940 ldnt1sb {z0.d}, p6/z, [z10.d, x6]
+C41A914A ldnt1sb {z10.d}, p4/z, [z10.d, x26]
+C4139C8D ldnt1sb {z13.d}, p7/z, [z4.d, x19]
+C406977A ldnt1sb {z26.d}, p5/z, [z27.d, x6]
+C4108946 ldnt1sb {z6.d}, p2/z, [z10.d, x16]
+C41487E1 ldnt1sb {z1.d}, p1/z, [z31.d, x20]
+C4129E89 ldnt1sb {z9.d}, p7/z, [z20.d, x18]
+C40E8F99 ldnt1sb {z25.d}, p3/z, [z28.d, x14]
+// ldnt1sh_z_p_ar_s_x32_unscaled 1000010|msz=01|00|Rm=xxxxx|10|U=0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1SH {<Zt>.S},<Pg>/Z, [<Zn>.S{,<Xm>}]
+849681A8 ldnt1sh {z8.s}, p0/z, [z13.s, x22]
+849F8BD8 ldnt1sh {z24.s}, p2/z, [z30.s, xzr]
+848A81C1 ldnt1sh {z1.s}, p0/z, [z14.s, x10]
+848394F9 ldnt1sh {z25.s}, p5/z, [z7.s, x3]
+84808286 ldnt1sh {z6.s}, p0/z, [z20.s, x0]
+848E9E41 ldnt1sh {z1.s}, p7/z, [z18.s, x14]
+848A93BD ldnt1sh {z29.s}, p4/z, [z29.s, x10]
+848898D5 ldnt1sh {z21.s}, p6/z, [z6.s, x8]
+// ldnt1sh_z_p_ar_d_64_unscaled 1100010|msz=01|00|Rm=xxxxx|1|U=0|0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1SH {<Zt>.D},<Pg>/Z, [<Zn>.D{,<Xm>}]
+C49F8057 ldnt1sh {z23.d}, p0/z, [z2.d, xzr]
+C484966A ldnt1sh {z10.d}, p5/z, [z19.d, x4]
+C4899FA2 ldnt1sh {z2.d}, p7/z, [z29.d, x9]
+C48D84D0 ldnt1sh {z16.d}, p1/z, [z6.d, x13]
+C4979669 ldnt1sh {z9.d}, p5/z, [z19.d, x23]
+C49C99D4 ldnt1sh {z20.d}, p6/z, [z14.d, x28]
+C48589F7 ldnt1sh {z23.d}, p2/z, [z15.d, x5]
+C49390F2 ldnt1sh {z18.d}, p4/z, [z7.d, x19]
+// ldnt1sw_z_p_ar_d_64_unscaled 1100010|msz=10|00|Rm=xxxxx|1|U=0|0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1SW {<Zt>.D},<Pg>/Z, [<Zn>.D{,<Xm>}]
+C50B865C ldnt1sw {z28.d}, p1/z, [z18.d, x11]
+C50C88EA ldnt1sw {z10.d}, p2/z, [z7.d, x12]
+C50C99F8 ldnt1sw {z24.d}, p6/z, [z15.d, x12]
+C5099F35 ldnt1sw {z21.d}, p7/z, [z25.d, x9]
+C50C9EB3 ldnt1sw {z19.d}, p7/z, [z21.d, x12]
+C505823D ldnt1sw {z29.d}, p0/z, [z17.d, x5]
+C5019EA1 ldnt1sw {z1.d}, p7/z, [z21.d, x1]
+C50F8883 ldnt1sw {z3.d}, p2/z, [z4.d, x15]
+// ldnt1w_z_p_ar_s_x32_unscaled 1000010|msz=10|00|Rm=xxxxx|10|U=1|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1W {<Zt>.S},<Pg>/Z, [<Zn>.S{,<Xm>}]
+8505B915 ldnt1w {z21.s}, p6/z, [z8.s, x5]
+8503BB84 ldnt1w {z4.s}, p6/z, [z28.s, x3]
+8503A68D ldnt1w {z13.s}, p1/z, [z20.s, x3]
+8517BB94 ldnt1w {z20.s}, p6/z, [z28.s, x23]
+851FBAF9 ldnt1w {z25.s}, p6/z, [z23.s, xzr]
+850AB0CB ldnt1w {z11.s}, p4/z, [z6.s, x10]
+8505BED4 ldnt1w {z20.s}, p7/z, [z22.s, x5]
+8500BE05 ldnt1w {z5.s}, p7/z, [z16.s, x0]
+// ldnt1w_z_p_ar_d_64_unscaled 1100010|msz=10|00|Rm=xxxxx|1|U=1|0|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// LDNT1W {<Zt>.D},<Pg>/Z, [<Zn>.D{,<Xm>}]
+C50ADB02 ldnt1w {z2.d}, p6/z, [z24.d, x10]
+C514DB53 ldnt1w {z19.d}, p6/z, [z26.d, x20]
+C502D87A ldnt1w {z26.d}, p6/z, [z3.d, x2]
+C514D3B3 ldnt1w {z19.d}, p4/z, [z29.d, x20]
+C518CEC0 ldnt1w {z0.d}, p3/z, [z22.d, x24]
+C519CFE1 ldnt1w {z1.d}, p3/z, [z31.d, x25]
+C510C7C6 ldnt1w {z6.d}, p1/z, [z30.d, x16]
+C50DCF41 ldnt1w {z1.d}, p3/z, [z26.d, x13]
+// match_p_p_zz_ 01000101|size=xx|1|Zm=xxxxx|100|Pg=xxx|Zn=xxxxx|op=0|Pd=xxxx
+// MATCH <Pd>.<T>,<Pg>/Z,<Zn>.<T>,<Zm>.<T>
+452E9E05 match p5.b, p7/z, p16.b, p14.b
+45749ACE match p14.h, p6/z, p22.h, p20.h
+452480C5 match p5.b, p0/z, p6.b, p4.b
+452D89AE match p14.b, p2/z, p13.b, p13.b
+4534898F match p15.b, p2/z, p12.b, p20.b
+456F930B match p11.h, p4/z, p24.h, p15.h
+456983E0 match p0.h, p0/z, p31.h, p9.h
+452895C7 match p7.b, p5/z, p14.b, p8.b
+// mla_z_zzzi_h 01000100|0|i3h=x|1|i3l=xx|Zm=xxx|00001|S=0|Zn=xxxxx|Zda=xxxxx
+// MLA <Zda>.H,<Zn>.H,<Zm>.H[<imm>]
+443C0A47 mla z7.h, z18.h, z4.h[3]
+447C097F mla z31.h, z11.h, z4.h[7]
+443D090F mla z15.h, z8.h, z5.h[3]
+442D0A6F mla z15.h, z19.h, z5.h[1]
+44720A10 mla z16.h, z16.h, z2.h[6]
+446C0908 mla z8.h, z8.h, z4.h[5]
+44600AD4 mla z20.h, z22.h, z0.h[4]
+446709E6 mla z6.h, z15.h, z7.h[4]
+// mla_z_zzzi_s 01000100|size=10|1|i2=xx|Zm=xxx|00001|S=0|Zn=xxxxx|Zda=xxxxx
+// MLA <Zda>.S,<Zn>.S,<Zm>.S[<imm>]
+44B00995 mla z21.s, z12.s, z0.s[2]
+44A908BD mla z29.s, z5.s, z1.s[1]
+44BF0921 mla z1.s, z9.s, z7.s[3]
+44BA084C mla z12.s, z2.s, z2.s[3]
+44BA0956 mla z22.s, z10.s, z2.s[3]
+44A30B32 mla z18.s, z25.s, z3.s[0]
+44B30B24 mla z4.s, z25.s, z3.s[2]
+44AF0926 mla z6.s, z9.s, z7.s[1]
+// mla_z_zzzi_d 01000100|size=11|1|i1=x|Zm=xxxx|00001|S=0|Zn=xxxxx|Zda=xxxxx
+// MLA <Zda>.D,<Zn>.D,<Zm>.D[<imm>]
+44E10ACC mla z12.d, z22.d, z1.d[0]
+44F10B25 mla z5.d, z25.d, z1.d[1]
+44F80BEF mla z15.d, z31.d, z8.d[1]
+44F70AC7 mla z7.d, z22.d, z7.d[1]
+44E108D6 mla z22.d, z6.d, z1.d[0]
+44FB0926 mla z6.d, z9.d, z11.d[1]
+44F309E8 mla z8.d, z15.d, z3.d[1]
+44E90A81 mla z1.d, z20.d, z9.d[0]
+// mls_z_zzzi_h 01000100|0|i3h=x|1|i3l=xx|Zm=xxx|00001|S=1|Zn=xxxxx|Zda=xxxxx
+// MLS <Zda>.H,<Zn>.H,<Zm>.H[<imm>]
+44650F1C mls z28.h, z24.h, z5.h[4]
+44350E5E mls z30.h, z18.h, z5.h[2]
+44640E56 mls z22.h, z18.h, z4.h[4]
+44260DBE mls z30.h, z13.h, z6.h[0]
+44340F78 mls z24.h, z27.h, z4.h[2]
+44700E33 mls z19.h, z17.h, z0.h[6]
+442F0CC4 mls z4.h, z6.h, z7.h[1]
+442D0D31 mls z17.h, z9.h, z5.h[1]
+// mls_z_zzzi_s 01000100|size=10|1|i2=xx|Zm=xxx|00001|S=1|Zn=xxxxx|Zda=xxxxx
+// MLS <Zda>.S,<Zn>.S,<Zm>.S[<imm>]
+44B50D1E mls z30.s, z8.s, z5.s[2]
+44B70D6D mls z13.s, z11.s, z7.s[2]
+44AD0CB0 mls z16.s, z5.s, z5.s[1]
+44B50DA7 mls z7.s, z13.s, z5.s[2]
+44A70E0C mls z12.s, z16.s, z7.s[0]
+44AF0DC0 mls z0.s, z14.s, z7.s[1]
+44BC0CFA mls z26.s, z7.s, z4.s[3]
+44A90F9D mls z29.s, z28.s, z1.s[1]
+// mls_z_zzzi_d 01000100|size=11|1|i1=x|Zm=xxxx|00001|S=1|Zn=xxxxx|Zda=xxxxx
+// MLS <Zda>.D,<Zn>.D,<Zm>.D[<imm>]
+44E90F95 mls z21.d, z28.d, z9.d[0]
+44EC0FA1 mls z1.d, z29.d, z12.d[0]
+44E80E03 mls z3.d, z16.d, z8.d[0]
+44EE0F00 mls z0.d, z24.d, z14.d[0]
+44FB0E85 mls z5.d, z20.d, z11.d[1]
+44F00C2D mls z13.d, z1.d, z0.d[1]
+44EB0E1A mls z26.d, z16.d, z11.d[0]
+44E00E0F mls z15.d, z16.d, z0.d[0]
+// mul_z_zz_ 00000100|size=xx|1|Zm=xxxxx|0110|opc=00|Zn=xxxxx|Zd=xxxxx
+// MUL <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+04676060 mul z0.h, z3.h, z7.h
+04F76343 mul z3.d, z26.d, z23.d
+042A608A mul z10.b, z4.b, z10.b
+04226305 mul z5.b, z24.b, z2.b
+04F9639C mul z28.d, z28.d, z25.d
+04EB614E mul z14.d, z10.d, z11.d
+04EB6025 mul z5.d, z1.d, z11.d
+04E86253 mul z19.d, z18.d, z8.d
+// mul_z_zzi_h 01000100|0|i3h=x|1|i3l=xx|Zm=xxx|111110|Zn=xxxxx|Zd=xxxxx
+// MUL <Zd>.H,<Zn>.H,<Zm>.H[<imm>]
+4471F827 mul z7.h, z1.h, z1.h[6]
+4424F89F mul z31.h, z4.h, z4.h[0]
+446DF99C mul z28.h, z12.h, z5.h[5]
+443DF8FB mul z27.h, z7.h, z5.h[3]
+446BFAF8 mul z24.h, z23.h, z3.h[5]
+4433F8A6 mul z6.h, z5.h, z3.h[2]
+4472FBAD mul z13.h, z29.h, z2.h[6]
+4474FA25 mul z5.h, z17.h, z4.h[6]
+// mul_z_zzi_s 01000100|size=10|1|i2=xx|Zm=xxx|111110|Zn=xxxxx|Zd=xxxxx
+// MUL <Zd>.S,<Zn>.S,<Zm>.S[<imm>]
+44BBF8E1 mul z1.s, z7.s, z3.s[3]
+44AAF881 mul z1.s, z4.s, z2.s[1]
+44AAFB75 mul z21.s, z27.s, z2.s[1]
+44BCFAD8 mul z24.s, z22.s, z4.s[3]
+44B1FA78 mul z24.s, z19.s, z1.s[2]
+44BDF9F6 mul z22.s, z15.s, z5.s[3]
+44AFFA71 mul z17.s, z19.s, z7.s[1]
+44BAFA45 mul z5.s, z18.s, z2.s[3]
+// mul_z_zzi_d 01000100|size=11|1|i1=x|Zm=xxxx|111110|Zn=xxxxx|Zd=xxxxx
+// MUL <Zd>.D,<Zn>.D,<Zm>.D[<imm>]
+44F8F9E9 mul z9.d, z15.d, z8.d[1]
+44FEF896 mul z22.d, z4.d, z14.d[1]
+44E9F877 mul z23.d, z3.d, z9.d[0]
+44FEFBEC mul z12.d, z31.d, z14.d[1]
+44E4F8FE mul z30.d, z7.d, z4.d[0]
+44E0F8C9 mul z9.d, z6.d, z0.d[0]
+44F1FB8A mul z10.d, z28.d, z1.d[1]
+44EAF83F mul z31.d, z1.d, z10.d[0]
+// nbsl_z_zzz_ 00000100|opc=11|1|Zm=xxxxx|00111|o2=1|Zk=xxxxx|Zdn=xxxxx
+// NBSL <Zdn>.D,<Zdn>.D,<Zm>.D,<Zk>.D
+04FF3D9E nbsl z30.d, z30.d, z31.d, z12.d
+04E93D65 nbsl z5.d, z5.d, z9.d, z11.d
+04E33FE5 nbsl z5.d, z5.d, z3.d, z31.d
+04F23D46 nbsl z6.d, z6.d, z18.d, z10.d
+04F23E99 nbsl z25.d, z25.d, z18.d, z20.d
+04EB3E75 nbsl z21.d, z21.d, z11.d, z19.d
+04EE3DF4 nbsl z20.d, z20.d, z14.d, z15.d
+04ED3CEE nbsl z14.d, z14.d, z13.d, z7.d
+// nmatch_p_p_zz_ 01000101|size=xx|1|Zm=xxxxx|100|Pg=xxx|Zn=xxxxx|op=1|Pd=xxxx
+// NMATCH <Pd>.<T>,<Pg>/Z,<Zn>.<T>,<Zm>.<T>
+45318658 nmatch p8.b, p1/z, p18.b, p17.b
+456797B7 nmatch p7.h, p5/z, p29.h, p7.h
+453490F5 nmatch p5.b, p4/z, p7.b, p20.b
+452D8CB9 nmatch p9.b, p3/z, p5.b, p13.b
+45348E73 nmatch p3.b, p3/z, p19.b, p20.b
+453F925B nmatch p11.b, p4/z, p18.b, p31.b
+457F9FFC nmatch p12.h, p7/z, p31.h, p31.h
+453A95DE nmatch p14.b, p5/z, p14.b, p26.b
+// pmul_z_zz_ 00000100|size=00|1|Zm=xxxxx|0110|opc=01|Zn=xxxxx|Zd=xxxxx
+// PMUL <Zd>.B,<Zn>.B,<Zm>.B
+043F661E pmul z0.b, z16.b, z31.b
+0437677B pmul z0.b, z27.b, z23.b
+04256642 pmul z0.b, z18.b, z5.b
+04226546 pmul z0.b, z10.b, z2.b
+04236439 pmul z0.b, z1.b, z3.b
+043F6522 pmul z0.b, z9.b, z31.b
+043A64F2 pmul z0.b, z7.b, z26.b
+04236742 pmul z0.b, z26.b, z3.b
+// pmullb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=0|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// PMULLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45C96AE2 pmullb z2.d, z23.s, z9.s
+45D36A9C pmullb z28.d, z20.s, z19.s
+45586846 pmullb z6.h, z2.b, z24.b
+45196A7D pmullb z29.q, z19.d, z25.d
+45D568E3 pmullb z3.d, z7.s, z21.s
+451B6BB5 pmullb z21.q, z29.d, z27.d
+455E6B42 pmullb z2.h, z26.b, z30.b
+45186B16 pmullb z22.q, z24.d, z24.d
+// pmullt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=0|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// PMULLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45016D11 pmullt z17.q, z8.d, z1.d
+45CA6EC4 pmullt z4.d, z22.s, z10.s
+45066EF8 pmullt z24.q, z23.d, z6.d
+45D96D24 pmullt z4.d, z9.s, z25.s
+45DA6DCF pmullt z15.d, z14.s, z26.s
+45CF6D78 pmullt z24.d, z11.s, z15.s
+455F6F56 pmullt z22.h, z26.b, z31.b
+45DF6D0E pmullt z14.d, z8.s, z31.s
+// raddhnb_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=0|R=1|T=0|Zn=xxxxx|Zd=xxxxx
+// RADDHNB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45FE6A9D raddhnb z29.s, z20.d, z30.d
+457B6ACB raddhnb z11.b, z22.h, z27.h
+45A96BDA raddhnb z26.h, z30.s, z9.s
+45706865 raddhnb z5.b, z3.h, z16.h
+45F86BD6 raddhnb z22.s, z30.d, z24.d
+45AE6A6E raddhnb z14.h, z19.s, z14.s
+45606808 raddhnb z8.b, z0.h, z0.h
+45F068A0 raddhnb z0.s, z5.d, z16.d
+// raddhnt_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=0|R=1|T=1|Zn=xxxxx|Zd=xxxxx
+// RADDHNT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45A26CA7 raddhnt z7.h, z5.s, z2.s
+45B96D4C raddhnt z12.h, z10.s, z25.s
+45B06D35 raddhnt z21.h, z9.s, z16.s
+45746DEE raddhnt z14.b, z15.h, z20.h
+45E66C25 raddhnt z5.s, z1.d, z6.d
+45F06D2C raddhnt z12.s, z9.d, z16.d
+45636E12 raddhnt z18.b, z16.h, z3.h
+45E96F18 raddhnt z24.s, z24.d, z9.d
+// rax1_z_zz_ 01000101|size=00|1|Zm=xxxxx|11110|op=1|Zn=xxxxx|Zd=xxxxx
+// RAX1 <Zd>.D,<Zn>.D,<Zm>.D
+4523F587 rax1 z7.d, z12.d, z3.d
+4527F4C6 rax1 z6.d, z6.d, z7.d
+4522F4E3 rax1 z3.d, z7.d, z2.d
+452EF7A1 rax1 z1.d, z29.d, z14.d
+452EF73C rax1 z28.d, z25.d, z14.d
+4522F658 rax1 z24.d, z18.d, z2.d
+4528F498 rax1 z24.d, z4.d, z8.d
+4535F606 rax1 z6.d, z16.d, z21.d
+// rshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=1|R=1|T=0|Zn=xxxxx|Zd=xxxxx
+// RSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+45671A73 rshrnb z19.q, z19.d, #0x19
+45751871 rshrnb z17.s, z3.h, #0xb
+45371AB3 rshrnb z19.h, z21.s, #0x9
+452B1B16 rshrnb z22.b, z24.h, #0x5
+45291BB4 rshrnb z20.b, z29.h, #0x7
+45661B63 rshrnb z3.q, z27.d, #0x1a
+453018E0 rshrnb z0.h, z7.s, #0x10
+456F1A14 rshrnb z20.h, z16.b, #0x11
+// rshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=1|R=1|T=1|Zn=xxxxx|Zd=xxxxx
+// RSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+452B1C70 rshrnt z16.b, z3.h, #0x5
+453F1E2D rshrnt z13.s, z17.d, #0x1
+456B1E09 rshrnt z9.h, z16.b, #0x15
+45391D1F rshrnt z31.s, z8.d, #0x7
+456D1DDB rshrnt z27.h, z14.b, #0x13
+453B1D2E rshrnt z14.s, z9.d, #0x5
+45721EB8 rshrnt z24.s, z21.h, #0xe
+452B1F10 rshrnt z16.b, z24.h, #0x5
+// rsubhnb_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=1|R=1|T=0|Zn=xxxxx|Zd=xxxxx
+// RSUBHNB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45FA7AAE rsubhnb z14.s, z21.d, z26.d
+456A793B rsubhnb z27.b, z9.h, z10.h
+45A3797E rsubhnb z30.h, z11.s, z3.s
+45AB792A rsubhnb z10.h, z9.s, z11.s
+45A279CD rsubhnb z13.h, z14.s, z2.s
+457F78D4 rsubhnb z20.b, z6.h, z31.h
+45EC7903 rsubhnb z3.s, z8.d, z12.d
+45F77B87 rsubhnb z7.s, z28.d, z23.d
+// rsubhnt_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=1|R=1|T=1|Zn=xxxxx|Zd=xxxxx
+// RSUBHNT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45657E76 rsubhnt z22.b, z19.h, z5.h
+45757EB3 rsubhnt z19.b, z21.h, z21.h
+45AF7DEA rsubhnt z10.h, z15.s, z15.s
+45E97D7C rsubhnt z28.s, z11.d, z9.d
+45F97F68 rsubhnt z8.s, z27.d, z25.d
+45E57E88 rsubhnt z8.s, z20.d, z5.d
+45BB7EC8 rsubhnt z8.h, z22.s, z27.s
+45A17CC7 rsubhnt z7.h, z6.s, z1.s
+// saba_z_zzz_ 01000101|size=xx|0|Zm=xxxxx|11111|U=0|Zn=xxxxx|Zda=xxxxx
+// SABA <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+4595FBBA saba z26.b, z29.b, z21.b
+4541FB1B saba z27.b, z24.b, z1.b
+4599FBC6 saba z6.b, z30.b, z25.b
+455FF894 saba z20.b, z4.b, z31.b
+450DFB40 saba z0.b, z26.b, z13.b
+459EF84C saba z12.b, z2.b, z30.b
+4596FB31 saba z17.b, z25.b, z22.b
+45C8F8B7 saba z23.b, z5.b, z8.b
+// sabalb_z_zzz_ 01000101|size=xx|0|Zm=xxxxx|1100|U=0|T=0|Zn=xxxxx|Zda=xxxxx
+// SABALB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+4593C3F2 sabalb z18.s, z31.h, z19.h
+454FC170 sabalb z16.h, z11.b, z15.b
+4581C1A5 sabalb z5.s, z13.h, z1.h
+45CAC183 sabalb z3.d, z12.s, z10.s
+4558C19F sabalb z31.h, z12.b, z24.b
+458CC335 sabalb z21.s, z25.h, z12.h
+459EC02D sabalb z13.s, z1.h, z30.h
+4556C3CD sabalb z13.h, z30.b, z22.b
+// sabalt_z_zzz_ 01000101|size=xx|0|Zm=xxxxx|1100|U=0|T=1|Zn=xxxxx|Zda=xxxxx
+// SABALT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45CCC477 sabalt z23.d, z3.s, z12.s
+458FC719 sabalt z25.s, z24.h, z15.h
+45DEC55E sabalt z30.d, z10.s, z30.s
+4583C4F2 sabalt z18.s, z7.h, z3.h
+4556C43E sabalt z30.h, z1.b, z22.b
+45DCC535 sabalt z21.d, z9.s, z28.s
+4586C547 sabalt z7.s, z10.h, z6.h
+454BC6A2 sabalt z2.h, z21.b, z11.b
+// sabdlb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=1|S=1|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SABDLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+4554331E sabdlb z30.h, z24.b, z20.b
+45C832BE sabdlb z30.d, z21.s, z8.s
+45DA32E9 sabdlb z9.d, z23.s, z26.s
+45CA3241 sabdlb z1.d, z18.s, z10.s
+45C231B4 sabdlb z20.d, z13.s, z2.s
+45883032 sabdlb z18.s, z1.h, z8.h
+455C317F sabdlb z31.h, z11.b, z28.b
+45D830AA sabdlb z10.d, z5.s, z24.s
+// sabdlt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=1|S=1|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SABDLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45D2345D sabdlt z29.d, z2.s, z18.s
+45883773 sabdlt z19.s, z27.h, z8.h
+459036EB sabdlt z11.s, z23.h, z16.h
+4581356C sabdlt z12.s, z11.h, z1.h
+45CC372F sabdlt z15.d, z25.s, z12.s
+45C2362E sabdlt z14.d, z17.s, z2.s
+459C352C sabdlt z12.s, z9.h, z28.h
+454F347F sabdlt z31.h, z3.b, z15.b
+// sadalp_z_p_z_ 01000100|size=xx|00010|U=0|101|Pg=xxx|Zn=xxxxx|Zda=xxxxx
+// SADALP <Zda>.<T>,<Pg>/M,<Zn>.<Tb>
+4484A7E5 sadalp z5.s, p1/m, z31.h
+44C4B834 sadalp z20.d, p6/m, z1.s
+4444B068 sadalp z8.h, p4/m, z3.b
+44C4A51C sadalp z28.d, p1/m, z8.s
+4484B70B sadalp z11.s, p5/m, z24.h
+44C4B082 sadalp z2.d, p4/m, z4.s
+4444A9A8 sadalp z8.h, p2/m, z13.b
+44C4AF85 sadalp z5.d, p3/m, z28.s
+// saddlb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=0|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SADDLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+458903FF saddlb z31.s, z31.h, z9.h
+45C402DE saddlb z30.d, z22.s, z4.s
+45C901F5 saddlb z21.d, z15.s, z9.s
+4556015A saddlb z26.h, z10.b, z22.b
+45520354 saddlb z20.h, z26.b, z18.b
+455501C2 saddlb z2.h, z14.b, z21.b
+45D10213 saddlb z19.d, z16.s, z17.s
+458701F5 saddlb z21.s, z15.h, z7.h
+// saddlbt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|1000|S=0|tb=0|Zn=xxxxx|Zd=xxxxx
+// SADDLBT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+459A8098 saddlbt z24.s, z4.h, z26.h
+455981E1 saddlbt z1.h, z15.b, z25.b
+455680B1 saddlbt z17.h, z5.b, z22.b
+458683B0 saddlbt z16.s, z29.h, z6.h
+4548802F saddlbt z15.h, z1.b, z8.b
+459D81C1 saddlbt z1.s, z14.h, z29.h
+45DC8162 saddlbt z2.d, z11.s, z28.s
+459783D8 saddlbt z24.s, z30.h, z23.h
+// saddlt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=0|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SADDLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+459A077F saddlt z31.s, z27.h, z26.h
+459606FB saddlt z27.s, z23.h, z22.h
+454704DC saddlt z28.h, z6.b, z7.b
+4556041E saddlt z30.h, z0.b, z22.b
+45510434 saddlt z20.h, z1.b, z17.b
+454E0519 saddlt z25.h, z8.b, z14.b
+45DF06FC saddlt z28.d, z23.s, z31.s
+45C20751 saddlt z17.d, z26.s, z2.s
+// saddwb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=0|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SADDWB <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+45C2431A saddwb z26.d, z24.d, z2.s
+45C0405B saddwb z27.d, z2.d, z0.s
+455840AC saddwb z12.h, z5.h, z24.b
+45CA4083 saddwb z3.d, z4.d, z10.s
+45CD4362 saddwb z2.d, z27.d, z13.s
+45D54311 saddwb z17.d, z24.d, z21.s
+459E40E5 saddwb z5.s, z7.s, z30.h
+45584168 saddwb z8.h, z11.h, z24.b
+// saddwt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=0|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SADDWT <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+459447F7 saddwt z23.s, z31.s, z20.h
+45534486 saddwt z6.h, z4.h, z19.b
+454D4439 saddwt z25.h, z1.h, z13.b
+45594446 saddwt z6.h, z2.h, z25.b
+459D45D0 saddwt z16.s, z14.s, z29.h
+459446EA saddwt z10.s, z23.s, z20.h
+459545D0 saddwt z16.s, z14.s, z21.h
+454A460B saddwt z11.h, z16.h, z10.b
+// sbclb_z_zzz_ 01000101|1|sz=x|0|Zm=xxxxx|11010|T=0|Zn=xxxxx|Zda=xxxxx
+// SBCLB <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+459FD076 sbclb z22.s, z3.s, z31.s
+45D3D1B6 sbclb z22.d, z13.d, z19.d
+4583D080 sbclb z0.s, z4.s, z3.s
+459FD29A sbclb z26.s, z20.s, z31.s
+458ED054 sbclb z20.s, z2.s, z14.s
+45CED29A sbclb z26.d, z20.d, z14.d
+45DED0FD sbclb z29.d, z7.d, z30.d
+45DCD2F0 sbclb z16.d, z23.d, z28.d
+// sbclt_z_zzz_ 01000101|1|sz=x|0|Zm=xxxxx|11010|T=1|Zn=xxxxx|Zda=xxxxx
+// SBCLT <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+45CCD693 sbclt z19.d, z20.d, z12.d
+45D3D71E sbclt z30.d, z24.d, z19.d
+4590D691 sbclt z17.s, z20.s, z16.s
+45C1D59B sbclt z27.d, z12.d, z1.d
+45D5D56C sbclt z12.d, z11.d, z21.d
+4584D799 sbclt z25.s, z28.s, z4.s
+45CED7F9 sbclt z25.d, z31.d, z14.d
+4581D59D sbclt z29.s, z12.s, z1.s
+// shadd_z_p_zz_ 01000100|size=xx|010|R=0|S=0|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SHADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44108154 shadd z20.b, p0/m, z20.b, z10.b
+44109B98 shadd z24.b, p6/m, z24.b, z28.b
+4490939E shadd z30.s, p4/m, z30.s, z28.s
+4410993C shadd z28.b, p6/m, z28.b, z9.b
+44509330 shadd z16.h, p4/m, z16.h, z25.h
+44D0875A shadd z26.d, p1/m, z26.d, z26.d
+44D09CFB shadd z27.d, p7/m, z27.d, z7.d
+445089D0 shadd z16.h, p2/m, z16.h, z14.h
+// shrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=1|R=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+453210F7 shrnb z23.h, z7.s, #0xe
+452911CC shrnb z12.b, z14.h, #0x7
+45651070 shrnb z16.q, z3.d, #0x1b
+457F124C shrnb z12.d, z18.s, #0x1
+453313CD shrnb z13.h, z30.s, #0xd
+457A10E2 shrnb z2.d, z7.s, #0x6
+456511A1 shrnb z1.q, z13.d, #0x1b
+45701106 shrnb z6.s, z8.h, #0x10
+// shrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=1|R=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+457B161A shrnt z26.d, z16.s, #0x5
+4561151C shrnt z28.q, z8.d, #0x1f
+457614B3 shrnt z19.s, z5.h, #0xa
+4577157F shrnt z31.s, z11.h, #0x9
+452D1777 shrnt z23.b, z27.h, #0x3
+456C175A shrnt z26.h, z26.b, #0x14
+4562166F shrnt z15.q, z19.d, #0x1e
+45391614 shrnt z20.s, z16.d, #0x7
+// shsub_z_p_zz_ 01000100|size=xx|010|R=0|S=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SHSUB <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44D28618 shsub z24.d, p1/m, z24.d, z16.d
+4412992F shsub z15.b, p6/m, z15.b, z9.b
+4452884C shsub z12.h, p2/m, z12.h, z2.h
+44528108 shsub z8.h, p0/m, z8.h, z8.h
+449287F4 shsub z20.s, p1/m, z20.s, z31.s
+44528A9A shsub z26.h, p2/m, z26.h, z20.h
+44129206 shsub z6.b, p4/m, z6.b, z16.b
+44D289FE shsub z30.d, p2/m, z30.d, z15.d
+// shsubr_z_p_zz_ 01000100|size=xx|010|R=1|S=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SHSUBR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+449698A1 shsubr z1.s, p6/m, z1.s, z5.s
+44D691B3 shsubr z19.d, p4/m, z19.d, z13.d
+44D690F5 shsubr z21.d, p4/m, z21.d, z7.d
+44D69DD9 shsubr z25.d, p7/m, z25.d, z14.d
+44969CC9 shsubr z9.s, p7/m, z9.s, z6.s
+44D69319 shsubr z25.d, p4/m, z25.d, z24.d
+44968980 shsubr z0.s, p2/m, z0.s, z12.s
+44168ACB shsubr z11.b, p2/m, z11.b, z22.b
+// sli_z_zzi_ 01000101|tszh=xx|0|tszl=xx|imm3=xxx|11110|op=1|Zn=xxxxx|Zd=xxxxx
+// SLI <Zd>.<T>,<Zn>.<T>, #<const>
+4551F70E sli z14.s, z24.s, #0x11
+4589F54E sli z14.d, z10.d, #0x9
+454FF6ED sli z13.s, z23.s, #0xf
+45DAF7E4 sli z4.d, z31.d, #0x3a
+4510F549 sli z9.h, z10.h, #0x0
+450AF6B8 sli z24.b, z21.b, #0x2
+45CCF4D7 sli z23.d, z6.d, #0x2c
+451EF56B sli z11.h, z11.h, #0xe
+// sm4e_z_zz_ 01000101|size=00|10001|op=1|11100|o2=0|Zm=xxxxx|Zdn=xxxxx
+// SM4E <Zdn>.S,<Zdn>.S,<Zm>.S
+4523E1A0 sm4e z0.s, z0.s, z13.s
+4523E106 sm4e z6.s, z6.s, z8.s
+4523E0A4 sm4e z4.s, z4.s, z5.s
+4523E2F3 sm4e z19.s, z19.s, z23.s
+4523E3CC sm4e z12.s, z12.s, z30.s
+4523E1BF sm4e z31.s, z31.s, z13.s
+4523E0FC sm4e z28.s, z28.s, z7.s
+4523E07A sm4e z26.s, z26.s, z3.s
+// sm4ekey_z_zz_ 01000101|size=00|1|Zm=xxxxx|11110|op=0|Zn=xxxxx|Zd=xxxxx
+// SM4EKEY <Zd>.S,<Zn>.S,<Zm>.S
+4533F313 sm4ekey z19.s, z24.s, z19.s
+4536F1BE sm4ekey z30.s, z13.s, z22.s
+4533F356 sm4ekey z22.s, z26.s, z19.s
+4530F118 sm4ekey z24.s, z8.s, z16.s
+4536F39C sm4ekey z28.s, z28.s, z22.s
+4529F086 sm4ekey z6.s, z4.s, z9.s
+4529F31A sm4ekey z26.s, z24.s, z9.s
+453CF1E6 sm4ekey z6.s, z15.s, z28.s
+// smaxp_z_p_zz_ 01000100|size=xx|010|opc=10|U=0|101|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SMAXP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+4494A4A5 smaxp z5.s, p1/m, z5.s, z5.s
+4454B614 smaxp z20.h, p5/m, z20.h, z16.h
+4454AEDD smaxp z29.h, p3/m, z29.h, z22.h
+4454A6CD smaxp z13.h, p1/m, z13.h, z22.h
+44D4B59B smaxp z27.d, p5/m, z27.d, z12.d
+44D4A434 smaxp z20.d, p1/m, z20.d, z1.d
+4414B46D smaxp z13.b, p5/m, z13.b, z3.b
+4414A55D smaxp z29.b, p1/m, z29.b, z10.b
+// sminp_z_p_zz_ 01000100|size=xx|010|opc=11|U=0|101|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SMINP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+4456A6E1 sminp z1.h, p1/m, z1.h, z23.h
+44D6B99A sminp z26.d, p6/m, z26.d, z12.d
+4456B870 sminp z16.h, p6/m, z16.h, z3.h
+4416BE08 sminp z8.b, p7/m, z8.b, z16.b
+4416BDE8 sminp z8.b, p7/m, z8.b, z15.b
+4416BE91 sminp z17.b, p7/m, z17.b, z20.b
+4496B7B5 sminp z21.s, p5/m, z21.s, z29.s
+4456B71E sminp z30.h, p5/m, z30.h, z24.h
+// smlalb_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=0|U=0|T=0|Zn=xxxxx|Zda=xxxxx
+// SMLALB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+44834217 smlalb z23.s, z16.h, z3.h
+44DA435B smlalb z27.d, z26.s, z26.s
+444941F8 smlalb z24.h, z15.b, z9.b
+44CF4138 smlalb z24.d, z9.s, z15.s
+44DA42C4 smlalb z4.d, z22.s, z26.s
+445741D2 smlalb z18.h, z14.b, z23.b
+44904084 smlalb z4.s, z4.h, z16.h
+44554282 smlalb z2.h, z20.b, z21.b
+// smlalb_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=0|U=0|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SMLALB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44AE89F9 smlalb z25.s, z15.h, z6.h[3]
+44BF830B smlalb z11.s, z24.h, z7.h[6]
+44BB83EC smlalb z12.s, z31.h, z3.h[6]
+44AE88F1 smlalb z17.s, z7.h, z6.h[3]
+44A08A2E smlalb z14.s, z17.h, z0.h[1]
+44B1832D smlalb z13.s, z25.h, z1.h[4]
+44B88AB9 smlalb z25.s, z21.h, z0.h[7]
+44A8883A smlalb z26.s, z1.h, z0.h[3]
+// smlalb_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=0|U=0|i2l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SMLALB <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44E18971 smlalb z17.d, z11.s, z1.s[1]
+44E188C0 smlalb z0.d, z6.s, z1.s[1]
+44E28111 smlalb z17.d, z8.s, z2.s[0]
+44EC8140 smlalb z0.d, z10.s, z12.s[0]
+44FF8258 smlalb z24.d, z18.s, z15.s[2]
+44FF8B5D smlalb z29.d, z26.s, z15.s[3]
+44E38915 smlalb z21.d, z8.s, z3.s[1]
+44F48376 smlalb z22.d, z27.s, z4.s[2]
+// smlalt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=0|U=0|T=1|Zn=xxxxx|Zda=xxxxx
+// SMLALT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+445E4625 smlalt z5.h, z17.b, z30.b
+44DA477B smlalt z27.d, z27.s, z26.s
+44C4472A smlalt z10.d, z25.s, z4.s
+44C445C1 smlalt z1.d, z14.s, z4.s
+448B4668 smlalt z8.s, z19.h, z11.h
+445B45BC smlalt z28.h, z13.b, z27.b
+445D46E3 smlalt z3.h, z23.b, z29.b
+44C444CB smlalt z11.d, z6.s, z4.s
+// smlalt_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=0|U=0|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SMLALT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44AE85D6 smlalt z22.s, z14.h, z6.h[2]
+44AD8559 smlalt z25.s, z10.h, z5.h[2]
+44AC8C83 smlalt z3.s, z4.h, z4.h[3]
+44A385B5 smlalt z21.s, z13.h, z3.h[0]
+44B887A4 smlalt z4.s, z29.h, z0.h[6]
+44A8860F smlalt z15.s, z16.h, z0.h[2]
+44B28E68 smlalt z8.s, z19.h, z2.h[5]
+44BF85AA smlalt z10.s, z13.h, z7.h[6]
+// smlalt_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=0|U=0|i2l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SMLALT <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44EC8EE9 smlalt z9.d, z23.s, z12.s[1]
+44FF8EB2 smlalt z18.d, z21.s, z15.s[3]
+44FF8784 smlalt z4.d, z28.s, z15.s[2]
+44FF8E60 smlalt z0.d, z19.s, z15.s[3]
+44E4879E smlalt z30.d, z28.s, z4.s[0]
+44FF87D1 smlalt z17.d, z30.s, z15.s[2]
+44EB8EEF smlalt z15.d, z23.s, z11.s[1]
+44FB8C4A smlalt z10.d, z2.s, z11.s[3]
+// smlslb_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=1|U=0|T=0|Zn=xxxxx|Zda=xxxxx
+// SMLSLB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+44D35116 smlslb z22.d, z8.s, z19.s
+44935079 smlslb z25.s, z3.h, z19.h
+44945256 smlslb z22.s, z18.h, z20.h
+44D35206 smlslb z6.d, z16.s, z19.s
+44C752E5 smlslb z5.d, z23.s, z7.s
+44865382 smlslb z2.s, z28.h, z6.h
+44D25277 smlslb z23.d, z19.s, z18.s
+44CD5206 smlslb z6.d, z16.s, z13.s
+// smlslb_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=1|U=0|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SMLSLB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44A3A83B smlslb z27.s, z1.h, z3.h[1]
+44BCA977 smlslb z23.s, z11.h, z4.h[7]
+44B9A91D smlslb z29.s, z8.h, z1.h[7]
+44A9A0EC smlslb z12.s, z7.h, z1.h[2]
+44BFA059 smlslb z25.s, z2.h, z7.h[6]
+44B0A3F2 smlslb z18.s, z31.h, z0.h[4]
+44ADA0CB smlslb z11.s, z6.h, z5.h[2]
+44B0A95E smlslb z30.s, z10.h, z0.h[5]
+// smlslb_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=1|U=0|i2l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SMLSLB <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44FBA8F1 smlslb z17.d, z7.s, z11.s[3]
+44FEA927 smlslb z7.d, z9.s, z14.s[3]
+44ECABBF smlslb z31.d, z29.s, z12.s[1]
+44F2A8FA smlslb z26.d, z7.s, z2.s[3]
+44ECA8CD smlslb z13.d, z6.s, z12.s[1]
+44E6A271 smlslb z17.d, z19.s, z6.s[0]
+44E3A3EC smlslb z12.d, z31.s, z3.s[0]
+44F9A3DC smlslb z28.d, z30.s, z9.s[2]
+// smlslt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=1|U=0|T=1|Zn=xxxxx|Zda=xxxxx
+// SMLSLT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+4493575A smlslt z26.s, z26.h, z19.h
+444F5751 smlslt z17.h, z26.b, z15.b
+445957DE smlslt z30.h, z30.b, z25.b
+445F57E4 smlslt z4.h, z31.b, z31.b
+44D455E0 smlslt z0.d, z15.s, z20.s
+44DC565E smlslt z30.d, z18.s, z28.s
+44D6571F smlslt z31.d, z24.s, z22.s
+44C3566D smlslt z13.d, z19.s, z3.s
+// smlslt_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=1|U=0|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SMLSLT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44A8AE6B smlslt z11.s, z19.h, z0.h[3]
+44B3AC37 smlslt z23.s, z1.h, z3.h[5]
+44AEAE31 smlslt z17.s, z17.h, z6.h[3]
+44B5A50F smlslt z15.s, z8.h, z5.h[4]
+44BBA49E smlslt z30.s, z4.h, z3.h[6]
+44B4AC07 smlslt z7.s, z0.h, z4.h[5]
+44BAA6D2 smlslt z18.s, z22.h, z2.h[6]
+44BCA6BC smlslt z28.s, z21.h, z4.h[6]
+// smlslt_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=1|U=0|i2l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SMLSLT <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44FAAE31 smlslt z17.d, z17.s, z10.s[3]
+44E8A76F smlslt z15.d, z27.s, z8.s[0]
+44F7AEF3 smlslt z19.d, z23.s, z7.s[3]
+44E0AC28 smlslt z8.d, z1.s, z0.s[1]
+44F3A57B smlslt z27.d, z11.s, z3.s[2]
+44F6ADEF smlslt z15.d, z15.s, z6.s[3]
+44EBAFA9 smlslt z9.d, z29.s, z11.s[1]
+44E7AC43 smlslt z3.d, z2.s, z7.s[1]
+// smulh_z_zz_ 00000100|size=xx|1|Zm=xxxxx|0110|1|U=0|Zn=xxxxx|Zd=xxxxx
+// SMULH <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+04F46BBF smulh z31.d, z29.d, z20.d
+04E06B94 smulh z20.d, z28.d, z0.d
+04616ADE smulh z30.h, z22.h, z1.h
+0435688B smulh z11.b, z4.b, z21.b
+04FB6B2A smulh z10.d, z25.d, z27.d
+04A66A92 smulh z18.s, z20.s, z6.s
+04F068EC smulh z12.d, z7.d, z16.d
+04226A14 smulh z20.b, z16.b, z2.b
+// smullb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=1|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SMULLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45C9711C smullb z28.d, z8.s, z9.s
+455072E3 smullb z3.h, z23.b, z16.b
+45C670A9 smullb z9.d, z5.s, z6.s
+455B7010 smullb z16.h, z0.b, z27.b
+45857093 smullb z19.s, z4.h, z5.h
+459771DD smullb z29.s, z14.h, z23.h
+45DE70C0 smullb z0.d, z6.s, z30.s
+45877132 smullb z18.s, z9.h, z7.h
+// smullb_z_zzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|110|U=0|i3l=x|T=0|Zn=xxxxx|Zd=xxxxx
+// SMULLB <Zd>.S,<Zn>.H,<Zm>.H[<imm>]
+44BDCBE6 smullb z6.s, z31.h, z5.h[7]
+44A7C913 smullb z19.s, z8.h, z7.h[1]
+44AEC887 smullb z7.s, z4.h, z6.h[3]
+44A1C1FA smullb z26.s, z15.h, z1.h[0]
+44A9C918 smullb z24.s, z8.h, z1.h[3]
+44AAC2D6 smullb z22.s, z22.h, z2.h[2]
+44AAC886 smullb z6.s, z4.h, z2.h[3]
+44B4C9EF smullb z15.s, z15.h, z4.h[5]
+// smullb_z_zzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|110|U=0|i2l=x|T=0|Zn=xxxxx|Zd=xxxxx
+// SMULLB <Zd>.D,<Zn>.S,<Zm>.S[<imm>]
+44E3C145 smullb z5.d, z10.s, z3.s[0]
+44E8C0F9 smullb z25.d, z7.s, z8.s[0]
+44E4CAE8 smullb z8.d, z23.s, z4.s[1]
+44F8C03D smullb z29.d, z1.s, z8.s[2]
+44E8CA78 smullb z24.d, z19.s, z8.s[1]
+44FACACC smullb z12.d, z22.s, z10.s[3]
+44E9CAF6 smullb z22.d, z23.s, z9.s[1]
+44FAC3DD smullb z29.d, z30.s, z10.s[2]
+// smullt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=1|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SMULLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45827610 smullt z16.s, z16.h, z2.h
+45497592 smullt z18.h, z12.b, z9.b
+454C749B smullt z27.h, z4.b, z12.b
+45D0758D smullt z13.d, z12.s, z16.s
+45957796 smullt z22.s, z28.h, z21.h
+454E77F6 smullt z22.h, z31.b, z14.b
+459876CF smullt z15.s, z22.h, z24.h
+458A7669 smullt z9.s, z19.h, z10.h
+// smullt_z_zzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|110|U=0|i3l=x|T=1|Zn=xxxxx|Zd=xxxxx
+// SMULLT <Zd>.S,<Zn>.H,<Zm>.H[<imm>]
+44ABC468 smullt z8.s, z3.h, z3.h[2]
+44B2CEA0 smullt z0.s, z21.h, z2.h[5]
+44A7CDEE smullt z14.s, z15.h, z7.h[1]
+44A5C532 smullt z18.s, z9.h, z5.h[0]
+44B2CCD9 smullt z25.s, z6.h, z2.h[5]
+44AFCE26 smullt z6.s, z17.h, z7.h[3]
+44A8C758 smullt z24.s, z26.h, z0.h[2]
+44B2C4FB smullt z27.s, z7.h, z2.h[4]
+// smullt_z_zzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|110|U=0|i2l=x|T=1|Zn=xxxxx|Zd=xxxxx
+// SMULLT <Zd>.D,<Zn>.S,<Zm>.S[<imm>]
+44E2CFBA smullt z26.d, z29.s, z2.s[1]
+44FFC60E smullt z14.d, z16.s, z15.s[2]
+44E0C4E3 smullt z3.d, z7.s, z0.s[0]
+44E9CDCD smullt z13.d, z14.s, z9.s[1]
+44EEC6A1 smullt z1.d, z21.s, z14.s[0]
+44EDCE6E smullt z14.d, z19.s, z13.s[1]
+44E4CFF5 smullt z21.d, z31.s, z4.s[1]
+44EFC4A8 smullt z8.d, z5.s, z15.s[0]
+// splice_z_p_zz_con 00000101|size=xx|101101100|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// SPLICE <Zd>.<T>,<Pg>,{<Zn1>.<T>,<Zn2>.<T>}
+05ED92DE splice z30.d, p4, {z22.d, z23.d}
+052D8F36 splice z22.b, p3, {z25.b, z26.b}
+05AD8E4C splice z12.s, p3, {z18.s, z19.s}
+05ED92A2 splice z2.d, p4, {z21.d, z22.d}
+056D8529 splice z9.h, p1, {z9.h, z10.h}
+05ED910A splice z10.d, p4, {z8.d, z9.d}
+056D9673 splice z19.h, p5, {z19.h, z20.h}
+056D954A splice z10.h, p5, {z10.h, z11.h}
+// sqabs_z_p_z_ 01000100|size=xx|00|Q=1|0|opc=00|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// SQABS <Zd>.<T>,<Pg>/M,<Zn>.<T>
+4408BB97 sqabs z23.b, p6/m, z28.b
+4408B6FE sqabs z30.b, p5/m, z23.b
+4488A066 sqabs z6.s, p0/m, z3.s
+4448B350 sqabs z16.h, p4/m, z26.h
+44C8AEFD sqabs z29.d, p3/m, z23.d
+4488A768 sqabs z8.s, p1/m, z27.s
+4488A17B sqabs z27.s, p0/m, z11.s
+4448AA27 sqabs z7.h, p2/m, z17.h
+// sqadd_z_p_zz_ 01000100|size=xx|011|op=0|S=0|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SQADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44188E71 sqadd z17.b, p3/m, z17.b, z19.b
+44588F86 sqadd z6.h, p3/m, z6.h, z28.h
+44D8915F sqadd z31.d, p4/m, z31.d, z10.d
+4418804C sqadd z12.b, p0/m, z12.b, z2.b
+44D880BD sqadd z29.d, p0/m, z29.d, z5.d
+44D88E00 sqadd z0.d, p3/m, z0.d, z16.d
+44588733 sqadd z19.h, p1/m, z19.h, z25.h
+44588DEE sqadd z14.h, p3/m, z14.h, z15.h
+// sqcadd_z_zz_ 01000101|size=xx|00000|op=1|11011|rot=x|Zm=xxxxx|Zdn=xxxxx
+// SQCADD <Zdn>.<T>,<Zdn>.<T>,<Zm>.<T>,<const>
+4581DE08 sqcadd z8.s, z8.s, z16.s, #0x10e
+4581D992 sqcadd z18.s, z18.s, z12.s, #0x5a
+45C1D9AC sqcadd z12.d, z12.d, z13.d, #0x5a
+4541DA5F sqcadd z31.h, z31.h, z18.h, #0x5a
+4501D964 sqcadd z4.b, z4.b, z11.b, #0x5a
+45C1DEEA sqcadd z10.d, z10.d, z23.d, #0x10e
+45C1DD94 sqcadd z20.d, z20.d, z12.d, #0x10e
+4501DCDB sqcadd z27.b, z27.b, z6.b, #0x10e
+// sqdmlalb_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|0110|S=0|T=0|Zn=xxxxx|Zda=xxxxx
+// SQDMLALB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+448B606F sqdmlalb z15.s, z3.h, z11.h
+449C61C6 sqdmlalb z6.s, z14.h, z28.h
+44C2630C sqdmlalb z12.d, z24.s, z2.s
+44D26324 sqdmlalb z4.d, z25.s, z18.s
+4456616B sqdmlalb z11.h, z11.b, z22.b
+448862BF sqdmlalb z31.s, z21.h, z8.h
+44466229 sqdmlalb z9.h, z17.b, z6.b
+44D7638F sqdmlalb z15.d, z28.s, z23.s
+// sqdmlalb_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|001|S=0|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SQDMLALB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44A0211D sqdmlalb z29.s, z8.h, z0.h[0]
+44A621C7 sqdmlalb z7.s, z14.h, z6.h[0]
+44B82932 sqdmlalb z18.s, z9.h, z0.h[7]
+44BC2B65 sqdmlalb z5.s, z27.h, z4.h[7]
+44AB2B9C sqdmlalb z28.s, z28.h, z3.h[3]
+44B62814 sqdmlalb z20.s, z0.h, z6.h[5]
+44AA2947 sqdmlalb z7.s, z10.h, z2.h[3]
+44B52A31 sqdmlalb z17.s, z17.h, z5.h[5]
+// sqdmlalb_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|001|S=0|i2l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SQDMLALB <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44E62918 sqdmlalb z24.d, z8.s, z6.s[1]
+44EB23F6 sqdmlalb z22.d, z31.s, z11.s[0]
+44EC2BBB sqdmlalb z27.d, z29.s, z12.s[1]
+44FB2976 sqdmlalb z22.d, z11.s, z11.s[3]
+44F028F4 sqdmlalb z20.d, z7.s, z0.s[3]
+44F52097 sqdmlalb z23.d, z4.s, z5.s[2]
+44EB22EC sqdmlalb z12.d, z23.s, z11.s[0]
+44E32AFA sqdmlalb z26.d, z23.s, z3.s[1]
+// sqdmlalbt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|00001|S=0|Zn=xxxxx|Zda=xxxxx
+// SQDMLALBT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+445D08B4 sqdmlalbt z20.h, z5.b, z29.b
+44490BE8 sqdmlalbt z8.h, z31.b, z9.b
+44C7080E sqdmlalbt z14.d, z0.s, z7.s
+44CA08E1 sqdmlalbt z1.d, z7.s, z10.s
+44C70A40 sqdmlalbt z0.d, z18.s, z7.s
+449E0A0C sqdmlalbt z12.s, z16.h, z30.h
+44D90A50 sqdmlalbt z16.d, z18.s, z25.s
+44CA08A8 sqdmlalbt z8.d, z5.s, z10.s
+// sqdmlalt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|0110|S=0|T=1|Zn=xxxxx|Zda=xxxxx
+// SQDMLALT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+44DB641E sqdmlalt z30.d, z0.s, z27.s
+4482653F sqdmlalt z31.s, z9.h, z2.h
+4451644B sqdmlalt z11.h, z2.b, z17.b
+448064D4 sqdmlalt z20.s, z6.h, z0.h
+4447654F sqdmlalt z15.h, z10.b, z7.b
+445C664A sqdmlalt z10.h, z18.b, z28.b
+449F67C0 sqdmlalt z0.s, z30.h, z31.h
+4499669D sqdmlalt z29.s, z20.h, z25.h
+// sqdmlalt_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|001|S=0|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SQDMLALT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44AB2FAB sqdmlalt z11.s, z29.h, z3.h[3]
+44AE247A sqdmlalt z26.s, z3.h, z6.h[2]
+44BD2670 sqdmlalt z16.s, z19.h, z5.h[6]
+44BC24F7 sqdmlalt z23.s, z7.h, z4.h[6]
+44A72E32 sqdmlalt z18.s, z17.h, z7.h[1]
+44BC2FA6 sqdmlalt z6.s, z29.h, z4.h[7]
+44A62C61 sqdmlalt z1.s, z3.h, z6.h[1]
+44AF2D0D sqdmlalt z13.s, z8.h, z7.h[3]
+// sqdmlalt_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|001|S=0|i2l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SQDMLALT <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44ED2548 sqdmlalt z8.d, z10.s, z13.s[0]
+44E22C01 sqdmlalt z1.d, z0.s, z2.s[1]
+44E42436 sqdmlalt z22.d, z1.s, z4.s[0]
+44FC26F8 sqdmlalt z24.d, z23.s, z12.s[2]
+44E825CB sqdmlalt z11.d, z14.s, z8.s[0]
+44EA2E18 sqdmlalt z24.d, z16.s, z10.s[1]
+44F32DCB sqdmlalt z11.d, z14.s, z3.s[3]
+44FA2E82 sqdmlalt z2.d, z20.s, z10.s[3]
+// sqdmlslb_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|0110|S=1|T=0|Zn=xxxxx|Zda=xxxxx
+// SQDMLSLB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+448B6B82 sqdmlslb z2.s, z28.h, z11.h
+44DD6A8B sqdmlslb z11.d, z20.s, z29.s
+4486681C sqdmlslb z28.s, z0.h, z6.h
+44C8686F sqdmlslb z15.d, z3.s, z8.s
+44946B74 sqdmlslb z20.s, z27.h, z20.h
+44DD68E1 sqdmlslb z1.d, z7.s, z29.s
+44D46878 sqdmlslb z24.d, z3.s, z20.s
+44D6688F sqdmlslb z15.d, z4.s, z22.s
+// sqdmlslb_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|001|S=1|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SQDMLSLB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44A139D6 sqdmlslb z22.s, z14.h, z1.h[1]
+44AC38E0 sqdmlslb z0.s, z7.h, z4.h[3]
+44A63BC1 sqdmlslb z1.s, z30.h, z6.h[1]
+44B03155 sqdmlslb z21.s, z10.h, z0.h[4]
+44BE318F sqdmlslb z15.s, z12.h, z6.h[6]
+44BA3859 sqdmlslb z25.s, z2.h, z2.h[7]
+44AC3B82 sqdmlslb z2.s, z28.h, z4.h[3]
+44B8397E sqdmlslb z30.s, z11.h, z0.h[7]
+// sqdmlslb_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|001|S=1|i2l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// SQDMLSLB <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44EA3A9B sqdmlslb z27.d, z20.s, z10.s[1]
+44F239A0 sqdmlslb z0.d, z13.s, z2.s[3]
+44F93AE8 sqdmlslb z8.d, z23.s, z9.s[3]
+44F431F0 sqdmlslb z16.d, z15.s, z4.s[2]
+44F83070 sqdmlslb z16.d, z3.s, z8.s[2]
+44F332E3 sqdmlslb z3.d, z23.s, z3.s[2]
+44F73B34 sqdmlslb z20.d, z25.s, z7.s[3]
+44FC3ABA sqdmlslb z26.d, z21.s, z12.s[3]
+// sqdmlslbt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|00001|S=1|Zn=xxxxx|Zda=xxxxx
+// SQDMLSLBT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+44D00DBA sqdmlslbt z26.d, z13.s, z16.s
+44C90DCF sqdmlslbt z15.d, z14.s, z9.s
+44DB0EC0 sqdmlslbt z0.d, z22.s, z27.s
+44920D1F sqdmlslbt z31.s, z8.h, z18.h
+44C90E92 sqdmlslbt z18.d, z20.s, z9.s
+44C70E74 sqdmlslbt z20.d, z19.s, z7.s
+44450ECD sqdmlslbt z13.h, z22.b, z5.b
+44D90DAA sqdmlslbt z10.d, z13.s, z25.s
+// sqdmlslt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|0110|S=1|T=1|Zn=xxxxx|Zda=xxxxx
+// SQDMLSLT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+44946FB8 sqdmlslt z24.s, z29.h, z20.h
+44866F4C sqdmlslt z12.s, z26.h, z6.h
+44C26D68 sqdmlslt z8.d, z11.s, z2.s
+44586C90 sqdmlslt z16.h, z4.b, z24.b
+44516E13 sqdmlslt z19.h, z16.b, z17.b
+44DB6F82 sqdmlslt z2.d, z28.s, z27.s
+44D06C43 sqdmlslt z3.d, z2.s, z16.s
+448C6CB6 sqdmlslt z22.s, z5.h, z12.h
+// sqdmlslt_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|001|S=1|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SQDMLSLT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44A93C4C sqdmlslt z12.s, z2.h, z1.h[3]
+44AB359E sqdmlslt z30.s, z12.h, z3.h[2]
+44A4361B sqdmlslt z27.s, z16.h, z4.h[0]
+44AA3F71 sqdmlslt z17.s, z27.h, z2.h[3]
+44B43D89 sqdmlslt z9.s, z12.h, z4.h[5]
+44A93C0C sqdmlslt z12.s, z0.h, z1.h[3]
+44B835B1 sqdmlslt z17.s, z13.h, z0.h[6]
+44AE3C14 sqdmlslt z20.s, z0.h, z6.h[3]
+// sqdmlslt_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|001|S=1|i2l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// SQDMLSLT <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44E03E57 sqdmlslt z23.d, z18.s, z0.s[1]
+44E734D7 sqdmlslt z23.d, z6.s, z7.s[0]
+44EF3445 sqdmlslt z5.d, z2.s, z15.s[0]
+44FF3CEC sqdmlslt z12.d, z7.s, z15.s[3]
+44E6349D sqdmlslt z29.d, z4.s, z6.s[0]
+44FD36C8 sqdmlslt z8.d, z22.s, z13.s[2]
+44E13CF7 sqdmlslt z23.d, z7.s, z1.s[1]
+44E93EA3 sqdmlslt z3.d, z21.s, z9.s[1]
+// sqdmulh_z_zz_ 00000100|size=xx|1|Zm=xxxxx|01110|R=0|Zn=xxxxx|Zd=xxxxx
+// SQDMULH <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+04A571E2 sqdmulh z2.s, z15.s, z5.s
+04647317 sqdmulh z23.h, z24.h, z4.h
+042670FF sqdmulh z31.b, z7.b, z6.b
+04617070 sqdmulh z16.h, z3.h, z1.h
+042971E5 sqdmulh z5.b, z15.b, z9.b
+04637066 sqdmulh z6.h, z3.h, z3.h
+04F170B2 sqdmulh z18.d, z5.d, z17.d
+04B47378 sqdmulh z24.s, z27.s, z20.s
+// sqdmulh_z_zzi_h 01000100|0|i3h=x|1|i3l=xx|Zm=xxx|11110|R=0|Zn=xxxxx|Zd=xxxxx
+// SQDMULH <Zd>.H,<Zn>.H,<Zm>.H[<imm>]
+446FF3DF sqdmulh z31.h, z30.h, z7.h[5]
+4429F001 sqdmulh z1.h, z0.h, z1.h[1]
+447DF0F8 sqdmulh z24.h, z7.h, z5.h[7]
+446BF0F0 sqdmulh z16.h, z7.h, z3.h[5]
+4476F2AE sqdmulh z14.h, z21.h, z6.h[6]
+443BF3F1 sqdmulh z17.h, z31.h, z3.h[3]
+4436F348 sqdmulh z8.h, z26.h, z6.h[2]
+443CF277 sqdmulh z23.h, z19.h, z4.h[3]
+// sqdmulh_z_zzi_s 01000100|size=10|1|i2=xx|Zm=xxx|11110|R=0|Zn=xxxxx|Zd=xxxxx
+// SQDMULH <Zd>.S,<Zn>.S,<Zm>.S[<imm>]
+44A8F3DB sqdmulh z27.s, z30.s, z0.s[1]
+44AEF2F0 sqdmulh z16.s, z23.s, z6.s[1]
+44B5F2E2 sqdmulh z2.s, z23.s, z5.s[2]
+44A6F14B sqdmulh z11.s, z10.s, z6.s[0]
+44AEF38E sqdmulh z14.s, z28.s, z6.s[1]
+44B6F1E3 sqdmulh z3.s, z15.s, z6.s[2]
+44B2F03E sqdmulh z30.s, z1.s, z2.s[2]
+44B5F1EC sqdmulh z12.s, z15.s, z5.s[2]
+// sqdmulh_z_zzi_d 01000100|size=11|1|i1=x|Zm=xxxx|11110|R=0|Zn=xxxxx|Zd=xxxxx
+// SQDMULH <Zd>.D,<Zn>.D,<Zm>.D[<imm>]
+44FEF1AD sqdmulh z13.d, z13.d, z14.d[1]
+44E9F3D6 sqdmulh z22.d, z30.d, z9.d[0]
+44F4F35A sqdmulh z26.d, z26.d, z4.d[1]
+44FDF163 sqdmulh z3.d, z11.d, z13.d[1]
+44E4F052 sqdmulh z18.d, z2.d, z4.d[0]
+44E0F346 sqdmulh z6.d, z26.d, z0.d[0]
+44E7F252 sqdmulh z18.d, z18.d, z7.d[0]
+44EBF2B8 sqdmulh z24.d, z21.d, z11.d[0]
+// sqdmullb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=0|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SQDMULLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+454960EF sqdmullb z15.h, z7.b, z9.b
+45846028 sqdmullb z8.s, z1.h, z4.h
+45C2610B sqdmullb z11.d, z8.s, z2.s
+4545622D sqdmullb z13.h, z17.b, z5.b
+45C66052 sqdmullb z18.d, z2.s, z6.s
+4557622C sqdmullb z12.h, z17.b, z23.b
+454961C1 sqdmullb z1.h, z14.b, z9.b
+45D862E5 sqdmullb z5.d, z23.s, z24.s
+// sqdmullb_z_zzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|1110|i3l=x|T=0|Zn=xxxxx|Zd=xxxxx
+// SQDMULLB <Zd>.S,<Zn>.H,<Zm>.H[<imm>]
+44BAE00A sqdmullb z10.s, z0.h, z2.h[6]
+44BFEBFC sqdmullb z28.s, z31.h, z7.h[7]
+44A9E008 sqdmullb z8.s, z0.h, z1.h[2]
+44BFE8CC sqdmullb z12.s, z6.h, z7.h[7]
+44A0EB1B sqdmullb z27.s, z24.h, z0.h[1]
+44BBEBC3 sqdmullb z3.s, z30.h, z3.h[7]
+44A5EB14 sqdmullb z20.s, z24.h, z5.h[1]
+44B4E998 sqdmullb z24.s, z12.h, z4.h[5]
+// sqdmullb_z_zzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|1110|i2l=x|T=0|Zn=xxxxx|Zd=xxxxx
+// SQDMULLB <Zd>.D,<Zn>.S,<Zm>.S[<imm>]
+44F6E9FD sqdmullb z29.d, z15.s, z6.s[3]
+44FAE0CF sqdmullb z15.d, z6.s, z10.s[2]
+44F0EBCF sqdmullb z15.d, z30.s, z0.s[3]
+44F1E0EE sqdmullb z14.d, z7.s, z1.s[2]
+44FAE014 sqdmullb z20.d, z0.s, z10.s[2]
+44F4E9E1 sqdmullb z1.d, z15.s, z4.s[3]
+44E2E82E sqdmullb z14.d, z1.s, z2.s[1]
+44EDEB28 sqdmullb z8.d, z25.s, z13.s[1]
+// sqdmullt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=0|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SQDMULLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+4544651E sqdmullt z30.h, z8.b, z4.b
+4555645D sqdmullt z29.h, z2.b, z21.b
+45CA66D2 sqdmullt z18.d, z22.s, z10.s
+45C36431 sqdmullt z17.d, z1.s, z3.s
+458464C2 sqdmullt z2.s, z6.h, z4.h
+455B6722 sqdmullt z2.h, z25.b, z27.b
+45C56769 sqdmullt z9.d, z27.s, z5.s
+45DC6605 sqdmullt z5.d, z16.s, z28.s
+// sqdmullt_z_zzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|1110|i3l=x|T=1|Zn=xxxxx|Zd=xxxxx
+// SQDMULLT <Zd>.S,<Zn>.H,<Zm>.H[<imm>]
+44B8E7C3 sqdmullt z3.s, z30.h, z0.h[6]
+44A9EFDC sqdmullt z28.s, z30.h, z1.h[3]
+44B0EEEA sqdmullt z10.s, z23.h, z0.h[5]
+44B6E7F1 sqdmullt z17.s, z31.h, z6.h[4]
+44AAE43F sqdmullt z31.s, z1.h, z2.h[2]
+44BCECF8 sqdmullt z24.s, z7.h, z4.h[7]
+44B6E421 sqdmullt z1.s, z1.h, z6.h[4]
+44A0EC54 sqdmullt z20.s, z2.h, z0.h[1]
+// sqdmullt_z_zzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|1110|i2l=x|T=1|Zn=xxxxx|Zd=xxxxx
+// SQDMULLT <Zd>.D,<Zn>.S,<Zm>.S[<imm>]
+44EBE6DE sqdmullt z30.d, z22.s, z11.s[0]
+44EFEE8A sqdmullt z10.d, z20.s, z15.s[1]
+44F2EE6E sqdmullt z14.d, z19.s, z2.s[3]
+44EDEDB9 sqdmullt z25.d, z13.s, z13.s[1]
+44EBE7B6 sqdmullt z22.d, z29.s, z11.s[0]
+44E7EC45 sqdmullt z5.d, z2.s, z7.s[1]
+44E4EDDB sqdmullt z27.d, z14.s, z4.s[1]
+44EBE73C sqdmullt z28.d, z25.s, z11.s[0]
+// sqneg_z_p_z_ 01000100|size=xx|00|Q=1|0|opc=01|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// SQNEG <Zd>.<T>,<Pg>/M,<Zn>.<T>
+4449A8C6 sqneg z6.h, p2/m, z6.h
+4449A987 sqneg z7.h, p2/m, z12.h
+44C9AC4C sqneg z12.d, p3/m, z2.d
+44C9BDEA sqneg z10.d, p7/m, z15.d
+4489A27E sqneg z30.s, p0/m, z19.s
+44C9A152 sqneg z18.d, p0/m, z10.d
+4449ADDE sqneg z30.h, p3/m, z14.h
+44C9B72C sqneg z12.d, p5/m, z25.d
+// sqrdcmlah_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|001|op=1|rot=xx|Zn=xxxxx|Zda=xxxxx
+// SQRDCMLAH <Zda>.<T>,<Zn>.<T>,<Zm>.<T>,<const>
+4417393A sqrdcmlah z26.b, z9.b, z23.b, #0xb4
+44D03836 sqrdcmlah z22.d, z1.d, z16.d, #0xb4
+44CE384C sqrdcmlah z12.d, z2.d, z14.d, #0xb4
+44CD34AD sqrdcmlah z13.d, z5.d, z13.d, #0x5a
+44DA321E sqrdcmlah z30.d, z16.d, z26.d, #0x0
+44913192 sqrdcmlah z18.s, z12.s, z17.s, #0x0
+440E3109 sqrdcmlah z9.b, z8.b, z14.b, #0x0
+44D239D1 sqrdcmlah z17.d, z14.d, z18.d, #0xb4
+// sqrdcmlah_z_zzzi_h 01000100|size=10|1|i2=xx|Zm=xxx|0111|rot=xx|Zn=xxxxx|Zda=xxxxx
+// SQRDCMLAH <Zda>.H,<Zn>.H,<Zm>.H[<imm>],<const>
+44AE78E1 sqrdcmlah z1.h, z7.h, z6.h[1], #0xb4
+44B67531 sqrdcmlah z17.h, z9.h, z6.h[2], #0x5a
+44BD7943 sqrdcmlah z3.h, z10.h, z5.h[3], #0xb4
+44B97B1E sqrdcmlah z30.h, z24.h, z1.h[3], #0xb4
+44B87628 sqrdcmlah z8.h, z17.h, z0.h[3], #0x5a
+44A77F22 sqrdcmlah z2.h, z25.h, z7.h[0], #0x10e
+44AA7556 sqrdcmlah z22.h, z10.h, z2.h[1], #0x5a
+44B9756B sqrdcmlah z11.h, z11.h, z1.h[3], #0x5a
+// sqrdcmlah_z_zzzi_s 01000100|size=11|1|i1=x|Zm=xxxx|0111|rot=xx|Zn=xxxxx|Zda=xxxxx
+// SQRDCMLAH <Zda>.S,<Zn>.S,<Zm>.S[<imm>],<const>
+44E1785A sqrdcmlah z26.s, z2.s, z1.s[0], #0xb4
+44F97D01 sqrdcmlah z1.s, z8.s, z9.s[1], #0x10e
+44E27344 sqrdcmlah z4.s, z26.s, z2.s[0], #0x0
+44FD75B4 sqrdcmlah z20.s, z13.s, z13.s[1], #0x5a
+44E17244 sqrdcmlah z4.s, z18.s, z1.s[0], #0x0
+44E07B8E sqrdcmlah z14.s, z28.s, z0.s[0], #0xb4
+44E17769 sqrdcmlah z9.s, z27.s, z1.s[0], #0x5a
+44EF72E0 sqrdcmlah z0.s, z23.s, z15.s[0], #0x0
+// sqrdmlah_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|01110|S=0|Zn=xxxxx|Zda=xxxxx
+// SQRDMLAH <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+440771D1 sqrdmlah z17.b, z14.b, z7.b
+44937080 sqrdmlah z0.b, z4.b, z19.b
+441D71F4 sqrdmlah z20.b, z15.b, z29.b
+441D73BB sqrdmlah z27.b, z29.b, z29.b
+44CC701A sqrdmlah z26.b, z0.b, z12.b
+44847232 sqrdmlah z18.b, z17.b, z4.b
+441D7094 sqrdmlah z20.b, z4.b, z29.b
+44D77189 sqrdmlah z9.b, z12.b, z23.b
+// sqrdmlah_z_zzzi_h 01000100|0|i3h=x|1|i3l=xx|Zm=xxx|00010|S=0|Zn=xxxxx|Zda=xxxxx
+// SQRDMLAH <Zda>.H,<Zn>.H,<Zm>.H[<imm>]
+44761078 sqrdmlah z24.h, z3.h, z6.h[6]
+446211DC sqrdmlah z28.h, z14.h, z2.h[4]
+446D13FD sqrdmlah z29.h, z31.h, z5.h[5]
+447B121A sqrdmlah z26.h, z16.h, z3.h[7]
+4468127E sqrdmlah z30.h, z19.h, z0.h[5]
+443711EC sqrdmlah z12.h, z15.h, z7.h[2]
+44271335 sqrdmlah z21.h, z25.h, z7.h[0]
+443E10F6 sqrdmlah z22.h, z7.h, z6.h[3]
+// sqrdmlah_z_zzzi_s 01000100|size=10|1|i2=xx|Zm=xxx|00010|S=0|Zn=xxxxx|Zda=xxxxx
+// SQRDMLAH <Zda>.S,<Zn>.S,<Zm>.S[<imm>]
+44B8108F sqrdmlah z15.s, z4.s, z0.s[3]
+44A6112F sqrdmlah z15.s, z9.s, z6.s[0]
+44AD12C6 sqrdmlah z6.s, z22.s, z5.s[1]
+44BA126E sqrdmlah z14.s, z19.s, z2.s[3]
+44AD13EE sqrdmlah z14.s, z31.s, z5.s[1]
+44AC128D sqrdmlah z13.s, z20.s, z4.s[1]
+44A21232 sqrdmlah z18.s, z17.s, z2.s[0]
+44AD1271 sqrdmlah z17.s, z19.s, z5.s[1]
+// sqrdmlah_z_zzzi_d 01000100|size=11|1|i1=x|Zm=xxxx|00010|S=0|Zn=xxxxx|Zda=xxxxx
+// SQRDMLAH <Zda>.D,<Zn>.D,<Zm>.D[<imm>]
+44E11023 sqrdmlah z3.d, z1.d, z1.d[0]
+44F0127C sqrdmlah z28.d, z19.d, z0.d[1]
+44FE1229 sqrdmlah z9.d, z17.d, z14.d[1]
+44E3131F sqrdmlah z31.d, z24.d, z3.d[0]
+44F3102D sqrdmlah z13.d, z1.d, z3.d[1]
+44EC11BE sqrdmlah z30.d, z13.d, z12.d[0]
+44FF1392 sqrdmlah z18.d, z28.d, z15.d[1]
+44ED13AF sqrdmlah z15.d, z29.d, z13.d[0]
+// sqrdmlsh_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|01110|S=1|Zn=xxxxx|Zda=xxxxx
+// SQRDMLSH <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+4402742A sqrdmlsh z10.b, z1.b, z2.b
+444E74F3 sqrdmlsh z19.b, z7.b, z14.b
+444B743A sqrdmlsh z26.b, z1.b, z11.b
+44897555 sqrdmlsh z21.b, z10.b, z9.b
+44C374F6 sqrdmlsh z22.b, z7.b, z3.b
+44497607 sqrdmlsh z7.b, z16.b, z9.b
+448475A7 sqrdmlsh z7.b, z13.b, z4.b
+4400758B sqrdmlsh z11.b, z12.b, z0.b
+// sqrdmlsh_z_zzzi_h 01000100|0|i3h=x|1|i3l=xx|Zm=xxx|00010|S=1|Zn=xxxxx|Zda=xxxxx
+// SQRDMLSH <Zda>.H,<Zn>.H,<Zm>.H[<imm>]
+442B14EE sqrdmlsh z14.h, z7.h, z3.h[1]
+442A1447 sqrdmlsh z7.h, z2.h, z2.h[1]
+447F1587 sqrdmlsh z7.h, z12.h, z7.h[7]
+442017B6 sqrdmlsh z22.h, z29.h, z0.h[0]
+442814A3 sqrdmlsh z3.h, z5.h, z0.h[1]
+4431159F sqrdmlsh z31.h, z12.h, z1.h[2]
+443816D0 sqrdmlsh z16.h, z22.h, z0.h[3]
+4439178E sqrdmlsh z14.h, z28.h, z1.h[3]
+// sqrdmlsh_z_zzzi_s 01000100|size=10|1|i2=xx|Zm=xxx|00010|S=1|Zn=xxxxx|Zda=xxxxx
+// SQRDMLSH <Zda>.S,<Zn>.S,<Zm>.S[<imm>]
+44AF142D sqrdmlsh z13.s, z1.s, z7.s[1]
+44BB17EF sqrdmlsh z15.s, z31.s, z3.s[3]
+44BF17D1 sqrdmlsh z17.s, z30.s, z7.s[3]
+44B014E5 sqrdmlsh z5.s, z7.s, z0.s[2]
+44BD15CB sqrdmlsh z11.s, z14.s, z5.s[3]
+44B71475 sqrdmlsh z21.s, z3.s, z7.s[2]
+44A4145F sqrdmlsh z31.s, z2.s, z4.s[0]
+44BC14C7 sqrdmlsh z7.s, z6.s, z4.s[3]
+// sqrdmlsh_z_zzzi_d 01000100|size=11|1|i1=x|Zm=xxxx|00010|S=1|Zn=xxxxx|Zda=xxxxx
+// SQRDMLSH <Zda>.D,<Zn>.D,<Zm>.D[<imm>]
+44EE1653 sqrdmlsh z19.d, z18.d, z14.d[0]
+44F71702 sqrdmlsh z2.d, z24.d, z7.d[1]
+44FF16BE sqrdmlsh z30.d, z21.d, z15.d[1]
+44E017D3 sqrdmlsh z19.d, z30.d, z0.d[0]
+44F516DA sqrdmlsh z26.d, z22.d, z5.d[1]
+44EB16AD sqrdmlsh z13.d, z21.d, z11.d[0]
+44F416CA sqrdmlsh z10.d, z22.d, z4.d[1]
+44FC1423 sqrdmlsh z3.d, z1.d, z12.d[1]
+// sqrdmulh_z_zz_ 00000100|size=xx|1|Zm=xxxxx|01110|R=1|Zn=xxxxx|Zd=xxxxx
+// SQRDMULH <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+042374B7 sqrdmulh z23.b, z5.b, z3.b
+043D74A8 sqrdmulh z8.b, z5.b, z29.b
+047A76A1 sqrdmulh z1.h, z21.h, z26.h
+04E074DC sqrdmulh z28.d, z6.d, z0.d
+04647620 sqrdmulh z0.h, z17.h, z4.h
+04EB7791 sqrdmulh z17.d, z28.d, z11.d
+04FD752D sqrdmulh z13.d, z9.d, z29.d
+04F676FA sqrdmulh z26.d, z23.d, z22.d
+// sqrdmulh_z_zzi_h 01000100|0|i3h=x|1|i3l=xx|Zm=xxx|11110|R=1|Zn=xxxxx|Zd=xxxxx
+// SQRDMULH <Zd>.H,<Zn>.H,<Zm>.H[<imm>]
+446FF5DC sqrdmulh z28.h, z14.h, z7.h[5]
+447AF5DD sqrdmulh z29.h, z14.h, z2.h[7]
+4469F689 sqrdmulh z9.h, z20.h, z1.h[5]
+4471F5CD sqrdmulh z13.h, z14.h, z1.h[6]
+4472F71E sqrdmulh z30.h, z24.h, z2.h[6]
+4427F770 sqrdmulh z16.h, z27.h, z7.h[0]
+446EF7C8 sqrdmulh z8.h, z30.h, z6.h[5]
+4437F5CA sqrdmulh z10.h, z14.h, z7.h[2]
+// sqrdmulh_z_zzi_s 01000100|size=10|1|i2=xx|Zm=xxx|11110|R=1|Zn=xxxxx|Zd=xxxxx
+// SQRDMULH <Zd>.S,<Zn>.S,<Zm>.S[<imm>]
+44A1F793 sqrdmulh z19.s, z28.s, z1.s[0]
+44B3F447 sqrdmulh z7.s, z2.s, z3.s[2]
+44BFF6AF sqrdmulh z15.s, z21.s, z7.s[3]
+44B3F466 sqrdmulh z6.s, z3.s, z3.s[2]
+44B9F76B sqrdmulh z11.s, z27.s, z1.s[3]
+44ABF792 sqrdmulh z18.s, z28.s, z3.s[1]
+44A1F4E0 sqrdmulh z0.s, z7.s, z1.s[0]
+44B1F736 sqrdmulh z22.s, z25.s, z1.s[2]
+// sqrdmulh_z_zzi_d 01000100|size=11|1|i1=x|Zm=xxxx|11110|R=1|Zn=xxxxx|Zd=xxxxx
+// SQRDMULH <Zd>.D,<Zn>.D,<Zm>.D[<imm>]
+44F4F59A sqrdmulh z26.d, z12.d, z4.d[1]
+44F9F75A sqrdmulh z26.d, z26.d, z9.d[1]
+44F4F418 sqrdmulh z24.d, z0.d, z4.d[1]
+44E1F6C8 sqrdmulh z8.d, z22.d, z1.d[0]
+44E3F5D4 sqrdmulh z20.d, z14.d, z3.d[0]
+44E6F4BE sqrdmulh z30.d, z5.d, z6.d[0]
+44FEF4D9 sqrdmulh z25.d, z6.d, z14.d[1]
+44E8F73D sqrdmulh z29.d, z25.d, z8.d[0]
+// sqrshl_z_p_zz_ 01000100|size=xx|00|Q=1|R=0|N=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SQRSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+440A9DB7 sqrshl z23.b, p7/m, z23.b, z13.b
+444A8929 sqrshl z9.h, p2/m, z9.h, z9.h
+440A9706 sqrshl z6.b, p5/m, z6.b, z24.b
+440A89DC sqrshl z28.b, p2/m, z28.b, z14.b
+444A8468 sqrshl z8.h, p1/m, z8.h, z3.h
+440A9814 sqrshl z20.b, p6/m, z20.b, z0.b
+44CA98CB sqrshl z11.d, p6/m, z11.d, z6.d
+448A93D4 sqrshl z20.s, p4/m, z20.s, z30.s
+// sqrshlr_z_p_zz_ 01000100|size=xx|00|Q=1|R=1|N=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SQRSHLR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+448E9FE3 sqrshlr z3.s, p7/m, z3.s, z31.s
+444E9B42 sqrshlr z2.h, p6/m, z2.h, z26.h
+44CE8017 sqrshlr z23.d, p0/m, z23.d, z0.d
+440E8161 sqrshlr z1.b, p0/m, z1.b, z11.b
+440E9F05 sqrshlr z5.b, p7/m, z5.b, z24.b
+440E9A2F sqrshlr z15.b, p6/m, z15.b, z17.b
+444E85CE sqrshlr z14.h, p1/m, z14.h, z14.h
+448E8A1D sqrshlr z29.s, p2/m, z29.s, z16.s
+// sqrshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=1|T=0|Zn=xxxxx|Zd=xxxxx
+// SQRSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+45332B5A sqrshrnb z26.h, z26.s, #0xd
+453E288D sqrshrnb z13.s, z4.d, #0x2
+45342B39 sqrshrnb z25.h, z25.s, #0xc
+45362934 sqrshrnb z20.h, z9.s, #0xa
+453329A2 sqrshrnb z2.h, z13.s, #0xd
+456D28D2 sqrshrnb z18.h, z6.b, #0x13
+45372BE7 sqrshrnb z7.h, z31.s, #0x9
+45342968 sqrshrnb z8.h, z11.s, #0xc
+// sqrshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=1|T=1|Zn=xxxxx|Zd=xxxxx
+// SQRSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+45612C92 sqrshrnt z18.q, z4.d, #0x1f
+452D2D16 sqrshrnt z22.b, z8.h, #0x3
+45612F61 sqrshrnt z1.q, z27.d, #0x1f
+45732D8B sqrshrnt z11.s, z12.h, #0xd
+452E2E0D sqrshrnt z13.b, z16.h, #0x2
+45772FC1 sqrshrnt z1.s, z30.h, #0x9
+453B2C03 sqrshrnt z3.s, z0.d, #0x5
+45692FE3 sqrshrnt z3.h, z31.b, #0x17
+// sqrshrunb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=1|T=0|Zn=xxxxx|Zd=xxxxx
+// SQRSHRUNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+45700A00 sqrshrunb z0.s, z16.h, #0x10
+452B0BF4 sqrshrunb z20.b, z31.h, #0x5
+456E0937 sqrshrunb z23.h, z9.b, #0x12
+456708DB sqrshrunb z27.q, z6.d, #0x19
+456A09AF sqrshrunb z15.h, z13.b, #0x16
+45310840 sqrshrunb z0.h, z2.s, #0xf
+45630A2C sqrshrunb z12.q, z17.d, #0x1d
+45790AB7 sqrshrunb z23.d, z21.s, #0x7
+// sqrshrunt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=1|T=1|Zn=xxxxx|Zd=xxxxx
+// SQRSHRUNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+45700E43 sqrshrunt z3.s, z18.h, #0x10
+45750F05 sqrshrunt z5.s, z24.h, #0xb
+456A0D9C sqrshrunt z28.h, z12.b, #0x16
+456E0D5C sqrshrunt z28.h, z10.b, #0x12
+453C0E2D sqrshrunt z13.s, z17.d, #0x4
+453E0C8B sqrshrunt z11.s, z4.d, #0x2
+457C0DC8 sqrshrunt z8.d, z14.s, #0x4
+45690C4B sqrshrunt z11.h, z2.b, #0x17
+// sqshl_z_p_zi_ 00000100|tszh=xx|00|opc=01|L=1|U=0|100|Pg=xxx|tszl=xx|imm3=xxx|Zdn=xxxxx
+// SQSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>, #<const>
+040696D4 sqshl z20.h, p5/m, z20.h, #0x6
+04C68A5E sqshl z30.d, p2/m, z30.d, #0x32
+04C6885B sqshl z27.d, p2/m, z27.d, #0x22
+0446947F sqshl z31.s, p5/m, z31.s, #0x3
+048696AF sqshl z15.d, p5/m, z15.d, #0x15
+04C69873 sqshl z19.d, p6/m, z19.d, #0x23
+0406911B sqshl z27.b, p4/m, z27.b, #0x0
+04069FEC sqshl z12.h, p7/m, z12.h, #0xf
+// sqshl_z_p_zz_ 01000100|size=xx|00|Q=1|R=0|N=0|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SQSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44888271 sqshl z17.s, p0/m, z17.s, z19.s
+4448881D sqshl z29.h, p2/m, z29.h, z0.h
+440881D8 sqshl z24.b, p0/m, z24.b, z14.b
+44C89AC6 sqshl z6.d, p6/m, z6.d, z22.d
+44C884B5 sqshl z21.d, p1/m, z21.d, z5.d
+44C884E2 sqshl z2.d, p1/m, z2.d, z7.d
+44489A45 sqshl z5.h, p6/m, z5.h, z18.h
+44489C73 sqshl z19.h, p7/m, z19.h, z3.h
+// sqshlr_z_p_zz_ 01000100|size=xx|00|Q=1|R=1|N=0|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SQSHLR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+448C93B1 sqshlr z17.s, p4/m, z17.s, z29.s
+440C9057 sqshlr z23.b, p4/m, z23.b, z2.b
+44CC9AC2 sqshlr z2.d, p6/m, z2.d, z22.d
+448C9EC6 sqshlr z6.s, p7/m, z6.s, z22.s
+44CC830D sqshlr z13.d, p0/m, z13.d, z24.d
+448C855E sqshlr z30.s, p1/m, z30.s, z10.s
+44CC9EEF sqshlr z15.d, p7/m, z15.d, z23.d
+448C9712 sqshlr z18.s, p5/m, z18.s, z24.s
+// sqshlu_z_p_zi_ 00000100|tszh=xx|00|opc=11|L=1|U=1|100|Pg=xxx|tszl=xx|imm3=xxx|Zdn=xxxxx
+// SQSHLU <Zdn>.<T>,<Pg>/M,<Zdn>.<T>, #<const>
+048F9610 sqshlu z16.d, p5/m, z16.d, #0x10
+048F94CD sqshlu z13.d, p5/m, z13.d, #0x6
+040F87BD sqshlu z29.h, p1/m, z29.h, #0xd
+04CF8FD9 sqshlu z25.d, p3/m, z25.d, #0x3e
+044F9F80 sqshlu z0.s, p7/m, z0.s, #0x1c
+048F9FCB sqshlu z11.d, p7/m, z11.d, #0x1e
+044F8C15 sqshlu z21.s, p3/m, z21.s, #0x0
+04CF8E97 sqshlu z23.d, p3/m, z23.d, #0x34
+// sqshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SQSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+456720D2 sqshrnb z18.q, z6.d, #0x19
+456623CD sqshrnb z13.q, z30.d, #0x1a
+45722115 sqshrnb z21.s, z8.h, #0xe
+453F2217 sqshrnb z23.s, z16.d, #0x1
+45322218 sqshrnb z24.h, z16.s, #0xe
+4533200F sqshrnb z15.h, z0.s, #0xd
+45762204 sqshrnb z4.s, z16.h, #0xa
+45372214 sqshrnb z20.h, z16.s, #0x9
+// sqshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SQSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+452D25BD sqshrnt z29.b, z13.h, #0x3
+452C27EA sqshrnt z10.b, z31.h, #0x4
+457A2658 sqshrnt z24.d, z18.s, #0x6
+4566245C sqshrnt z28.q, z2.d, #0x1a
+45792636 sqshrnt z22.d, z17.s, #0x7
+457D2514 sqshrnt z20.d, z8.s, #0x3
+45282709 sqshrnt z9.b, z24.h, #0x8
+456024DE sqshrnt z30.q, z6.d, #0x20
+// sqshrunb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SQSHRUNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+4562021A sqshrunb z26.q, z16.d, #0x1e
+452D003B sqshrunb z27.b, z1.h, #0x3
+45700381 sqshrunb z1.s, z28.h, #0x10
+45630012 sqshrunb z18.q, z0.d, #0x1d
+457C0168 sqshrunb z8.d, z11.s, #0x4
+457E0320 sqshrunb z0.d, z25.s, #0x2
+457D0118 sqshrunb z24.d, z8.s, #0x3
+4564002C sqshrunb z12.q, z1.d, #0x1c
+// sqshrunt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SQSHRUNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+453405F9 sqshrunt z25.h, z15.s, #0xc
+453D04B8 sqshrunt z24.s, z5.d, #0x3
+45660772 sqshrunt z18.q, z27.d, #0x1a
+4531065D sqshrunt z29.h, z18.s, #0xf
+457B053C sqshrunt z28.d, z9.s, #0x5
+45750433 sqshrunt z19.s, z1.h, #0xb
+452B0423 sqshrunt z3.b, z1.h, #0x5
+456605C0 sqshrunt z0.q, z14.d, #0x1a
+// sqsub_z_p_zz_ 01000100|size=xx|011|op=0|S=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SQSUB <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+449A902E sqsub z14.s, p4/m, z14.s, z1.s
+449A8F57 sqsub z23.s, p3/m, z23.s, z26.s
+445A8F0D sqsub z13.h, p3/m, z13.h, z24.h
+449A9142 sqsub z2.s, p4/m, z2.s, z10.s
+44DA8F7B sqsub z27.d, p3/m, z27.d, z27.d
+441A9C5A sqsub z26.b, p7/m, z26.b, z2.b
+445A988D sqsub z13.h, p6/m, z13.h, z4.h
+441A8F48 sqsub z8.b, p3/m, z8.b, z26.b
+// sqsubr_z_p_zz_ 01000100|size=xx|011|op=1|S=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SQSUBR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44DE92B5 sqsubr z21.d, p4/m, z21.d, z21.d
+445E9D5D sqsubr z29.h, p7/m, z29.h, z10.h
+449E8A9D sqsubr z29.s, p2/m, z29.s, z20.s
+449E8E14 sqsubr z20.s, p3/m, z20.s, z16.s
+441E9195 sqsubr z21.b, p4/m, z21.b, z12.b
+445E88D4 sqsubr z20.h, p2/m, z20.h, z6.h
+449E96C3 sqsubr z3.s, p5/m, z3.s, z22.s
+449E8BB4 sqsubr z20.s, p2/m, z20.s, z29.s
+// sqxtnb_z_zz_ 010001010|tszh=x|1|tszl=xx|000010|0|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SQXTNB <Zd>.<T>,<Zn>.<Tb>
+456042E2 sqxtnb z2, z23
+453041B7 sqxtnb z23.h, z13.s
+4560437F sqxtnb z31, z27
+452843BF sqxtnb z31.b, z29.h
+4530435D sqxtnb z29.h, z26.s
+456040BE sqxtnb z30, z5
+45284051 sqxtnb z17.b, z2.h
+456043C5 sqxtnb z5, z30
+// sqxtnt_z_zz_ 010001010|tszh=x|1|tszl=xx|000010|0|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SQXTNT <Zd>.<T>,<Zn>.<Tb>
+4560464E sqxtnt z14, z18
+45284555 sqxtnt z21.b, z10.h
+456046AB sqxtnt z11, z21
+453045A4 sqxtnt z4.h, z13.s
+45304454 sqxtnt z20.h, z2.s
+45284531 sqxtnt z17.b, z9.h
+45284463 sqxtnt z3.b, z3.h
+45604705 sqxtnt z5, z24
+// sqxtunb_z_zz_ 010001010|tszh=x|1|tszl=xx|000010|opc=10|T=0|Zn=xxxxx|Zd=xxxxx
+// SQXTUNB <Zd>.<T>,<Zn>.<Tb>
+45305269 sqxtunb z9.h, z19.s
+45605367 sqxtunb z7, z27
+453053B7 sqxtunb z23.h, z29.s
+453053EC sqxtunb z12.h, z31.s
+452850EC sqxtunb z12.b, z7.h
+452851CF sqxtunb z15.b, z14.h
+45305383 sqxtunb z3.h, z28.s
+45285032 sqxtunb z18.b, z1.h
+// sqxtunt_z_zz_ 010001010|tszh=x|1|tszl=xx|000010|opc=10|T=1|Zn=xxxxx|Zd=xxxxx
+// SQXTUNT <Zd>.<T>,<Zn>.<Tb>
+452854EC sqxtunt z12.b, z7.h
+45605601 sqxtunt z1, z16
+45305565 sqxtunt z5.h, z11.s
+45285424 sqxtunt z4.b, z1.h
+4560559B sqxtunt z27, z12
+45305595 sqxtunt z21.h, z12.s
+45285613 sqxtunt z19.b, z16.h
+45605757 sqxtunt z23, z26
+// srhadd_z_p_zz_ 01000100|size=xx|010|R=1|S=0|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SRHADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+445494E7 srhadd z7.h, p5/m, z7.h, z7.h
+44149FFD srhadd z29.b, p7/m, z29.b, z31.b
+44949774 srhadd z20.s, p5/m, z20.s, z27.s
+44949B2B srhadd z11.s, p6/m, z11.s, z25.s
+44148CF7 srhadd z23.b, p3/m, z23.b, z7.b
+445494E4 srhadd z4.h, p5/m, z4.h, z7.h
+44549ACE srhadd z14.h, p6/m, z14.h, z22.h
+441485CC srhadd z12.b, p1/m, z12.b, z14.b
+// sri_z_zzi_ 01000101|tszh=xx|0|tszl=xx|imm3=xxx|11110|op=0|Zn=xxxxx|Zd=xxxxx
+// SRI <Zd>.<T>,<Zn>.<T>, #<const>
+4516F128 sri z8.h, z9.h, #0xa
+450BF360 sri z0.b, z27.b, #0x5
+458FF202 sri z2.d, z16.d, #0x31
+4594F28F sri z15.d, z20.d, #0x2c
+45D3F267 sri z7.d, z19.d, #0xd
+4541F3A3 sri z3.s, z29.s, #0x1f
+4595F17A sri z26.d, z11.d, #0x2b
+4550F2EA sri z10.s, z23.s, #0x10
+// srshl_z_p_zz_ 01000100|size=xx|00|Q=0|R=0|N=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SRSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44829D8C srshl z12.s, p7/m, z12.s, z12.s
+448289E9 srshl z9.s, p2/m, z9.s, z15.s
+44829B5E srshl z30.s, p6/m, z30.s, z26.s
+44C28F90 srshl z16.d, p3/m, z16.d, z28.d
+44C295AD srshl z13.d, p5/m, z13.d, z13.d
+44028A85 srshl z5.b, p2/m, z5.b, z20.b
+4442884C srshl z12.h, p2/m, z12.h, z2.h
+448294C2 srshl z2.s, p5/m, z2.s, z6.s
+// srshlr_z_p_zz_ 01000100|size=xx|00|Q=0|R=1|N=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SRSHLR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44C684B8 srshlr z24.d, p1/m, z24.d, z5.d
+44869C26 srshlr z6.s, p7/m, z6.s, z1.s
+44C69040 srshlr z0.d, p4/m, z0.d, z2.d
+44C69EFD srshlr z29.d, p7/m, z29.d, z23.d
+44868790 srshlr z16.s, p1/m, z16.s, z28.s
+44468D95 srshlr z21.h, p3/m, z21.h, z12.h
+444694C8 srshlr z8.h, p5/m, z8.h, z6.h
+440682FD srshlr z29.b, p0/m, z29.b, z23.b
+// srshr_z_p_zi_ 00000100|tszh=xx|00|opc=11|L=0|U=0|100|Pg=xxx|tszl=xx|imm3=xxx|Zdn=xxxxx
+// SRSHR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>, #<const>
+040C96F7 srshr z23.h, p5/m, z23.h, #0x9
+040C8AAE srshr z14.h, p2/m, z14.h, #0xb
+044C947A srshr z26.s, p5/m, z26.s, #0x1d
+04CC9140 srshr z0.d, p4/m, z0.d, #0x16
+044C9171 srshr z17.s, p4/m, z17.s, #0x15
+04CC84A0 srshr z0.d, p1/m, z0.d, #0x1b
+044C8E4D srshr z13.s, p3/m, z13.s, #0xe
+04CC81BA srshr z26.d, p0/m, z26.d, #0x13
+// srsra_z_zi_ 01000101|tszh=xx|0|tszl=xx|imm3=xxx|1110|R=1|U=0|Zn=xxxxx|Zda=xxxxx
+// SRSRA <Zda>.<T>,<Zn>.<T>, #<const>
+4548E9D4 srsra z20.s, z14.s, #0x18
+458EE8FA srsra z26.d, z7.d, #0x32
+4598EAEC srsra z12.d, z23.d, #0x28
+4591EAF0 srsra z16.d, z23.d, #0x2f
+4517EB34 srsra z20.h, z25.h, #0x9
+451AEB14 srsra z20.h, z24.h, #0x6
+451DEA1C srsra z28.h, z16.h, #0x3
+4583EADA srsra z26.d, z22.d, #0x3d
+// sshllb_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SSHLLB <Zd>.<T>,<Zn>.<Tb>, #<const>
+450CA08C sshllb z12.h, z4.b, #0x4
+4556A2F0 sshllb z16.h, z23.s, #0x16
+451EA17C sshllb z28.d, z11.s, #0xe
+4518A0D4 sshllb z20.d, z6.s, #0x8
+4516A175 sshllb z21.s, z11.h, #0x6
+455BA2BA sshllb z26.s, z21.d, #0x1b
+451EA239 sshllb z25.d, z17.s, #0xe
+450CA281 sshllb z1.h, z20.b, #0x4
+// sshllt_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SSHLLT <Zd>.<T>,<Zn>.<Tb>, #<const>
+4542A64D sshllt z13.d, z18.q, #0x2
+455DA587 sshllt z7.s, z12.d, #0x1d
+4549A73B sshllt z27.b, z25.h, #0x9
+4513A637 sshllt z23.s, z17.h, #0x3
+455DA679 sshllt z25.s, z19.d, #0x1d
+4547A454 sshllt z20.d, z2.q, #0x7
+454BA498 sshllt z24.b, z4.h, #0xb
+454FA6DF sshllt z31.b, z22.h, #0xf
+// ssra_z_zi_ 01000101|tszh=xx|0|tszl=xx|imm3=xxx|1110|R=0|U=0|Zn=xxxxx|Zda=xxxxx
+// SSRA <Zda>.<T>,<Zn>.<T>, #<const>
+458DE16E ssra z14.d, z11.d, #0x33
+450FE0DE ssra z30.b, z6.b, #0x1
+4592E344 ssra z4.d, z26.d, #0x2e
+450FE194 ssra z20.b, z12.b, #0x1
+4597E301 ssra z1.d, z24.d, #0x29
+451FE048 ssra z8.h, z2.h, #0x1
+4598E1AC ssra z12.d, z13.d, #0x28
+45DFE14C ssra z12.d, z10.d, #0x1
+// ssublb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=1|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SSUBLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+4554115B ssublb z27.h, z10.b, z20.b
+45C111F2 ssublb z18.d, z15.s, z1.s
+455F118E ssublb z14.h, z12.b, z31.b
+45CF120F ssublb z15.d, z16.s, z15.s
+459F11C9 ssublb z9.s, z14.h, z31.h
+45D91276 ssublb z22.d, z19.s, z25.s
+45C011C8 ssublb z8.d, z14.s, z0.s
+45831353 ssublb z19.s, z26.h, z3.h
+// ssublbt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|1000|S=1|tb=0|Zn=xxxxx|Zd=xxxxx
+// SSUBLBT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45848BEB ssublbt z11.s, z31.h, z4.h
+45DF8A05 ssublbt z5.d, z16.s, z31.s
+4597882D ssublbt z13.s, z1.h, z23.h
+45568810 ssublbt z16.h, z0.b, z22.b
+459D883A ssublbt z26.s, z1.h, z29.h
+45C48A59 ssublbt z25.d, z18.s, z4.s
+45858A93 ssublbt z19.s, z20.h, z5.h
+45C088A7 ssublbt z7.d, z5.s, z0.s
+// ssublt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=1|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SSUBLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+4559177E ssublt z30.h, z27.b, z25.b
+45CD1418 ssublt z24.d, z0.s, z13.s
+45DB15DA ssublt z26.d, z14.s, z27.s
+45C81787 ssublt z7.d, z28.s, z8.s
+455D16C7 ssublt z7.h, z22.b, z29.b
+455F1446 ssublt z6.h, z2.b, z31.b
+45DD1513 ssublt z19.d, z8.s, z29.s
+4598166B ssublt z11.s, z19.h, z24.h
+// ssubltb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|1000|S=1|tb=1|Zn=xxxxx|Zd=xxxxx
+// SSUBLTB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45DA8C9D ssubltb z29.d, z4.s, z26.s
+45998F1A ssubltb z26.s, z24.h, z25.h
+45418C8C ssubltb z12.h, z4.b, z1.b
+45DD8DDE ssubltb z30.d, z14.s, z29.s
+45808F54 ssubltb z20.s, z26.h, z0.h
+458B8D71 ssubltb z17.s, z11.h, z11.h
+45438C02 ssubltb z2.h, z0.b, z3.b
+45C78C16 ssubltb z22.d, z0.s, z7.s
+// ssubwb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=1|U=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SSUBWB <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+45DB501C ssubwb z28.d, z0.d, z27.s
+45D853D9 ssubwb z25.d, z30.d, z24.s
+458F52F4 ssubwb z20.s, z23.s, z15.h
+454A503A ssubwb z26.h, z1.h, z10.b
+454850B9 ssubwb z25.h, z5.h, z8.b
+45DE5066 ssubwb z6.d, z3.d, z30.s
+458A51D0 ssubwb z16.s, z14.s, z10.h
+45CB530B ssubwb z11.d, z24.d, z11.s
+// ssubwt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=1|U=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SSUBWT <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+45D5563F ssubwt z31.d, z17.d, z21.s
+45495639 ssubwt z25.h, z17.h, z9.b
+459456C3 ssubwt z3.s, z22.s, z20.h
+459F5602 ssubwt z2.s, z16.s, z31.h
+45D15522 ssubwt z2.d, z9.d, z17.s
+45CC5784 ssubwt z4.d, z28.d, z12.s
+458857FF ssubwt z31.s, z31.s, z8.h
+45525402 ssubwt z2.h, z0.h, z18.b
+// stnt1b_z_p_ar_s_x32_unscaled 1110010|msz=00|10|Rm=xxxxx|001|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// STNT1B {<Zt>.S},<Pg>, [<Zn>.S{,<Xm>}]
+E44A2137 stnt1b {z23.s}, p0, [z9.s, x10]
+E45F2C46 stnt1b {z6.s}, p3, [z2.s, xzr]
+E4443ABD stnt1b {z29.s}, p6, [z21.s, x4]
+E4502707 stnt1b {z7.s}, p1, [z24.s, x16]
+E4423634 stnt1b {z20.s}, p5, [z17.s, x2]
+E4422E6F stnt1b {z15.s}, p3, [z19.s, x2]
+E45638B4 stnt1b {z20.s}, p6, [z5.s, x22]
+E45D24E6 stnt1b {z6.s}, p1, [z7.s, x29]
+// stnt1b_z_p_ar_d_64_unscaled 1110010|msz=00|00|Rm=xxxxx|001|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// STNT1B {<Zt>.D},<Pg>, [<Zn>.D{,<Xm>}]
+E4042F51 stnt1b {z17.d}, p3, [z26.d, x4]
+E41B27A8 stnt1b {z8.d}, p1, [z29.d, x27]
+E4052E72 stnt1b {z18.d}, p3, [z19.d, x5]
+E41A2963 stnt1b {z3.d}, p2, [z11.d, x26]
+E41C2B86 stnt1b {z6.d}, p2, [z28.d, x28]
+E4192A95 stnt1b {z21.d}, p2, [z20.d, x25]
+E4113892 stnt1b {z18.d}, p6, [z4.d, x17]
+E41A2D8A stnt1b {z10.d}, p3, [z12.d, x26]
+// stnt1d_z_p_ar_d_64_unscaled 1110010|msz=11|00|Rm=xxxxx|001|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// STNT1D {<Zt>.D},<Pg>, [<Zn>.D{,<Xm>}]
+E58E3D24 stnt1d {z4.d}, p7, [z9.d, x14]
+E5952BC3 stnt1d {z3.d}, p2, [z30.d, x21]
+E5942A54 stnt1d {z20.d}, p2, [z18.d, x20]
+E5993B51 stnt1d {z17.d}, p6, [z26.d, x25]
+E58F293D stnt1d {z29.d}, p2, [z9.d, x15]
+E5993674 stnt1d {z20.d}, p5, [z19.d, x25]
+E58A242F stnt1d {z15.d}, p1, [z1.d, x10]
+E58F323D stnt1d {z29.d}, p4, [z17.d, x15]
+// stnt1h_z_p_ar_s_x32_unscaled 1110010|msz=01|10|Rm=xxxxx|001|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// STNT1H {<Zt>.S},<Pg>, [<Zn>.S{,<Xm>}]
+E4C03D7F stnt1h {z31.s}, p7, [z11.s, x0]
+E4C13792 stnt1h {z18.s}, p5, [z28.s, x1]
+E4D3281A stnt1h {z26.s}, p2, [z0.s, x19]
+E4CA2656 stnt1h {z22.s}, p1, [z18.s, x10]
+E4C5271B stnt1h {z27.s}, p1, [z24.s, x5]
+E4DF2E21 stnt1h {z1.s}, p3, [z17.s, xzr]
+E4DC2F6E stnt1h {z14.s}, p3, [z27.s, x28]
+E4D23FBA stnt1h {z26.s}, p7, [z29.s, x18]
+// stnt1h_z_p_ar_d_64_unscaled 1110010|msz=01|00|Rm=xxxxx|001|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// STNT1H {<Zt>.D},<Pg>, [<Zn>.D{,<Xm>}]
+E48A207B stnt1h {z27.d}, p0, [z3.d, x10]
+E48C2AA0 stnt1h {z0.d}, p2, [z21.d, x12]
+E4992BCE stnt1h {z14.d}, p2, [z30.d, x25]
+E49427DC stnt1h {z28.d}, p1, [z30.d, x20]
+E491376B stnt1h {z11.d}, p5, [z27.d, x17]
+E4953C49 stnt1h {z9.d}, p7, [z2.d, x21]
+E498203D stnt1h {z29.d}, p0, [z1.d, x24]
+E48130A6 stnt1h {z6.d}, p4, [z5.d, x1]
+// stnt1w_z_p_ar_s_x32_unscaled 1110010|msz=10|10|Rm=xxxxx|001|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// STNT1W {<Zt>.S},<Pg>, [<Zn>.S{,<Xm>}]
+E5503C00 stnt1w {z0.s}, p7, [z0.s, x16]
+E5462CD3 stnt1w {z19.s}, p3, [z6.s, x6]
+E54822E8 stnt1w {z8.s}, p0, [z23.s, x8]
+E5542B3E stnt1w {z30.s}, p2, [z25.s, x20]
+E5552652 stnt1w {z18.s}, p1, [z18.s, x21]
+E5572BCB stnt1w {z11.s}, p2, [z30.s, x23]
+E54C282D stnt1w {z13.s}, p2, [z1.s, x12]
+E5463490 stnt1w {z16.s}, p5, [z4.s, x6]
+// stnt1w_z_p_ar_d_64_unscaled 1110010|msz=10|00|Rm=xxxxx|001|Pg=xxx|Zn=xxxxx|Zt=xxxxx
+// STNT1W {<Zt>.D},<Pg>, [<Zn>.D{,<Xm>}]
+E514379D stnt1w {z29.d}, p5, [z28.d, x20]
+E51637C3 stnt1w {z3.d}, p5, [z30.d, x22]
+E51A2B0D stnt1w {z13.d}, p2, [z24.d, x26]
+E518309A stnt1w {z26.d}, p4, [z4.d, x24]
+E5172CF2 stnt1w {z18.d}, p3, [z7.d, x23]
+E5062197 stnt1w {z23.d}, p0, [z12.d, x6]
+E5022990 stnt1w {z16.d}, p2, [z12.d, x2]
+E5133C7B stnt1w {z27.d}, p7, [z3.d, x19]
+// subhnb_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=1|R=0|T=0|Zn=xxxxx|Zd=xxxxx
+// SUBHNB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45FF72BB subhnb z27.s, z21.d, z31.d
+45AA71F8 subhnb z24.h, z15.s, z10.s
+457473AD subhnb z13.b, z29.h, z20.h
+45F47188 subhnb z8.s, z12.d, z20.d
+45B67122 subhnb z2.h, z9.s, z22.s
+45AE7293 subhnb z19.h, z20.s, z14.s
+45F772E4 subhnb z4.s, z23.d, z23.d
+4562723F subhnb z31.b, z17.h, z2.h
+// subhnt_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=1|R=0|T=1|Zn=xxxxx|Zd=xxxxx
+// SUBHNT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45E175D8 subhnt z24.s, z14.d, z1.d
+45B17787 subhnt z7.h, z28.s, z17.s
+45F876FE subhnt z30.s, z23.d, z24.d
+457D756A subhnt z10.b, z11.h, z29.h
+45F975EE subhnt z14.s, z15.d, z25.d
+45AD761A subhnt z26.h, z16.s, z13.s
+4563766A subhnt z10.b, z19.h, z3.h
+45FC75B7 subhnt z23.s, z13.d, z28.d
+// suqadd_z_p_zz_ 01000100|size=xx|011|op=1|S=0|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// SUQADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+445C86D2 suqadd z18.h, p1/m, z18.h, z22.h
+449C975E suqadd z30.s, p5/m, z30.s, z26.s
+449C8D23 suqadd z3.s, p3/m, z3.s, z9.s
+44DC8D57 suqadd z23.d, p3/m, z23.d, z10.d
+441C989F suqadd z31.b, p6/m, z31.b, z4.b
+449C948D suqadd z13.s, p5/m, z13.s, z4.s
+445C85D4 suqadd z20.h, p1/m, z20.h, z14.h
+44DC9442 suqadd z2.d, p5/m, z2.d, z2.d
+// tbl_z_zz_2 00000101|size=xx|1|Zm=xxxxx|00101|op=0|Zn=xxxxx|Zd=xxxxx
+// TBL <Zd>.<T>,{<Zn1>.<T>,<Zn2>.<T>},<Zm>.<T>
+05712A95 tbl z21.h, {z20.h, z21.h}, z17.h
+05F7287E tbl z30.d, {z3.d, z4.d}, z23.d
+05AA282C tbl z12.s, {z1.s, z2.s}, z10.s
+05B52A45 tbl z5.s, {z18.s, z19.s}, z21.s
+05A72A86 tbl z6.s, {z20.s, z21.s}, z7.s
+05AB29B4 tbl z20.s, {z13.s, z14.s}, z11.s
+05732B6C tbl z12.h, {z27.h, z28.h}, z19.h
+05632B06 tbl z6.h, {z24.h, z25.h}, z3.h
+// tbx_z_zz_ 00000101|size=xx|1|Zm=xxxxx|00101|op=1|Zn=xxxxx|Zd=xxxxx
+// TBX <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+05F22E68 tbx z8.d, z19.d, z18.d
+05B82EAE tbx z14.s, z21.s, z24.s
+05642FC7 tbx z7.h, z30.h, z4.h
+05302D53 tbx z19.b, z10.b, z16.b
+05F72DC1 tbx z1.d, z14.d, z23.d
+05262E2D tbx z13.b, z17.b, z6.b
+057A2D92 tbx z18.h, z12.h, z26.h
+05AC2CB7 tbx z23.s, z5.s, z12.s
+// uaba_z_zzz_ 01000101|size=xx|0|Zm=xxxxx|11111|U=1|Zn=xxxxx|Zda=xxxxx
+// UABA <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
+45DDFD3C uaba z28.b, z9.b, z29.b
+45D1FE19 uaba z25.b, z16.b, z17.b
+459DFD6D uaba z13.b, z11.b, z29.b
+450DFF50 uaba z16.b, z26.b, z13.b
+450BFC0F uaba z15.b, z0.b, z11.b
+4543FE99 uaba z25.b, z20.b, z3.b
+4551FC1D uaba z29.b, z0.b, z17.b
+451FFE3E uaba z30.b, z17.b, z31.b
+// uabalb_z_zzz_ 01000101|size=xx|0|Zm=xxxxx|1100|U=1|T=0|Zn=xxxxx|Zda=xxxxx
+// UABALB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45DCCB28 uabalb z8.d, z25.s, z28.s
+454ECAE5 uabalb z5.h, z23.b, z14.b
+454BC862 uabalb z2.h, z3.b, z11.b
+45D4CA3D uabalb z29.d, z17.s, z20.s
+45D3C87E uabalb z30.d, z3.s, z19.s
+458EC87F uabalb z31.s, z3.h, z14.h
+454ECA8F uabalb z15.h, z20.b, z14.b
+454FCA21 uabalb z1.h, z17.b, z15.b
+// uabalt_z_zzz_ 01000101|size=xx|0|Zm=xxxxx|1100|U=1|T=1|Zn=xxxxx|Zda=xxxxx
+// UABALT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+4545CD9C uabalt z28.h, z12.b, z5.b
+454BCC1D uabalt z29.h, z0.b, z11.b
+4558CEC6 uabalt z6.h, z22.b, z24.b
+4598CD0E uabalt z14.s, z8.h, z24.h
+4596CE30 uabalt z16.s, z17.h, z22.h
+4583CC95 uabalt z21.s, z4.h, z3.h
+45D5CEBD uabalt z29.d, z21.s, z21.s
+4599CC84 uabalt z4.s, z4.h, z25.h
+// uabdlb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=1|S=1|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// UABDLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45483BC4 uabdlb z4.h, z30.b, z8.b
+45573B33 uabdlb z19.h, z25.b, z23.b
+45DD3811 uabdlb z17.d, z0.s, z29.s
+45D33B46 uabdlb z6.d, z26.s, z19.s
+45DD3A9C uabdlb z28.d, z20.s, z29.s
+45583A2C uabdlb z12.h, z17.b, z24.b
+45813B56 uabdlb z22.s, z26.h, z1.h
+455138E0 uabdlb z0.h, z7.b, z17.b
+// uabdlt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=1|S=1|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// UABDLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+454F3D70 uabdlt z16.h, z11.b, z15.b
+45843E69 uabdlt z9.s, z19.h, z4.h
+45DE3DA1 uabdlt z1.d, z13.s, z30.s
+45C83F79 uabdlt z25.d, z27.s, z8.s
+459E3FC9 uabdlt z9.s, z30.h, z30.h
+455B3CAB uabdlt z11.h, z5.b, z27.b
+45CA3D17 uabdlt z23.d, z8.s, z10.s
+45CC3F1E uabdlt z30.d, z24.s, z12.s
+// uadalp_z_p_z_ 01000100|size=xx|00010|U=1|101|Pg=xxx|Zn=xxxxx|Zda=xxxxx
+// UADALP <Zda>.<T>,<Pg>/M,<Zn>.<Tb>
+4445BD62 uadalp z2.h, p7/m, z11.b
+4445A8E0 uadalp z0.h, p2/m, z7.b
+44C5B786 uadalp z6.d, p5/m, z28.s
+4485A0F5 uadalp z21.s, p0/m, z7.h
+44C5B4F6 uadalp z22.d, p5/m, z7.s
+4445AAB0 uadalp z16.h, p2/m, z21.b
+4445AF9C uadalp z28.h, p3/m, z28.b
+4445A393 uadalp z19.h, p0/m, z28.b
+// uaddlb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=0|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// UADDLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45CB080B uaddlb z11.d, z0.s, z11.s
+45410ABF uaddlb z31.h, z21.b, z1.b
+45DC08E0 uaddlb z0.d, z7.s, z28.s
+455F0A04 uaddlb z4.h, z16.b, z31.b
+45C40A12 uaddlb z18.d, z16.s, z4.s
+459F0B3A uaddlb z26.s, z25.h, z31.h
+454C090F uaddlb z15.h, z8.b, z12.b
+455E099F uaddlb z31.h, z12.b, z30.b
+// uaddlt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=0|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// UADDLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45D50CA2 uaddlt z2.d, z5.s, z21.s
+45D80C79 uaddlt z25.d, z3.s, z24.s
+45C30CDC uaddlt z28.d, z6.s, z3.s
+45400C6F uaddlt z15.h, z3.b, z0.b
+45820C62 uaddlt z2.s, z3.h, z2.h
+45DC0F06 uaddlt z6.d, z24.s, z28.s
+45870ECA uaddlt z10.s, z22.h, z7.h
+455C0DD6 uaddlt z22.h, z14.b, z28.b
+// uaddwb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=0|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// UADDWB <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+459A490F uaddwb z15.s, z8.s, z26.h
+45C94B64 uaddwb z4.d, z27.d, z9.s
+45984923 uaddwb z3.s, z9.s, z24.h
+45DF4AC7 uaddwb z7.d, z22.d, z31.s
+45C2483C uaddwb z28.d, z1.d, z2.s
+45894AD3 uaddwb z19.s, z22.s, z9.h
+45C849DA uaddwb z26.d, z14.d, z8.s
+45884ABF uaddwb z31.s, z21.s, z8.h
+// uaddwt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=0|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// UADDWT <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+459E4D8E uaddwt z14.s, z12.s, z30.h
+45DF4EAB uaddwt z11.d, z21.d, z31.s
+45CC4CD3 uaddwt z19.d, z6.d, z12.s
+45964F0D uaddwt z13.s, z24.s, z22.h
+45DF4C60 uaddwt z0.d, z3.d, z31.s
+459C4FA8 uaddwt z8.s, z29.s, z28.h
+458F4E06 uaddwt z6.s, z16.s, z15.h
+459F4C7B uaddwt z27.s, z3.s, z31.h
+// uhadd_z_p_zz_ 01000100|size=xx|010|R=0|S=0|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UHADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+4411894F uhadd z15.b, p2/m, z15.b, z10.b
+44918079 uhadd z25.s, p0/m, z25.s, z3.s
+4451914A uhadd z10.h, p4/m, z10.h, z10.h
+44D189E8 uhadd z8.d, p2/m, z8.d, z15.d
+44919B57 uhadd z23.s, p6/m, z23.s, z26.s
+4451949F uhadd z31.h, p5/m, z31.h, z4.h
+441191E4 uhadd z4.b, p4/m, z4.b, z15.b
+4491815D uhadd z29.s, p0/m, z29.s, z10.s
+// uhsub_z_p_zz_ 01000100|size=xx|010|R=0|S=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UHSUB <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44538E7D uhsub z29.h, p3/m, z29.h, z19.h
+44138604 uhsub z4.b, p1/m, z4.b, z16.b
+44539413 uhsub z19.h, p5/m, z19.h, z0.h
+449388CD uhsub z13.s, p2/m, z13.s, z6.s
+4493887F uhsub z31.s, p2/m, z31.s, z3.s
+441393E0 uhsub z0.b, p4/m, z0.b, z31.b
+44539C37 uhsub z23.h, p7/m, z23.h, z1.h
+4413940F uhsub z15.b, p5/m, z15.b, z0.b
+// uhsubr_z_p_zz_ 01000100|size=xx|010|R=1|S=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UHSUBR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44178D79 uhsubr z25.b, p3/m, z25.b, z11.b
+44178B71 uhsubr z17.b, p2/m, z17.b, z27.b
+44178911 uhsubr z17.b, p2/m, z17.b, z8.b
+449790AA uhsubr z10.s, p4/m, z10.s, z5.s
+44978818 uhsubr z24.s, p2/m, z24.s, z0.s
+44978D9D uhsubr z29.s, p3/m, z29.s, z12.s
+44D79A38 uhsubr z24.d, p6/m, z24.d, z17.d
+44D79B0C uhsubr z12.d, p6/m, z12.d, z24.d
+// umaxp_z_p_zz_ 01000100|size=xx|010|opc=10|U=1|101|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UMAXP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+4455BC67 umaxp z7.h, p7/m, z7.h, z3.h
+4495A30A umaxp z10.s, p0/m, z10.s, z24.s
+4455BAE1 umaxp z1.h, p6/m, z1.h, z23.h
+4455A790 umaxp z16.h, p1/m, z16.h, z28.h
+4415A484 umaxp z4.b, p1/m, z4.b, z4.b
+4415BE4A umaxp z10.b, p7/m, z10.b, z18.b
+4455AF9A umaxp z26.h, p3/m, z26.h, z28.h
+4495A40D umaxp z13.s, p1/m, z13.s, z0.s
+// uminp_z_p_zz_ 01000100|size=xx|010|opc=11|U=1|101|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UMINP <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44D7A140 uminp z0.d, p0/m, z0.d, z10.d
+4457AE33 uminp z19.h, p3/m, z19.h, z17.h
+4417A897 uminp z23.b, p2/m, z23.b, z4.b
+4457A22A uminp z10.h, p0/m, z10.h, z17.h
+4417A7E8 uminp z8.b, p1/m, z8.b, z31.b
+4497AD40 uminp z0.s, p3/m, z0.s, z10.s
+4457A01D uminp z29.h, p0/m, z29.h, z0.h
+4497BEB7 uminp z23.s, p7/m, z23.s, z21.s
+// umlalb_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=0|U=1|T=0|Zn=xxxxx|Zda=xxxxx
+// UMLALB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+445748C9 umlalb z9.h, z6.b, z23.b
+44464ADA umlalb z26.h, z22.b, z6.b
+444F4B0A umlalb z10.h, z24.b, z15.b
+44454A25 umlalb z5.h, z17.b, z5.b
+44984A47 umlalb z7.s, z18.h, z24.h
+444E4BFD umlalb z29.h, z31.b, z14.b
+44D04A12 umlalb z18.d, z16.s, z16.s
+448E4AF4 umlalb z20.s, z23.h, z14.h
+// umlalb_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=0|U=1|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// UMLALB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44B09073 umlalb z19.s, z3.h, z0.h[4]
+44AB9159 umlalb z25.s, z10.h, z3.h[2]
+44A0986E umlalb z14.s, z3.h, z0.h[1]
+44A193FA umlalb z26.s, z31.h, z1.h[0]
+44B09AE6 umlalb z6.s, z23.h, z0.h[5]
+44A298CC umlalb z12.s, z6.h, z2.h[1]
+44A49889 umlalb z9.s, z4.h, z4.h[1]
+44B19A34 umlalb z20.s, z17.h, z1.h[5]
+// umlalb_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=0|U=1|i2l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// UMLALB <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44E798B7 umlalb z23.d, z5.s, z7.s[1]
+44F69030 umlalb z16.d, z1.s, z6.s[2]
+44F49B11 umlalb z17.d, z24.s, z4.s[3]
+44F390C9 umlalb z9.d, z6.s, z3.s[2]
+44FD9AAF umlalb z15.d, z21.s, z13.s[3]
+44EA9059 umlalb z25.d, z2.s, z10.s[0]
+44F7903B umlalb z27.d, z1.s, z7.s[2]
+44F09B31 umlalb z17.d, z25.s, z0.s[3]
+// umlalt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=0|U=1|T=1|Zn=xxxxx|Zda=xxxxx
+// UMLALT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+444D4EB3 umlalt z19.h, z21.b, z13.b
+44814FCD umlalt z13.s, z30.h, z1.h
+445A4D1E umlalt z30.h, z8.b, z26.b
+44514F20 umlalt z0.h, z25.b, z17.b
+44984EED umlalt z13.s, z23.h, z24.h
+44504E35 umlalt z21.h, z17.b, z16.b
+44474E85 umlalt z5.h, z20.b, z7.b
+44CF4DA0 umlalt z0.d, z13.s, z15.s
+// umlalt_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=0|U=1|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// UMLALT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44A69EE9 umlalt z9.s, z23.h, z6.h[1]
+44A29C0D umlalt z13.s, z0.h, z2.h[1]
+44BF9627 umlalt z7.s, z17.h, z7.h[6]
+44B39C0C umlalt z12.s, z0.h, z3.h[5]
+44AB9C4C umlalt z12.s, z2.h, z3.h[3]
+44AF97C2 umlalt z2.s, z30.h, z7.h[2]
+44AA96CB umlalt z11.s, z22.h, z2.h[2]
+44BA941A umlalt z26.s, z0.h, z2.h[6]
+// umlalt_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=0|U=1|i2l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// UMLALT <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44FA9D7B umlalt z27.d, z11.s, z10.s[3]
+44FF9F96 umlalt z22.d, z28.s, z15.s[3]
+44E59C85 umlalt z5.d, z4.s, z5.s[1]
+44FC97A8 umlalt z8.d, z29.s, z12.s[2]
+44EF9752 umlalt z18.d, z26.s, z15.s[0]
+44FB9F75 umlalt z21.d, z27.s, z11.s[3]
+44F09FDA umlalt z26.d, z30.s, z0.s[3]
+44E39C35 umlalt z21.d, z1.s, z3.s[1]
+// umlslb_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=1|U=1|T=0|Zn=xxxxx|Zda=xxxxx
+// UMLSLB <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+44585946 umlslb z6.h, z10.b, z24.b
+44C95AE7 umlslb z7.d, z23.s, z9.s
+44D6581C umlslb z28.d, z0.s, z22.s
+44945822 umlslb z2.s, z1.h, z20.h
+44C558AC umlslb z12.d, z5.s, z5.s
+44D1583B umlslb z27.d, z1.s, z17.s
+445A5956 umlslb z22.h, z10.b, z26.b
+44DA5A32 umlslb z18.d, z17.s, z26.s
+// umlslb_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=1|U=1|i3l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// UMLSLB <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44A5B2DD umlslb z29.s, z22.h, z5.h[0]
+44B5BAD2 umlslb z18.s, z22.h, z5.h[5]
+44B6B108 umlslb z8.s, z8.h, z6.h[4]
+44BDBB85 umlslb z5.s, z28.h, z5.h[7]
+44A5B176 umlslb z22.s, z11.h, z5.h[0]
+44A1B0A3 umlslb z3.s, z5.h, z1.h[0]
+44BFB0EE umlslb z14.s, z7.h, z7.h[6]
+44B2B382 umlslb z2.s, z28.h, z2.h[4]
+// umlslb_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=1|U=1|i2l=x|T=0|Zn=xxxxx|Zda=xxxxx
+// UMLSLB <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44EEBA2F umlslb z15.d, z17.s, z14.s[1]
+44F1BA75 umlslb z21.d, z19.s, z1.s[3]
+44FAB316 umlslb z22.d, z24.s, z10.s[2]
+44E1B9AE umlslb z14.d, z13.s, z1.s[1]
+44E1BA48 umlslb z8.d, z18.s, z1.s[1]
+44E4BAB8 umlslb z24.d, z21.s, z4.s[1]
+44EDB9BF umlslb z31.d, z13.s, z13.s[1]
+44F7B968 umlslb z8.d, z11.s, z7.s[3]
+// umlslt_z_zzz_ 01000100|size=xx|0|Zm=xxxxx|010|S=1|U=1|T=1|Zn=xxxxx|Zda=xxxxx
+// UMLSLT <Zda>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+44C65D7A umlslt z26.d, z11.s, z6.s
+445A5EB2 umlslt z18.h, z21.b, z26.b
+44D25C0B umlslt z11.d, z0.s, z18.s
+44885F39 umlslt z25.s, z25.h, z8.h
+44505F69 umlslt z9.h, z27.b, z16.b
+44845E10 umlslt z16.s, z16.h, z4.h
+449E5D6F umlslt z15.s, z11.h, z30.h
+44C45FDB umlslt z27.d, z30.s, z4.s
+// umlslt_z_zzzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|10|S=1|U=1|i3l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// UMLSLT <Zda>.S,<Zn>.H,<Zm>.H[<imm>]
+44BFB7CB umlslt z11.s, z30.h, z7.h[6]
+44A9BC29 umlslt z9.s, z1.h, z1.h[3]
+44A9B655 umlslt z21.s, z18.h, z1.h[2]
+44B9B5A8 umlslt z8.s, z13.h, z1.h[6]
+44B8BCF4 umlslt z20.s, z7.h, z0.h[7]
+44BBBE33 umlslt z19.s, z17.h, z3.h[7]
+44B2BDFF umlslt z31.s, z15.h, z2.h[5]
+44BBBC90 umlslt z16.s, z4.h, z3.h[7]
+// umlslt_z_zzzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|10|S=1|U=1|i2l=x|T=1|Zn=xxxxx|Zda=xxxxx
+// UMLSLT <Zda>.D,<Zn>.S,<Zm>.S[<imm>]
+44EEB5B4 umlslt z20.d, z13.s, z14.s[0]
+44EEB739 umlslt z25.d, z25.s, z14.s[0]
+44E9B40D umlslt z13.d, z0.s, z9.s[0]
+44E3BC7B umlslt z27.d, z3.s, z3.s[1]
+44ECBF50 umlslt z16.d, z26.s, z12.s[1]
+44E8B573 umlslt z19.d, z11.s, z8.s[0]
+44FEB5B9 umlslt z25.d, z13.s, z14.s[2]
+44E8B55D umlslt z29.d, z10.s, z8.s[0]
+// umulh_z_zz_ 00000100|size=xx|1|Zm=xxxxx|0110|1|U=1|Zn=xxxxx|Zd=xxxxx
+// UMULH <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+04706D14 umulh z20.h, z8.h, z16.h
+042B6D7D umulh z29.b, z11.b, z11.b
+04E56E42 umulh z2.d, z18.d, z5.d
+04376D22 umulh z2.b, z9.b, z23.b
+04626D92 umulh z18.h, z12.h, z2.h
+042E6F36 umulh z22.b, z25.b, z14.b
+042D6F7C umulh z28.b, z27.b, z13.b
+042E6E4F umulh z15.b, z18.b, z14.b
+// umullb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=1|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// UMULLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45D27859 umullb z25.d, z2.s, z18.s
+45457BB6 umullb z22.h, z29.b, z5.b
+45C378F7 umullb z23.d, z7.s, z3.s
+454D7A78 umullb z24.h, z19.b, z13.b
+458F7946 umullb z6.s, z10.h, z15.h
+45D67A3D umullb z29.d, z17.s, z22.s
+458B7927 umullb z7.s, z9.h, z11.h
+4587795B umullb z27.s, z10.h, z7.h
+// umullb_z_zzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|110|U=1|i3l=x|T=0|Zn=xxxxx|Zd=xxxxx
+// UMULLB <Zd>.S,<Zn>.H,<Zm>.H[<imm>]
+44B7D87D umullb z29.s, z3.h, z7.h[5]
+44BCD90C umullb z12.s, z8.h, z4.h[7]
+44B9DAFC umullb z28.s, z23.h, z1.h[7]
+44BCDADB umullb z27.s, z22.h, z4.h[7]
+44B7D00D umullb z13.s, z0.h, z7.h[4]
+44A6D9D1 umullb z17.s, z14.h, z6.h[1]
+44BAD210 umullb z16.s, z16.h, z2.h[6]
+44AAD801 umullb z1.s, z0.h, z2.h[3]
+// umullb_z_zzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|110|U=1|i2l=x|T=0|Zn=xxxxx|Zd=xxxxx
+// UMULLB <Zd>.D,<Zn>.S,<Zm>.S[<imm>]
+44E8DB8D umullb z13.d, z28.s, z8.s[1]
+44FFDADF umullb z31.d, z22.s, z15.s[3]
+44FCD18C umullb z12.d, z12.s, z12.s[2]
+44E7DA22 umullb z2.d, z17.s, z7.s[1]
+44F9D948 umullb z8.d, z10.s, z9.s[3]
+44EED376 umullb z22.d, z27.s, z14.s[0]
+44EDD2F1 umullb z17.d, z23.s, z13.s[0]
+44F1DB12 umullb z18.d, z24.s, z1.s[3]
+// umullt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|011|op=1|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// UMULLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45D37E37 umullt z23.d, z17.s, z19.s
+454A7C37 umullt z23.h, z1.b, z10.b
+45477FD1 umullt z17.h, z30.b, z7.b
+454C7C3E umullt z30.h, z1.b, z12.b
+455A7D44 umullt z4.h, z10.b, z26.b
+45D37F4F umullt z15.d, z26.s, z19.s
+45547DBA umullt z26.h, z13.b, z20.b
+45D97EB3 umullt z19.d, z21.s, z25.s
+// umullt_z_zzi_s 01000100|size=10|1|i3h=xx|Zm=xxx|110|U=1|i3l=x|T=1|Zn=xxxxx|Zd=xxxxx
+// UMULLT <Zd>.S,<Zn>.H,<Zm>.H[<imm>]
+44BDDDB5 umullt z21.s, z13.h, z5.h[7]
+44B4D5FF umullt z31.s, z15.h, z4.h[4]
+44B0D401 umullt z1.s, z0.h, z0.h[4]
+44B5D4E5 umullt z5.s, z7.h, z5.h[4]
+44A2DE1E umullt z30.s, z16.h, z2.h[1]
+44AFDE27 umullt z7.s, z17.h, z7.h[3]
+44B0D733 umullt z19.s, z25.h, z0.h[4]
+44BED6F2 umullt z18.s, z23.h, z6.h[6]
+// umullt_z_zzi_d 01000100|size=11|1|i2h=x|Zm=xxxx|110|U=1|i2l=x|T=1|Zn=xxxxx|Zd=xxxxx
+// UMULLT <Zd>.D,<Zn>.S,<Zm>.S[<imm>]
+44ECD532 umullt z18.d, z9.s, z12.s[0]
+44E5D594 umullt z20.d, z12.s, z5.s[0]
+44E4D59F umullt z31.d, z12.s, z4.s[0]
+44E1D60B umullt z11.d, z16.s, z1.s[0]
+44E4DEA1 umullt z1.d, z21.s, z4.s[1]
+44EBD6C6 umullt z6.d, z22.s, z11.s[0]
+44E8DD8A umullt z10.d, z12.s, z8.s[1]
+44FFDFDD umullt z29.d, z30.s, z15.s[3]
+// uqadd_z_p_zz_ 01000100|size=xx|011|op=0|S=0|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UQADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44598BFD uqadd z29.h, p2/m, z29.h, z31.h
+44198630 uqadd z16.b, p1/m, z16.b, z17.b
+44199C7C uqadd z28.b, p7/m, z28.b, z3.b
+44599EAE uqadd z14.h, p7/m, z14.h, z21.h
+4499832F uqadd z15.s, p0/m, z15.s, z25.s
+44D98E6A uqadd z10.d, p3/m, z10.d, z19.d
+4419878E uqadd z14.b, p1/m, z14.b, z28.b
+44598C7C uqadd z28.h, p3/m, z28.h, z3.h
+// uqrshl_z_p_zz_ 01000100|size=xx|00|Q=1|R=0|N=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UQRSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+444B91A6 uqrshl z6.h, p4/m, z6.h, z13.h
+448B8459 uqrshl z25.s, p1/m, z25.s, z2.s
+448B8F18 uqrshl z24.s, p3/m, z24.s, z24.s
+440B8553 uqrshl z19.b, p1/m, z19.b, z10.b
+444B949B uqrshl z27.h, p5/m, z27.h, z4.h
+44CB901E uqrshl z30.d, p4/m, z30.d, z0.d
+448B82BB uqrshl z27.s, p0/m, z27.s, z21.s
+440B9D2D uqrshl z13.b, p7/m, z13.b, z9.b
+// uqrshlr_z_p_zz_ 01000100|size=xx|00|Q=1|R=1|N=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UQRSHLR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44CF8755 uqrshlr z21.d, p1/m, z21.d, z26.d
+44CF8662 uqrshlr z2.d, p1/m, z2.d, z19.d
+444F9E89 uqrshlr z9.h, p7/m, z9.h, z20.h
+44CF888F uqrshlr z15.d, p2/m, z15.d, z4.d
+444F871A uqrshlr z26.h, p1/m, z26.h, z24.h
+448F8778 uqrshlr z24.s, p1/m, z24.s, z27.s
+448F961E uqrshlr z30.s, p5/m, z30.s, z16.s
+44CF9390 uqrshlr z16.d, p4/m, z16.d, z28.d
+// uqrshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=1|T=0|Zn=xxxxx|Zd=xxxxx
+// UQRSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+456739AE uqrshrnb z14.q, z13.d, #0x19
+45393A9E uqrshrnb z30.s, z20.d, #0x7
+4574384D uqrshrnb z13.s, z2.h, #0xc
+456439A0 uqrshrnb z0.q, z13.d, #0x1c
+456D3B63 uqrshrnb z3.h, z27.b, #0x13
+45723A9E uqrshrnb z30.s, z20.h, #0xe
+453039E9 uqrshrnb z9.h, z15.s, #0x10
+457A39C0 uqrshrnb z0.d, z14.s, #0x6
+// uqrshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=1|T=1|Zn=xxxxx|Zd=xxxxx
+// UQRSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+45343EC6 uqrshrnt z6.h, z22.s, #0xc
+45643E56 uqrshrnt z22.q, z18.d, #0x1c
+452E3FA6 uqrshrnt z6.b, z29.h, #0x2
+45733F2C uqrshrnt z12.s, z25.h, #0xd
+457C3F5E uqrshrnt z30.d, z26.s, #0x4
+453F3DAA uqrshrnt z10.s, z13.d, #0x1
+45713F40 uqrshrnt z0.s, z26.h, #0xf
+45743CD3 uqrshrnt z19.s, z6.h, #0xc
+// uqshl_z_p_zi_ 00000100|tszh=xx|00|opc=01|L=1|U=1|100|Pg=xxx|tszl=xx|imm3=xxx|Zdn=xxxxx
+// UQSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>, #<const>
+04079183 uqshl z3.b, p4/m, z3.b, #0x4
+04C79262 uqshl z2.d, p4/m, z2.d, #0x33
+04C78FC9 uqshl z9.d, p3/m, z9.d, #0x3e
+04879936 uqshl z22.d, p6/m, z22.d, #0x9
+04478213 uqshl z19.s, p0/m, z19.s, #0x10
+04C78D51 uqshl z17.d, p3/m, z17.d, #0x2a
+048791A1 uqshl z1.d, p4/m, z1.d, #0xd
+044796C4 uqshl z4.s, p5/m, z4.s, #0x16
+// uqshl_z_p_zz_ 01000100|size=xx|00|Q=1|R=0|N=0|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UQSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44C9994B uqshl z11.d, p6/m, z11.d, z10.d
+448987D1 uqshl z17.s, p1/m, z17.s, z30.s
+440997B4 uqshl z20.b, p5/m, z20.b, z29.b
+44498B7E uqshl z30.h, p2/m, z30.h, z27.h
+44C98336 uqshl z22.d, p0/m, z22.d, z25.d
+4409944A uqshl z10.b, p5/m, z10.b, z2.b
+44899AA3 uqshl z3.s, p6/m, z3.s, z21.s
+4409977C uqshl z28.b, p5/m, z28.b, z27.b
+// uqshlr_z_p_zz_ 01000100|size=xx|00|Q=1|R=1|N=0|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UQSHLR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+440D85CD uqshlr z13.b, p1/m, z13.b, z14.b
+440D8D4C uqshlr z12.b, p3/m, z12.b, z10.b
+448D94A8 uqshlr z8.s, p5/m, z8.s, z5.s
+44CD9231 uqshlr z17.d, p4/m, z17.d, z17.d
+444D8CEE uqshlr z14.h, p3/m, z14.h, z7.h
+440D921F uqshlr z31.b, p4/m, z31.b, z16.b
+448D9C2D uqshlr z13.s, p7/m, z13.s, z1.s
+448D9AFB uqshlr z27.s, p6/m, z27.s, z23.s
+// uqshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=0|T=0|Zn=xxxxx|Zd=xxxxx
+// UQSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
+452C32B2 uqshrnb z18.b, z21.h, #0x4
+456A3120 uqshrnb z0.h, z9.b, #0x16
+457733BA uqshrnb z26.s, z29.h, #0x9
+453A300A uqshrnb z10.s, z0.d, #0x6
+456D32EC uqshrnb z12.h, z23.b, #0x13
+457033D4 uqshrnb z20.s, z30.h, #0x10
+45333070 uqshrnb z16.h, z3.s, #0xd
+453630C9 uqshrnb z9.h, z6.s, #0xa
+// uqshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=0|T=1|Zn=xxxxx|Zd=xxxxx
+// UQSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
+456437D3 uqshrnt z19.q, z30.d, #0x1c
+457D376A uqshrnt z10.d, z27.s, #0x3
+45313464 uqshrnt z4.h, z3.s, #0xf
+452A3476 uqshrnt z22.b, z3.h, #0x6
+457634A6 uqshrnt z6.s, z5.h, #0xa
+453A36F5 uqshrnt z21.s, z23.d, #0x6
+4572375F uqshrnt z31.s, z26.h, #0xe
+457137F8 uqshrnt z24.s, z31.h, #0xf
+// uqsub_z_p_zz_ 01000100|size=xx|011|op=0|S=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UQSUB <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+449B8221 uqsub z1.s, p0/m, z1.s, z17.s
+441B8AAF uqsub z15.b, p2/m, z15.b, z21.b
+445B9959 uqsub z25.h, p6/m, z25.h, z10.h
+449B92E1 uqsub z1.s, p4/m, z1.s, z23.s
+44DB8726 uqsub z6.d, p1/m, z6.d, z25.d
+445B910C uqsub z12.h, p4/m, z12.h, z8.h
+449B9386 uqsub z6.s, p4/m, z6.s, z28.s
+445B9FAB uqsub z11.h, p7/m, z11.h, z29.h
+// uqsubr_z_p_zz_ 01000100|size=xx|011|op=1|S=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// UQSUBR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44DF91FB uqsubr z27.d, p4/m, z27.d, z15.d
+441F9188 uqsubr z8.b, p4/m, z8.b, z12.b
+449F9588 uqsubr z8.s, p5/m, z8.s, z12.s
+44DF868E uqsubr z14.d, p1/m, z14.d, z20.d
+44DF9AC8 uqsubr z8.d, p6/m, z8.d, z22.d
+449F82AB uqsubr z11.s, p0/m, z11.s, z21.s
+445F850B uqsubr z11.h, p1/m, z11.h, z8.h
+445F9D5A uqsubr z26.h, p7/m, z26.h, z10.h
+// uqxtnb_z_zz_ 010001010|tszh=x|1|tszl=xx|000010|0|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// UQXTNB <Zd>.<T>,<Zn>.<Tb>
+45304B70 uqxtnb z16.h, z27.s
+456049DE uqxtnb z30, z14
+4528491D uqxtnb z29.b, z8.h
+456048E5 uqxtnb z5, z7
+45284B7B uqxtnb z27.b, z27.h
+45284B4C uqxtnb z12.b, z26.h
+45304857 uqxtnb z23.h, z2.s
+45604883 uqxtnb z3, z4
+// uqxtnt_z_zz_ 010001010|tszh=x|1|tszl=xx|000010|0|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// UQXTNT <Zd>.<T>,<Zn>.<Tb>
+45284F00 uqxtnt z0.b, z24.h
+45284C53 uqxtnt z19.b, z2.h
+45304E29 uqxtnt z9.h, z17.s
+45304DD2 uqxtnt z18.h, z14.s
+45304F27 uqxtnt z7.h, z25.s
+45604FE0 uqxtnt z0, z31
+45604DFE uqxtnt z30, z15
+45284D9B uqxtnt z27.b, z12.h
+// urecpe_z_p_z_ 01000100|size=xx|00|Q=0|0|opc=00|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// URECPE <Zd>.S,<Pg>/M,<Zn>.S
+4480B873 urecpe z19.s, p6/m, z3.s
+4480AC69 urecpe z9.s, p3/m, z3.s
+4480A512 urecpe z18.s, p1/m, z8.s
+4480BE58 urecpe z24.s, p7/m, z18.s
+4480BCC4 urecpe z4.s, p7/m, z6.s
+4480BA4C urecpe z12.s, p6/m, z18.s
+4480B536 urecpe z22.s, p5/m, z9.s
+4480BFAA urecpe z10.s, p7/m, z29.s
+// urhadd_z_p_zz_ 01000100|size=xx|010|R=1|S=0|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// URHADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+449594C0 urhadd z0.s, p5/m, z0.s, z6.s
+44559F70 urhadd z16.h, p7/m, z16.h, z27.h
+44D58A73 urhadd z19.d, p2/m, z19.d, z19.d
+445588BA urhadd z26.h, p2/m, z26.h, z5.h
+44958075 urhadd z21.s, p0/m, z21.s, z3.s
+44959EA9 urhadd z9.s, p7/m, z9.s, z21.s
+44959FBE urhadd z30.s, p7/m, z30.s, z29.s
+44159641 urhadd z1.b, p5/m, z1.b, z18.b
+// urshl_z_p_zz_ 01000100|size=xx|00|Q=0|R=0|N=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// URSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+440386C5 urshl z5.b, p1/m, z5.b, z22.b
+440397E5 urshl z5.b, p5/m, z5.b, z31.b
+44039374 urshl z20.b, p4/m, z20.b, z27.b
+44C39F54 urshl z20.d, p7/m, z20.d, z26.d
+44839D6B urshl z11.s, p7/m, z11.s, z11.s
+44C38618 urshl z24.d, p1/m, z24.d, z16.d
+448383C7 urshl z7.s, p0/m, z7.s, z30.s
+44C38F7E urshl z30.d, p3/m, z30.d, z27.d
+// urshlr_z_p_zz_ 01000100|size=xx|00|Q=0|R=1|N=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// URSHLR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+44079B83 urshlr z3.b, p6/m, z3.b, z28.b
+4447942B urshlr z11.h, p5/m, z11.h, z1.h
+448781E0 urshlr z0.s, p0/m, z0.s, z15.s
+44C78866 urshlr z6.d, p2/m, z6.d, z3.d
+44878F8D urshlr z13.s, p3/m, z13.s, z28.s
+44C78E8C urshlr z12.d, p3/m, z12.d, z20.d
+440780AA urshlr z10.b, p0/m, z10.b, z5.b
+44C78955 urshlr z21.d, p2/m, z21.d, z10.d
+// urshr_z_p_zi_ 00000100|tszh=xx|00|opc=11|L=0|U=1|100|Pg=xxx|tszl=xx|imm3=xxx|Zdn=xxxxx
+// URSHR <Zdn>.<T>,<Pg>/M,<Zdn>.<T>, #<const>
+040D910F urshr z15.b, p4/m, z15.b, #0x8
+048D9DD5 urshr z21.d, p7/m, z21.d, #0x32
+048D9FA3 urshr z3.d, p7/m, z3.d, #0x23
+040D8B5B urshr z27.h, p2/m, z27.h, #0x6
+048D8AD3 urshr z19.d, p2/m, z19.d, #0x2a
+04CD9E5C urshr z28.d, p7/m, z28.d, #0xe
+044D8DE7 urshr z7.s, p3/m, z7.s, #0x11
+040D9165 urshr z5.b, p4/m, z5.b, #0x5
+// ursqrte_z_p_z_ 01000100|size=xx|00|Q=0|0|opc=01|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// URSQRTE <Zd>.S,<Pg>/M,<Zn>.S
+4481B4D1 ursqrte z17.s, p5/m, z6.s
+4481B8CA ursqrte z10.s, p6/m, z6.s
+4481BD85 ursqrte z5.s, p7/m, z12.s
+4481A602 ursqrte z2.s, p1/m, z16.s
+4481BA89 ursqrte z9.s, p6/m, z20.s
+4481BF12 ursqrte z18.s, p7/m, z24.s
+4481A8BC ursqrte z28.s, p2/m, z5.s
+4481AAB1 ursqrte z17.s, p2/m, z21.s
+// ursra_z_zi_ 01000101|tszh=xx|0|tszl=xx|imm3=xxx|1110|R=1|U=1|Zn=xxxxx|Zda=xxxxx
+// URSRA <Zda>.<T>,<Zn>.<T>, #<const>
+45D8EECD ursra z13.d, z22.d, #0x8
+4592EFB4 ursra z20.d, z29.d, #0x2e
+4544EDD5 ursra z21.s, z14.s, #0x1c
+4552EF1A ursra z26.s, z24.s, #0xe
+451AEE06 ursra z6.h, z16.h, #0x6
+455DED41 ursra z1.s, z10.s, #0x3
+45D3EF75 ursra z21.d, z27.d, #0xd
+4586ECBB ursra z27.d, z5.d, #0x3a
+// ushllb_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// USHLLB <Zd>.<T>,<Zn>.<Tb>, #<const>
+4553ABF0 ushllb z16.h, z31.s, #0x13
+4554AAF3 ushllb z19.h, z23.s, #0x14
+454CA8DC ushllb z28.b, z6.h, #0xc
+455BAAF4 ushllb z20.s, z23.d, #0x1b
+450CA8B6 ushllb z22.h, z5.b, #0x4
+4549A8DF ushllb z31.b, z6.h, #0x9
+4552AB74 ushllb z20.h, z27.s, #0x12
+4514A9A6 ushllb z6.s, z13.h, #0x4
+// ushllt_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// USHLLT <Zd>.<T>,<Zn>.<Tb>, #<const>
+450AAFE1 ushllt z1.h, z31.b, #0x2
+4546AF2F ushllt z15.d, z25.q, #0x6
+4554AC9D ushllt z29.h, z4.s, #0x14
+455EAD0D ushllt z13.s, z8.d, #0x1e
+4554AF81 ushllt z1.h, z28.s, #0x14
+4515ACB0 ushllt z16.s, z5.h, #0x5
+4547ACBB ushllt z27.d, z5.q, #0x7
+4509AFCC ushllt z12.h, z30.b, #0x1
+// usqadd_z_p_zz_ 01000100|size=xx|011|op=1|S=0|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
+// USQADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
+449D81A4 usqadd z4.s, p0/m, z4.s, z13.s
+449D9E26 usqadd z6.s, p7/m, z6.s, z17.s
+445D8386 usqadd z6.h, p0/m, z6.h, z28.h
+441D98C1 usqadd z1.b, p6/m, z1.b, z6.b
+445D8353 usqadd z19.h, p0/m, z19.h, z26.h
+449D9D52 usqadd z18.s, p7/m, z18.s, z10.s
+445D998C usqadd z12.h, p6/m, z12.h, z12.h
+445D8F9F usqadd z31.h, p3/m, z31.h, z28.h
+// usra_z_zi_ 01000101|tszh=xx|0|tszl=xx|imm3=xxx|1110|R=0|U=1|Zn=xxxxx|Zda=xxxxx
+// USRA <Zda>.<T>,<Zn>.<T>, #<const>
+454AE6D2 usra z18.s, z22.s, #0x16
+4541E7AF usra z15.s, z29.s, #0x1f
+4557E501 usra z1.s, z8.s, #0x9
+4546E60A usra z10.s, z16.s, #0x1a
+45CFE64D usra z13.d, z18.d, #0x11
+451FE66D usra z13.h, z19.h, #0x1
+45DBE650 usra z16.d, z18.d, #0x5
+4586E5D1 usra z17.d, z14.d, #0x3a
+// usublb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=1|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// USUBLB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45971B41 usublb z1.s, z26.h, z23.h
+45521A10 usublb z16.h, z16.b, z18.b
+45D7194B usublb z11.d, z10.s, z23.s
+45DD1AC0 usublb z0.d, z22.s, z29.s
+45C01892 usublb z18.d, z4.s, z0.s
+454E1AB8 usublb z24.h, z21.b, z14.b
+4555190C usublb z12.h, z8.b, z21.b
+45DB1B22 usublb z2.d, z25.s, z27.s
+// usublt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|00|op=0|S=1|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// USUBLT <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
+45861C71 usublt z17.s, z3.h, z6.h
+45D21FB5 usublt z21.d, z29.s, z18.s
+45C51E15 usublt z21.d, z16.s, z5.s
+45831F7D usublt z29.s, z27.h, z3.h
+455C1E10 usublt z16.h, z16.b, z28.b
+45C21F6C usublt z12.d, z27.s, z2.s
+45D21C1E usublt z30.d, z0.s, z18.s
+459D1E9A usublt z26.s, z20.h, z29.h
+// usubwb_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=1|U=1|T=0|Zn=xxxxx|Zd=xxxxx
+// USUBWB <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+45495AA0 usubwb z0.h, z21.h, z9.b
+455358F5 usubwb z21.h, z7.h, z19.b
+45945BF5 usubwb z21.s, z31.s, z20.h
+45915ACB usubwb z11.s, z22.s, z17.h
+455D5B82 usubwb z2.h, z28.h, z29.b
+459459D0 usubwb z16.s, z14.s, z20.h
+45455954 usubwb z20.h, z10.h, z5.b
+459B5997 usubwb z23.s, z12.s, z27.h
+// usubwt_z_zz_ 01000101|size=xx|0|Zm=xxxxx|010|S=1|U=1|T=1|Zn=xxxxx|Zd=xxxxx
+// USUBWT <Zd>.<T>,<Zn>.<T>,<Zm>.<Tb>
+45905C86 usubwt z6.s, z4.s, z16.h
+45995EE2 usubwt z2.s, z23.s, z25.h
+45C35DC4 usubwt z4.d, z14.d, z3.s
+45805E8D usubwt z13.s, z20.s, z0.h
+458D5D55 usubwt z21.s, z10.s, z13.h
+45D35EBD usubwt z29.d, z21.d, z19.s
+45DC5DC3 usubwt z3.d, z14.d, z28.s
+45D35F79 usubwt z25.d, z27.d, z19.s
+// whilege_p_p_rr_ 00100101|size=xx|1|Rm=xxxxx|000|sf=x|U=0|lt=0|Rn=xxxxx|eq=0|Pd=xxxx
+// WHILEGE <Pd>.<T>,<R><n>,<R><m>
+25B510C1 whilege p1.s, x6, x21
+252C10C1 whilege p1.b, x6, x12
+256401ED whilege p13.h, w15, w4
+257C116F whilege p15.h, x11, x28
+256A03A3 whilege p3.h, w29, w10
+25AB128B whilege p11.s, x20, x11
+25FF13A3 whilege p3.d, x29, xzr
+253D0384 whilege p4.b, w28, w29
+// whilegt_p_p_rr_ 00100101|size=xx|1|Rm=xxxxx|000|sf=x|U=0|lt=0|Rn=xxxxx|eq=1|Pd=xxxx
+// WHILEGT <Pd>.<T>,<R><n>,<R><m>
+257613F2 whilegt p2.h, xzr, x22
+25B1031A whilegt p10.s, w24, w17
+2523101E whilegt p14.b, x0, x3
+25AF033A whilegt p10.s, w25, w15
+25A41359 whilegt p9.s, x26, x4
+256002DE whilegt p14.h, w22, w0
+25BE1096 whilegt p6.s, x4, x30
+25AE10D3 whilegt p3.s, x6, x14
+// whilehi_p_p_rr_ 00100101|size=xx|1|Rm=xxxxx|000|sf=x|U=1|lt=0|Rn=xxxxx|eq=1|Pd=xxxx
+// WHILEHI <Pd>.<T>,<R><n>,<R><m>
+25B00BDA whilehi p10.s, w30, w16
+253C1BBA whilehi p10.b, x29, x28
+25741B52 whilehi p2.h, x26, x20
+25B51AB9 whilehi p9.s, x21, x21
+25790A95 whilehi p5.h, w20, w25
+253818F1 whilehi p1.b, x7, x24
+25E21850 whilehi p0.d, x2, x2
+25281859 whilehi p9.b, x2, x8
+// whilehs_p_p_rr_ 00100101|size=xx|1|Rm=xxxxx|000|sf=x|U=1|lt=0|Rn=xxxxx|eq=0|Pd=xxxx
+// WHILEHS <Pd>.<T>,<R><n>,<R><m>
+25E80904 whilehs p4.d, w8, w8
+257D094D whilehs p13.h, w10, w29
+25E918A2 whilehs p2.d, x5, x9
+25BA0947 whilehs p7.s, w10, w26
+25750A0F whilehs p15.h, w16, w21
+25A11BAA whilehs p10.s, x29, x1
+25A51981 whilehs p1.s, x12, x5
+25B509C3 whilehs p3.s, w14, w21
+// whilerw_p_rr_ 00100101|size=xx|1|Rm=xxxxx|001100|Rn=xxxxx|rw=1|Pd=xxxx
+// WHILERW <Pd>.<T>,<Xn>,<Xm>
+25A13152 whilerw p2.s, x10, x1
+25A23391 whilerw p1.s, x28, x2
+25EA3038 whilerw p8.d, x1, x10
+25FA3318 whilerw p8.d, x24, x26
+25613171 whilerw p1.h, x11, x1
+256C31DD whilerw p13.h, x14, x12
+25AE3078 whilerw p8.s, x3, x14
+25EC3234 whilerw p4.d, x17, x12
+// whilewr_p_rr_ 00100101|size=xx|1|Rm=xxxxx|001100|Rn=xxxxx|rw=0|Pd=xxxx
+// WHILEWR <Pd>.<T>,<Xn>,<Xm>
+252E336D whilewr p13.b, x27, x14
+25F0302E whilewr p14.d, x1, x16
+25603326 whilewr p6.h, x25, x0
+25B63304 whilewr p4.s, x24, x22
+25F83343 whilewr p3.d, x26, x24
+25E331A8 whilewr p8.d, x13, x3
+25FB3168 whilewr p8.d, x11, x27
+253B31C1 whilewr p1.b, x14, x27
+// xar_z_zzi_ 00000100|tszh=xx|1|tszl=xx|imm3=xxx|001101|Zm=xxxxx|Zdn=xxxxx
+// XAR <Zdn>.<T>,<Zdn>.<T>,<Zm>.<T>, #<const>
+04EE3424 xar z4.d, z4.d, z1.d, #0x12
+043D3604 xar z4.h, z4.h, z16.h, #0x3
+04F5379B xar z27.d, z27.d, z28.d, #0xb
+04AB376B xar z11.d, z11.d, z27.d, #0x35
+0433342E xar z14.h, z14.h, z1.h, #0xd
+04AD36B2 xar z18.d, z18.d, z21.d, #0x33
+04393594 xar z20.h, z20.h, z12.h, #0x7
+043B343C xar z28.h, z28.h, z1.h, #0x5
+// added in 2021-03 Armv8-A spec
+// CAS_C32_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CAS <Ws>,<Wt>, [<Xn|SP>{,#0}]
+88AD7E57 cas w13, w23, [x18]
+88AC7CB8 cas w12, w24, [x5]
+88AF7F64 cas w15, w4, [x27]
+88BA7E36 cas w26, w22, [x17]
+88BE7CF1 cas w30, w17, [x7]
+88AE7E6C cas w14, w12, [x19]
+88AB7DA3 cas w11, w3, [x13]
+88A77DEE cas w7, w14, [x15]
+// CASA_C32_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASA <Ws>,<Wt>, [<Xn|SP>{,#0}]
+88EC7D2C casa w12, w12, [x9]
+88ED7D70 casa w13, w16, [x11]
+88FD7C7D casa w29, w29, [x3]
+88F67D3F casa w22, wzr, [x9]
+88E77C36 casa w7, w22, [x1]
+88EF7E7E casa w15, w30, [x19]
+88F17D2E casa w17, w14, [x9]
+88E97F24 casa w9, w4, [x25]
+// CASAL_C32_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASAL <Ws>,<Wt>, [<Xn|SP>{,#0}]
+88F9FF82 casal w25, w2, [x28]
+88FEFEAF casal w30, w15, [x21]
+88E0FDE7 casal w0, w7, [x15]
+88FEFD6A casal w30, w10, [x11]
+88E5FE66 casal w5, w6, [x19]
+88FDFDD9 casal w29, w25, [x14]
+88FDFE2F casal w29, w15, [x17]
+88F6FEC1 casal w22, w1, [x22]
+// CASL_C32_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASL <Ws>,<Wt>, [<Xn|SP>{,#0}]
+88A1FC1D casl w1, w29, [x0]
+88B5FFB7 casl w21, w23, [x29]
+88B3FCBF casl w19, wzr, [x5]
+88A4FD02 casl w4, w2, [x8]
+88B9FDCE casl w25, w14, [x14]
+88A6FF33 casl w6, w19, [x25]
+88A6FF48 casl w6, w8, [x26]
+88A7FC9B casl w7, w27, [x4]
+// CAS_C64_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CAS <Xs>,<Xt>, [<Xn|SP>{,#0}]
+C8AF7CD9 cas x15, x25, [x6]
+C8A37FEE cas x3, x14, [sp]
+C8B97F0C cas x25, x12, [x24]
+C8BF7F03 cas xzr, x3, [x24]
+C8BF7DBF cas xzr, xzr, [x13]
+C8BB7C1E cas x27, x30, [x0]
+C8BE7E00 cas x30, x0, [x16]
+C8BA7E2A cas x26, x10, [x17]
+// CASA_C64_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASA <Xs>,<Xt>, [<Xn|SP>{,#0}]
+C8FB7DE2 casa x27, x2, [x15]
+C8ED7D22 casa x13, x2, [x9]
+C8F87EBC casa x24, x28, [x21]
+C8E57E0A casa x5, x10, [x16]
+C8E57FD9 casa x5, x25, [x30]
+C8EF7DE3 casa x15, x3, [x15]
+C8E47ED5 casa x4, x21, [x22]
+C8E47E60 casa x4, x0, [x19]
+// CASAL_C64_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASAL <Xs>,<Xt>, [<Xn|SP>{,#0}]
+C8ECFE29 casal x12, x9, [x17]
+C8F6FC5E casal x22, x30, [x2]
+C8E9FF56 casal x9, x22, [x26]
+C8EAFE04 casal x10, x4, [x16]
+C8E5FD97 casal x5, x23, [x12]
+C8E2FCEE casal x2, x14, [x7]
+C8EDFC6F casal x13, x15, [x3]
+C8E5FC57 casal x5, x23, [x2]
+// CASL_C64_comswap size=1x|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASL <Xs>,<Xt>, [<Xn|SP>{,#0}]
+C8BBFFED casl x27, x13, [sp]
+C8BAFC2B casl x26, x11, [x1]
+C8AAFE2B casl x10, x11, [x17]
+C8A0FC5B casl x0, x27, [x2]
+C8A8FEFF casl x8, xzr, [x23]
+C8AFFF90 casl x15, x16, [x28]
+C8B6FD21 casl x22, x1, [x9]
+C8A1FF36 casl x1, x22, [x25]
+// CASAB_C32_comswap size=00|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASAB <Ws>,<Wt>, [<Xn|SP>{,#0}]
+08F97EF5 casab w25, w21, [x23]
+08EC7C75 casab w12, w21, [x3]
+08F17EFA casab w17, w26, [x23]
+08FF7EFC casab wzr, w28, [x23]
+08E17F00 casab w1, w0, [x24]
+08F97CA7 casab w25, w7, [x5]
+08FA7D63 casab w26, w3, [x11]
+08F17C4E casab w17, w14, [x2]
+// CASALB_C32_comswap size=00|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASALB <Ws>,<Wt>, [<Xn|SP>{,#0}]
+08ECFC7E casalb w12, w30, [x3]
+08E9FCE6 casalb w9, w6, [x7]
+08E3FFF9 casalb w3, w25, [sp]
+08EEFCEF casalb w14, w15, [x7]
+08EBFFEB casalb w11, w11, [sp]
+08FFFC8A casalb wzr, w10, [x4]
+08ECFEF8 casalb w12, w24, [x23]
+08F1FD46 casalb w17, w6, [x10]
+// CASB_C32_comswap size=00|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASB <Ws>,<Wt>, [<Xn|SP>{,#0}]
+08A17E04 casb w1, w4, [x16]
+08BA7C96 casb w26, w22, [x4]
+08A37CBA casb w3, w26, [x5]
+08A57E0D casb w5, w13, [x16]
+08AD7F49 casb w13, w9, [x26]
+08B07C0E casb w16, w14, [x0]
+08B97EBF casb w25, wzr, [x21]
+08A97E52 casb w9, w18, [x18]
+// CASLB_C32_comswap size=00|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASLB <Ws>,<Wt>, [<Xn|SP>{,#0}]
+08BEFED4 caslb w30, w20, [x22]
+08A5FF70 caslb w5, w16, [x27]
+08A2FFFF caslb w2, wzr, [sp]
+08ACFC9F caslb w12, wzr, [x4]
+08ABFD89 caslb w11, w9, [x12]
+08B7FE0C caslb w23, w12, [x16]
+08A2FDA1 caslb w2, w1, [x13]
+08BFFCCC caslb wzr, w12, [x6]
+// CASAH_C32_comswap size=01|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASAH <Ws>,<Wt>, [<Xn|SP>{,#0}]
+48F17C32 casah w17, w18, [x1]
+48FB7DCA casah w27, w10, [x14]
+48E37EC3 casah w3, w3, [x22]
+48EB7F90 casah w11, w16, [x28]
+48FF7FC5 casah wzr, w5, [x30]
+48EC7C4C casah w12, w12, [x2]
+48F97FDC casah w25, w28, [x30]
+48F37D27 casah w19, w7, [x9]
+// CASALH_C32_comswap size=01|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASALH <Ws>,<Wt>, [<Xn|SP>{,#0}]
+48F1FDA0 casalh w17, w0, [x13]
+48E3FC6C casalh w3, w12, [x3]
+48F8FE89 casalh w24, w9, [x20]
+48E2FE7D casalh w2, w29, [x19]
+48FCFE45 casalh w28, w5, [x18]
+48EAFEF4 casalh w10, w20, [x23]
+48E4FE82 casalh w4, w2, [x20]
+48FCFCDD casalh w28, w29, [x6]
+// CASH_C32_comswap size=01|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASH <Ws>,<Wt>, [<Xn|SP>{,#0}]
+48B47E87 cash w20, w7, [x20]
+48BB7F36 cash w27, w22, [x25]
+48BE7D15 cash w30, w21, [x8]
+48A47E0E cash w4, w14, [x16]
+48B47E88 cash w20, w8, [x20]
+48A67DD7 cash w6, w23, [x14]
+48AE7CB8 cash w14, w24, [x5]
+48B87F72 cash w24, w18, [x27]
+// CASLH_C32_comswap size=01|0010001|L=x|1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASLH <Ws>,<Wt>, [<Xn|SP>{,#0}]
+48BAFDBB caslh w26, w27, [x13]
+48BBFDA6 caslh w27, w6, [x13]
+48B7FFE3 caslh w23, w3, [sp]
+48BBFD42 caslh w27, w2, [x10]
+48B8FDB6 caslh w24, w22, [x13]
+48A6FD69 caslh w6, w9, [x11]
+48AFFDC5 caslh w15, w5, [x14]
+48B5FF08 caslh w21, w8, [x24]
+// CASP_CP32_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASP <Ws>,<W(s+1)>,<Wt>,<W(t+1)>, [<Xn|SP>{,#0}]
+083C7FAA casp w28, w29, w10, w11, [x29]
+082E7CD0 casp w14, w15, w16, w17, [x6]
+08307FAC casp w16, w17, w12, w13, [x29]
+08307F00 casp w16, w17, w0, w1, [x24]
+08307F4A casp w16, w17, w10, w11, [x26]
+083A7CBE casp w26, w27, w30, wzr, [x5]
+08207D2A casp w0, w1, w10, w11, [x9]
+08387CB2 casp w24, w25, w18, w19, [x5]
+// CASPA_CP32_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASPA <Ws>,<W(s+1)>,<Wt>,<W(t+1)>, [<Xn|SP>{,#0}]
+08687D7A caspa w8, w9, w26, w27, [x11]
+086E7F18 caspa w14, w15, w24, w25, [x24]
+08687DDC caspa w8, w9, w28, w29, [x14]
+086E7E20 caspa w14, w15, w0, w1, [x17]
+08627F80 caspa w2, w3, w0, w1, [x28]
+087A7EEA caspa w26, w27, w10, w11, [x23]
+08627C6C caspa w2, w3, w12, w13, [x3]
+086C7F60 caspa w12, w13, w0, w1, [x27]
+// CASPAL_CP32_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASPAL <Ws>,<W(s+1)>,<Wt>,<W(t+1)>, [<Xn|SP>{,#0}]
+087EFDC6 caspal w30, wzr, w6, w7, [x14]
+0864FE54 caspal w4, w5, w20, w21, [x18]
+0870FE8C caspal w16, w17, w12, w13, [x20]
+0878FCC2 caspal w24, w25, w2, w3, [x6]
+0872FEC2 caspal w18, w19, w2, w3, [x22]
+0864FC18 caspal w4, w5, w24, w25, [x0]
+086EFD00 caspal w14, w15, w0, w1, [x8]
+0868FF8A caspal w8, w9, w10, w11, [x28]
+// CASPL_CP32_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASPL <Ws>,<W(s+1)>,<Wt>,<W(t+1)>, [<Xn|SP>{,#0}]
+0820FC96 caspl w0, w1, w22, w23, [x4]
+082CFE2C caspl w12, w13, w12, w13, [x17]
+0824FED6 caspl w4, w5, w22, w23, [x22]
+082EFF36 caspl w14, w15, w22, w23, [x25]
+0834FCBA caspl w20, w21, w26, w27, [x5]
+0820FF08 caspl w0, w1, w8, w9, [x24]
+0824FFA6 caspl w4, w5, w6, w7, [x29]
+0822FEFA caspl w2, w3, w26, w27, [x23]
+// CASP_CP64_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASP <Xs>,<X(s+1)>,<Xt>,<X(t+1)>, [<Xn|SP>{,#0}]
+482E7FFE casp x14, x15, x30, xzr, [sp]
+48367CA2 casp x22, x23, x2, x3, [x5]
+483E7E10 casp x30, xzr, x16, x17, [x16]
+48367D44 casp x22, x23, x4, x5, [x10]
+48227DBC casp x2, x3, x28, x29, [x13]
+482C7C50 casp x12, x13, x16, x17, [x2]
+48307CBA casp x16, x17, x26, x27, [x5]
+48247DAC casp x4, x5, x12, x13, [x13]
+// CASPA_CP64_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASPA <Xs>,<X(s+1)>,<Xt>,<X(t+1)>, [<Xn|SP>{,#0}]
+486A7DE0 caspa x10, x11, x0, x1, [x15]
+48647DAE caspa x4, x5, x14, x15, [x13]
+486E7E76 caspa x14, x15, x22, x23, [x19]
+48627D24 caspa x2, x3, x4, x5, [x9]
+48707CD6 caspa x16, x17, x22, x23, [x6]
+48687EEC caspa x8, x9, x12, x13, [x23]
+48747D6E caspa x20, x21, x14, x15, [x11]
+487E7D48 caspa x30, xzr, x8, x9, [x10]
+// CASPAL_CP64_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASPAL <Xs>,<X(s+1)>,<Xt>,<X(t+1)>, [<Xn|SP>{,#0}]
+4868FE9C caspal x8, x9, x28, x29, [x20]
+4864FE6E caspal x4, x5, x14, x15, [x19]
+4864FC0C caspal x4, x5, x12, x13, [x0]
+486EFF26 caspal x14, x15, x6, x7, [x25]
+4868FC5E caspal x8, x9, x30, xzr, [x2]
+487EFEE4 caspal x30, xzr, x4, x5, [x23]
+486CFE4E caspal x12, x13, x14, x15, [x18]
+4862FC52 caspal x2, x3, x18, x19, [x2]
+// CASPL_CP64_comswappr 0|sz=x|001000|o2=0|L=x|o1=1|Rs=xxxxx|o0=x|Rt2=11111|Rn=xxxxx|Rt=xxxxx
+// CASPL <Xs>,<X(s+1)>,<Xt>,<X(t+1)>, [<Xn|SP>{,#0}]
+483AFE42 caspl x26, x27, x2, x3, [x18]
+4822FC3C caspl x2, x3, x28, x29, [x1]
+483AFE08 caspl x26, x27, x8, x9, [x16]
+4822FC56 caspl x2, x3, x22, x23, [x2]
+482AFFBE caspl x10, x11, x30, xzr, [x29]
+4830FD24 caspl x16, x17, x4, x5, [x9]
+4820FEAA caspl x0, x1, x10, x11, [x21]
+483EFCC4 caspl x30, xzr, x4, x5, [x6]
+// DRPS_64E_branch_reg 1101011|opc=0101|op2=11111|op3=000000|Rt=11111|op4=00000
+// DRPS
+D6BF03E0 drps
+// DUP_asimdins_DV_v 0|Q=x|op=0|01110000|imm5=xxxxx|0|imm4=0000|1|Rn=xxxxx|Rd=xxxxx
+// DUP <Vd>.<T>,<Vn>.<Ts>[<index>]
+4E0506E3 dup v3.16b, v23.b[2]
+4E170572 dup v18.16b, v11.b[11]
+4E04065E dup v30.4s, v18.s[0]
+4E0E04D8 dup v24.8h, v6.h[3]
+4E130794 dup v20.16b, v28.b[9]
+4E18060D dup v13.2d, v16.d[1]
+4E1D0421 dup v1.16b, v1.b[14]
+4E1907C6 dup v6.16b, v30.b[12]
+// DVP_SYS_CR_systeminstrs 1101010100|L=0|op0=01|op1=011|CRn=0111|CRm=0011|op2=101|Rt=xxxxx
+// DVP RCTX,<Xt>
+D50B73A6 dvp rctx, x6
+D50B73B7 dvp rctx, x23
+D50B73A7 dvp rctx, x7
+D50B73AD dvp rctx, x13
+D50B73AF dvp rctx, x15
+D50B73BA dvp rctx, x26
+D50B73B3 dvp rctx, x19
+D50B73A0 dvp rctx, x0
+// ERET_64E_branch_reg 1101011|opc[3]=0|opc[2:0]=100|op2=11111|op3[5:2]=0000|A=0|M=0|Rn=11111|op4=00000
+// ERET
+D69F03E0 eret
+// ERETAA_64E_branch_reg 1101011|opc[3]=0|opc[2:0]=100|op2=11111|op3[5:2]=0000|A=1|M=x|Rn=11111|op4=11111
+// ERETAA
+D69F0BFF eretaa
+// ERETAB_64E_branch_reg 1101011|opc[3]=0|opc[2:0]=100|op2=11111|op3[5:2]=0000|A=1|M=x|Rn=11111|op4=11111
+// ERETAB
+D69F0FFF eretab
+// LDAR_LR32_ldstord size=1x|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDAR <Wt>, [<Xn|SP>{,#0}]
+88DFFC99 ldar w25, [x4]
+88DFFC3C ldar w28, [x1]
+88DFFF37 ldar w23, [x25]
+88DFFFA1 ldar w1, [x29]
+88DFFD43 ldar w3, [x10]
+88DFFF28 ldar w8, [x25]
+88DFFD49 ldar w9, [x10]
+88DFFF9E ldar w30, [x28]
+// LDAR_LR64_ldstord size=1x|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDAR <Xt>, [<Xn|SP>{,#0}]
+C8DFFEF5 ldar x21, [x23]
+C8DFFF98 ldar x24, [x28]
+C8DFFC03 ldar x3, [x0]
+C8DFFDF9 ldar x25, [x15]
+C8DFFE8A ldar x10, [x20]
+C8DFFFEE ldar x14, [sp]
+C8DFFC6B ldar x11, [x3]
+C8DFFF8C ldar x12, [x28]
+// LDARB_LR32_ldstord size=00|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDARB <Wt>, [<Xn|SP>{,#0}]
+08DFFE9C ldarb w28, [x20]
+08DFFE94 ldarb w20, [x20]
+08DFFE90 ldarb w16, [x20]
+08DFFC98 ldarb w24, [x4]
+08DFFEF9 ldarb w25, [x23]
+08DFFCE7 ldarb w7, [x7]
+08DFFF47 ldarb w7, [x26]
+08DFFCEE ldarb w14, [x7]
+// LDARH_LR32_ldstord size=01|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDARH <Wt>, [<Xn|SP>{,#0}]
+48DFFD2F ldarh w15, [x9]
+48DFFF03 ldarh w3, [x24]
+48DFFEEC ldarh w12, [x23]
+48DFFF38 ldarh w24, [x25]
+48DFFF21 ldarh w1, [x25]
+48DFFECD ldarh w13, [x22]
+48DFFEA7 ldarh w7, [x21]
+48DFFEF6 ldarh w22, [x23]
+// LDAXP_LP32_ldstexclp 1|sz=x|001000|o2=0|L=1|o1=1|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// LDAXP <Wt1>,<Wt2>, [<Xn|SP>{,#0}]
+887F9CEA ldaxp w10, w7, [x7]
+887FAA99 ldaxp w25, w10, [x20]
+887FA647 ldaxp w7, w9, [x18]
+887FAFF7 ldaxp w23, w11, [sp]
+887FFFAA ldaxp w10, wzr, [x29]
+887F9DBD ldaxp w29, w7, [x13]
+887F8949 ldaxp w9, w2, [x10]
+887FD28E ldaxp w14, w20, [x20]
+// LDAXP_LP64_ldstexclp 1|sz=x|001000|o2=0|L=1|o1=1|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// LDAXP <Xt1>,<Xt2>, [<Xn|SP>{,#0}]
+C87FE8D5 ldaxp x21, x26, [x6]
+C87FC02B ldaxp x11, x16, [x1]
+C87FBE51 ldaxp x17, x15, [x18]
+C87FB648 ldaxp x8, x13, [x18]
+C87FC6F7 ldaxp x23, x17, [x23]
+C87FF581 ldaxp x1, x29, [x12]
+C87FF6FA ldaxp x26, x29, [x23]
+C87FADDE ldaxp x30, x11, [x14]
+// LDAXR_LR32_ldstexclr size=1x|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDAXR <Wt>, [<Xn|SP>{,#0}]
+885FFD08 ldaxr w8, [x8]
+885FFDD9 ldaxr w25, [x14]
+885FFDBA ldaxr w26, [x13]
+885FFC73 ldaxr w19, [x3]
+885FFC4D ldaxr w13, [x2]
+885FFE87 ldaxr w7, [x20]
+885FFEDE ldaxr w30, [x22]
+885FFE7D ldaxr w29, [x19]
+// LDAXR_LR64_ldstexclr size=1x|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDAXR <Xt>, [<Xn|SP>{,#0}]
+C85FFF0B ldaxr x11, [x24]
+C85FFFC3 ldaxr x3, [x30]
+C85FFE2C ldaxr x12, [x17]
+C85FFC21 ldaxr x1, [x1]
+C85FFCAC ldaxr x12, [x5]
+C85FFCC9 ldaxr x9, [x6]
+C85FFFEA ldaxr x10, [sp]
+C85FFEC6 ldaxr x6, [x22]
+// LDAXRB_LR32_ldstexclr size=00|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDAXRB <Wt>, [<Xn|SP>{,#0}]
+085FFE57 ldaxrb w23, [x18]
+085FFE1F ldaxrb wzr, [x16]
+085FFCE4 ldaxrb w4, [x7]
+085FFDEE ldaxrb w14, [x15]
+085FFF6D ldaxrb w13, [x27]
+085FFC1B ldaxrb w27, [x0]
+085FFDB1 ldaxrb w17, [x13]
+085FFD4D ldaxrb w13, [x10]
+// LDAXRH_LR32_ldstexclr size=01|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDAXRH <Wt>, [<Xn|SP>{,#0}]
+485FFFFC ldaxrh w28, [sp]
+485FFC38 ldaxrh w24, [x1]
+485FFC83 ldaxrh w3, [x4]
+485FFC8B ldaxrh w11, [x4]
+485FFCE6 ldaxrh w6, [x7]
+485FFC6A ldaxrh w10, [x3]
+485FFF8C ldaxrh w12, [x28]
+485FFE82 ldaxrh w2, [x20]
+// LDLAR_LR32_ldstord size=1x|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDLAR <Wt>, [<Xn|SP>{,#0}]
+88DF7C1F ldlar wzr, [x0]
+88DF7F85 ldlar w5, [x28]
+88DF7C60 ldlar w0, [x3]
+88DF7C2B ldlar w11, [x1]
+88DF7D24 ldlar w4, [x9]
+88DF7EC5 ldlar w5, [x22]
+88DF7D72 ldlar w18, [x11]
+88DF7E1B ldlar w27, [x16]
+// LDLAR_LR64_ldstord size=1x|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDLAR <Xt>, [<Xn|SP>{,#0}]
+C8DF7C2F ldlar x15, [x1]
+C8DF7D47 ldlar x7, [x10]
+C8DF7ED7 ldlar x23, [x22]
+C8DF7E9D ldlar x29, [x20]
+C8DF7EFC ldlar x28, [x23]
+C8DF7C71 ldlar x17, [x3]
+C8DF7E73 ldlar x19, [x19]
+C8DF7CE4 ldlar x4, [x7]
+// LDLARB_LR32_ldstord size=00|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDLARB <Wt>, [<Xn|SP>{,#0}]
+08DF7C04 ldlarb w4, [x0]
+08DF7D1E ldlarb w30, [x8]
+08DF7E1A ldlarb w26, [x16]
+08DF7D98 ldlarb w24, [x12]
+08DF7DD7 ldlarb w23, [x14]
+08DF7E5E ldlarb w30, [x18]
+08DF7ECF ldlarb w15, [x22]
+08DF7F7D ldlarb w29, [x27]
+// LDLARH_LR32_ldstord size=01|001000|o2=1|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDLARH <Wt>, [<Xn|SP>{,#0}]
+48DF7DD1 ldlarh w17, [x14]
+48DF7F55 ldlarh w21, [x26]
+48DF7DD6 ldlarh w22, [x14]
+48DF7C50 ldlarh w16, [x2]
+48DF7D3E ldlarh w30, [x9]
+48DF7D5F ldlarh wzr, [x10]
+48DF7E47 ldlarh w7, [x18]
+48DF7F87 ldlarh w7, [x28]
+// LDXP_LP32_ldstexclp 1|sz=x|001000|o2=0|L=1|o1=1|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// LDXP <Wt1>,<Wt2>, [<Xn|SP>{,#0}]
+887F5DB1 ldxp w17, w23, [x13]
+887F7C29 ldxp w9, wzr, [x1]
+887F76D2 ldxp w18, w29, [x22]
+887F6ED7 ldxp w23, w27, [x22]
+887F2679 ldxp w25, w9, [x19]
+887F1103 ldxp w3, w4, [x8]
+887F41EA ldxp w10, w16, [x15]
+887F6145 ldxp w5, w24, [x10]
+// LDXP_LP64_ldstexclp 1|sz=x|001000|o2=0|L=1|o1=1|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// LDXP <Xt1>,<Xt2>, [<Xn|SP>{,#0}]
+C87F2712 ldxp x18, x9, [x24]
+C87F1749 ldxp x9, x5, [x26]
+C87F2D44 ldxp x4, x11, [x10]
+C87F6DD5 ldxp x21, x27, [x14]
+C87F0C47 ldxp x7, x3, [x2]
+C87F5807 ldxp x7, x22, [x0]
+C87F3FFF ldxp xzr, x15, [sp]
+C87F759F ldxp xzr, x29, [x12]
+// LDXR_LR32_ldstexclr size=1x|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDXR <Wt>, [<Xn|SP>{,#0}]
+885F7FC0 ldxr w0, [x30]
+885F7F34 ldxr w20, [x25]
+885F7E3B ldxr w27, [x17]
+885F7CC5 ldxr w5, [x6]
+885F7C40 ldxr w0, [x2]
+885F7DE3 ldxr w3, [x15]
+885F7E16 ldxr w22, [x16]
+885F7F90 ldxr w16, [x28]
+// LDXR_LR64_ldstexclr size=1x|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDXR <Xt>, [<Xn|SP>{,#0}]
+C85F7D23 ldxr x3, [x9]
+C85F7CE4 ldxr x4, [x7]
+C85F7FED ldxr x13, [sp]
+C85F7FAA ldxr x10, [x29]
+C85F7D57 ldxr x23, [x10]
+C85F7DE0 ldxr x0, [x15]
+C85F7F09 ldxr x9, [x24]
+C85F7E67 ldxr x7, [x19]
+// LDXRB_LR32_ldstexclr size=00|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDXRB <Wt>, [<Xn|SP>{,#0}]
+085F7FA3 ldxrb w3, [x29]
+085F7D32 ldxrb w18, [x9]
+085F7DC4 ldxrb w4, [x14]
+085F7D5B ldxrb w27, [x10]
+085F7DE7 ldxrb w7, [x15]
+085F7E0B ldxrb w11, [x16]
+085F7DE3 ldxrb w3, [x15]
+085F7C0A ldxrb w10, [x0]
+// LDXRH_LR32_ldstexclr size=01|001000|o2=0|L=1|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// LDXRH <Wt>, [<Xn|SP>{,#0}]
+485F7F0D ldxrh w13, [x24]
+485F7D89 ldxrh w9, [x12]
+485F7D2D ldxrh w13, [x9]
+485F7EC3 ldxrh w3, [x22]
+485F7DB7 ldxrh w23, [x13]
+485F7DA1 ldxrh w1, [x13]
+485F7E67 ldxrh w7, [x19]
+485F7E6C ldxrh w12, [x19]
+// PSSBB_DSB_BO_barriers 1101010100|L=0|op0=00|op1=011|CRn=0011|CRm=0100|1|opc=00|Rt=11111
+// PSSBB
+D503349F pssbb
+// SSBB_DSB_BO_barriers 1101010100|L=0|op0=00|op1=011|CRn=0011|CRm=0000|1|opc=00|Rt=11111
+// SSBB
+D503309F ssbb
+// STLLR_SL32_ldstord size=1x|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLLR <Wt>, [<Xn|SP>{,#0}]
+889F7C49 stllr w9, [x2]
+889F7EA2 stllr w2, [x21]
+889F7F8C stllr w12, [x28]
+889F7CD2 stllr w18, [x6]
+889F7E6A stllr w10, [x19]
+889F7C32 stllr w18, [x1]
+889F7C98 stllr w24, [x4]
+889F7F05 stllr w5, [x24]
+// STLLR_SL64_ldstord size=1x|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLLR <Xt>, [<Xn|SP>{,#0}]
+C89F7D79 stllr x25, [x11]
+C89F7DBC stllr x28, [x13]
+C89F7E0C stllr x12, [x16]
+C89F7DFE stllr x30, [x15]
+C89F7F1F stllr xzr, [x24]
+C89F7D6E stllr x14, [x11]
+C89F7F98 stllr x24, [x28]
+C89F7C18 stllr x24, [x0]
+// STLLRB_SL32_ldstord size=00|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLLRB <Wt>, [<Xn|SP>{,#0}]
+089F7E8B stllrb w11, [x20]
+089F7F5E stllrb w30, [x26]
+089F7EC0 stllrb w0, [x22]
+089F7C5F stllrb wzr, [x2]
+089F7EB8 stllrb w24, [x21]
+089F7F49 stllrb w9, [x26]
+089F7CBC stllrb w28, [x5]
+089F7C5A stllrb w26, [x2]
+// STLLRH_SL32_ldstord size=01|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLLRH <Wt>, [<Xn|SP>{,#0}]
+489F7C85 stllrh w5, [x4]
+489F7C32 stllrh w18, [x1]
+489F7ED2 stllrh w18, [x22]
+489F7F47 stllrh w7, [x26]
+489F7D88 stllrh w8, [x12]
+489F7D8E stllrh w14, [x12]
+489F7FB8 stllrh w24, [x29]
+489F7E3B stllrh w27, [x17]
+// STLR_SL32_ldstord size=1x|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLR <Wt>, [<Xn|SP>{,#0}]
+889FFF7C stlr w28, [x27]
+889FFFFF stlr wzr, [sp]
+889FFF7B stlr w27, [x27]
+889FFEB0 stlr w16, [x21]
+889FFCDA stlr w26, [x6]
+889FFE86 stlr w6, [x20]
+889FFCE5 stlr w5, [x7]
+889FFD52 stlr w18, [x10]
+// STLR_SL64_ldstord size=1x|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLR <Xt>, [<Xn|SP>{,#0}]
+C89FFD31 stlr x17, [x9]
+C89FFF03 stlr x3, [x24]
+C89FFF51 stlr x17, [x26]
+C89FFC71 stlr x17, [x3]
+C89FFE1E stlr x30, [x16]
+C89FFCCA stlr x10, [x6]
+C89FFDCB stlr x11, [x14]
+C89FFDED stlr x13, [x15]
+// STLRB_SL32_ldstord size=00|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLRB <Wt>, [<Xn|SP>{,#0}]
+089FFD84 stlrb w4, [x12]
+089FFD65 stlrb w5, [x11]
+089FFD62 stlrb w2, [x11]
+089FFFA0 stlrb w0, [x29]
+089FFC78 stlrb w24, [x3]
+089FFC91 stlrb w17, [x4]
+089FFDEE stlrb w14, [x15]
+089FFC36 stlrb w22, [x1]
+// STLRH_SL32_ldstord size=01|001000|o2=1|L=0|o1=0|Rs=(1)(1)(1)(1)(1)|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLRH <Wt>, [<Xn|SP>{,#0}]
+489FFC27 stlrh w7, [x1]
+489FFCFF stlrh wzr, [x7]
+489FFD2F stlrh w15, [x9]
+489FFF14 stlrh w20, [x24]
+489FFECF stlrh w15, [x22]
+489FFD2E stlrh w14, [x9]
+489FFFB7 stlrh w23, [x29]
+489FFD68 stlrh w8, [x11]
+// STLXP_SP32_ldstexclp 1|sz=x|001000|o2=0|L=0|o1=1|Rs=xxxxx|o0=1|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// STLXP <Ws>,<Wt1>,<Wt2>, [<Xn|SP>{,#0}]
+8827B60A stlxp w7, w10, w13, [x16]
+882C8D74 stlxp w12, w20, w3, [x11]
+882AEF02 stlxp w10, w2, w27, [x24]
+882EDD20 stlxp w14, w0, w23, [x9]
+883AD5C6 stlxp w26, w6, w21, [x14]
+8823E0D5 stlxp w3, w21, w24, [x6]
+8827CE01 stlxp w7, w1, w19, [x16]
+8838E92C stlxp w24, w12, w26, [x9]
+// STLXP_SP64_ldstexclp 1|sz=x|001000|o2=0|L=0|o1=1|Rs=xxxxx|o0=1|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// STLXP <Ws>,<Xt1>,<Xt2>, [<Xn|SP>{,#0}]
+C82FD822 stlxp w15, x2, x22, [x1]
+C83BFB4A stlxp w27, x10, x30, [x26]
+C836E4E4 stlxp w22, x4, x25, [x7]
+C839A6F4 stlxp w25, x20, x9, [x23]
+C82DE935 stlxp w13, x21, x26, [x9]
+C831FC2E stlxp w17, x14, xzr, [x1]
+C821DCAE stlxp w1, x14, x23, [x5]
+C83BA419 stlxp w27, x25, x9, [x0]
+// STLXR_SR32_ldstexclr size=1x|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLXR <Ws>,<Wt>, [<Xn|SP>{,#0}]
+8808FF4B stlxr w8, w11, [x26]
+8817FC46 stlxr w23, w6, [x2]
+881FFDB4 stlxr wzr, w20, [x13]
+8806FF72 stlxr w6, w18, [x27]
+881AFD1A stlxr w26, w26, [x8]
+8814FF9B stlxr w20, w27, [x28]
+880FFD1C stlxr w15, w28, [x8]
+8804FCB0 stlxr w4, w16, [x5]
+// STLXR_SR64_ldstexclr size=1x|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLXR <Ws>,<Xt>, [<Xn|SP>{,#0}]
+C80CFFED stlxr w12, x13, [sp]
+C81CFF9B stlxr w28, x27, [x28]
+C809FD3B stlxr w9, x27, [x9]
+C812FD45 stlxr w18, x5, [x10]
+C80AFC90 stlxr w10, x16, [x4]
+C80BFCCE stlxr w11, x14, [x6]
+C800FF19 stlxr w0, x25, [x24]
+C80CFC39 stlxr w12, x25, [x1]
+// STLXRB_SR32_ldstexclr size=00|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLXRB <Ws>,<Wt>, [<Xn|SP>{,#0}]
+081CFDCA stlxrb w28, w10, [x14]
+0805FF02 stlxrb w5, w2, [x24]
+0806FC0B stlxrb w6, w11, [x0]
+0804FFB9 stlxrb w4, w25, [x29]
+080CFEBC stlxrb w12, w28, [x21]
+0813FF18 stlxrb w19, w24, [x24]
+0802FE09 stlxrb w2, w9, [x16]
+0808FDC4 stlxrb w8, w4, [x14]
+// STLXRH_SR32_ldstexclr size=01|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=1|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STLXRH <Ws>,<Wt>, [<Xn|SP>{,#0}]
+480CFC61 stlxrh w12, w1, [x3]
+481EFF15 stlxrh w30, w21, [x24]
+480BFDE5 stlxrh w11, w5, [x15]
+4807FC53 stlxrh w7, w19, [x2]
+480BFFCC stlxrh w11, w12, [x30]
+481DFF17 stlxrh w29, w23, [x24]
+4812FC12 stlxrh w18, w18, [x0]
+4809FE33 stlxrh w9, w19, [x17]
+// STXP_SP32_ldstexclp 1|sz=x|001000|o2=0|L=0|o1=1|Rs=xxxxx|o0=0|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// STXP <Ws>,<Wt1>,<Wt2>, [<Xn|SP>{,#0}]
+882609AB stxp w6, w11, w2, [x13]
+88201069 stxp w0, w9, w4, [x3]
+882E4412 stxp w14, w18, w17, [x0]
+8820222D stxp w0, w13, w8, [x17]
+883E1B2D stxp w30, w13, w6, [x25]
+882F76AB stxp w15, w11, w29, [x21]
+882D3A1F stxp w13, wzr, w14, [x16]
+882224FB stxp w2, w27, w9, [x7]
+// STXP_SP64_ldstexclp 1|sz=x|001000|o2=0|L=0|o1=1|Rs=xxxxx|o0=0|Rt2=xxxxx|Rn=xxxxx|Rt=xxxxx
+// STXP <Ws>,<Xt1>,<Xt2>, [<Xn|SP>{,#0}]
+C8225AFE stxp w2, x30, x22, [x23]
+C8247A62 stxp w4, x2, x30, [x19]
+C825204E stxp w5, x14, x8, [x2]
+C83B3621 stxp w27, x1, x13, [x17]
+C82D59CC stxp w13, x12, x22, [x14]
+C8382B75 stxp w24, x21, x10, [x27]
+C83B0A08 stxp w27, x8, x2, [x16]
+C825616A stxp w5, x10, x24, [x11]
+// STXR_SR32_ldstexclr size=1x|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STXR <Ws>,<Wt>, [<Xn|SP>{,#0}]
+88047F62 stxr w4, w2, [x27]
+88197CD5 stxr w25, w21, [x6]
+88147C47 stxr w20, w7, [x2]
+88077D94 stxr w7, w20, [x12]
+88037EAD stxr w3, w13, [x21]
+881C7C4F stxr w28, w15, [x2]
+88117D8E stxr w17, w14, [x12]
+88177DD6 stxr w23, w22, [x14]
+// STXR_SR64_ldstexclr size=1x|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STXR <Ws>,<Xt>, [<Xn|SP>{,#0}]
+C80B7FC1 stxr w11, x1, [x30]
+C8107D1C stxr w16, x28, [x8]
+C80A7F0A stxr w10, x10, [x24]
+C8067DEE stxr w6, x14, [x15]
+C8017CA6 stxr w1, x6, [x5]
+C8017FE8 stxr w1, x8, [sp]
+C80E7C1C stxr w14, x28, [x0]
+C81C7E78 stxr w28, x24, [x19]
+// STXRB_SR32_ldstexclr size=00|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STXRB <Ws>,<Wt>, [<Xn|SP>{,#0}]
+080D7CD2 stxrb w13, w18, [x6]
+080C7D20 stxrb w12, w0, [x9]
+080A7F85 stxrb w10, w5, [x28]
+08157EF2 stxrb w21, w18, [x23]
+080B7D09 stxrb w11, w9, [x8]
+08007EE6 stxrb w0, w6, [x23]
+08197D5F stxrb w25, wzr, [x10]
+081B7FF3 stxrb w27, w19, [sp]
+// STXRH_SR32_ldstexclr size=01|001000|o2=0|L=0|o1=0|Rs=xxxxx|o0=0|Rt2=(1)(1)(1)(1)(1)|Rn=xxxxx|Rt=xxxxx
+// STXRH <Ws>,<Wt>, [<Xn|SP>{,#0}]
+48117FB8 stxrh w17, w24, [x29]
+48137D08 stxrh w19, w8, [x8]
+48167CD6 stxrh w22, w22, [x6]
+48187D3D stxrh w24, w29, [x9]
+48117C43 stxrh w17, w3, [x2]
+48017CB1 stxrh w1, w17, [x5]
+48007E12 stxrh w0, w18, [x16]
+481E7FC3 stxrh w30, w3, [x30]
+// UBFM_32M_bitfield sf=x|opc=10|100110|N=x|immr=xxxxxx|imms=xxxxxx|Rn=xxxxx|Rd=xxxxx
+// UBFM <Wd>,<Wn>, #<immr>, #<imms>
+// UBFM_64M_bitfield sf=x|opc=10|100110|N=x|immr=xxxxxx|imms=xxxxxx|Rn=xxxxx|Rd=xxxxx
+// UBFM <Xd>,<Xn>, #<immr>, #<imms>
+// UDF_only_perm_undef 0000000000000000|imm16=xxxxxxxxxxxxxxxx
+// UDF #<imm>
+00004ABD udf #0x4abd
+0000571A udf #0x571a
+000015BD udf #0x15bd
+00005802 udf #0x5802
+0000B45F udf #0xb45f
+000011FA udf #0x11fa
+0000E3FF udf #0xe3ff
+00009E02 udf #0x9e02
+// IC_SYS_CR_systeminstrs 1101010100|L=0|op0=01|op1=xxx|CRn=0111|CRm=xxxx|op2=xxx|Rt=xxxxx
+// IC <ic_op>{,<Xt>}
+D5087112 ic ialluis
+D5087115 ic ialluis
+D5087516 ic iallu
+D508750E ic iallu
+D50B752A ic ivau, x10
+D50B7523 ic ivau, x3
+D508750F ic iallu
+D508751E ic iallu
+D50B753F ic ivau, xzr
 // added in 2020-12 spec
 // BFCVT_Z_P_Z_S2BF 01100101|opc=10|0010|opc2=10|101|Pg=xxx|Zn=xxxxx|Zd=xxxxx
 // BFCVT <Zd>.H,<Pg>/M,<Zn>.S
@@ -19084,7 +22693,8 @@ F8953385 prfum pldl3strm, [x28, #-0xad]
 F89BB15A prfum #0x1a, [x10, #-0x45]
 // PSB_HC_hints 1101010100000011001000100xxxxxxx
 D503223F psb csync
-// PSSBB_only_barriers 11010101000000110011010010xxxxxx
+// PSSBB_DSB_BO_BARRIERS
+// 1101010100|L=0|OP0=00|OP1=011|CRN=0011|CRM=0100|1|OPC=00|RT=11111
 D503349F pssbb
 // RADDHN_asimddiff_N 0x101110xx1xxxxx010000xxxxxxxxxx
 6E2D40F4 raddhn2 v20.16b, v7.8h, v13.8h

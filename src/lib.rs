@@ -64,7 +64,6 @@
 //! ```
 
 #![no_std]
-#![feature(maybe_uninit_uninit_array, maybe_uninit_extra, maybe_uninit_slice)]
 
 #[macro_use]
 extern crate num_derive;
@@ -75,7 +74,6 @@ extern crate static_assertions;
 use core::convert::{TryFrom, TryInto};
 use core::fmt;
 use core::hash::{Hash, Hasher};
-use core::mem::MaybeUninit;
 
 use num_traits::FromPrimitive;
 
@@ -104,7 +102,7 @@ pub struct Instruction {
     opcode: u32,
     op: Op,
     num_operands: usize,
-    operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize],
+    operands: [Operand; MAX_OPERANDS as usize],
 }
 
 // Needed because MaybeUninit doesn't allow derives
@@ -224,7 +222,7 @@ impl Instruction {
     /// assert_eq!(ops[2], Operand::Reg { reg: Reg::X2, arrspec: None });
     /// ```
     pub fn operands(&self) -> &[Operand] {
-        unsafe { MaybeUninit::slice_assume_init_ref(&self.operands[..self.num_operands]) }
+        &self.operands[..self.num_operands]
     }
 }
 /// Decoding errors types
@@ -290,22 +288,23 @@ impl DecodeError {
 /// assert_eq!(decoded.address(), 0x1000);
 /// ```
 pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
-    let mut decoded = MaybeUninit::zeroed();
-
-    let r = unsafe { aarch64_decompose(ins, decoded.as_mut_ptr(), address) };
+    let (r, decoded) = unsafe {
+        let mut decoded: bad64_sys::Instruction = core::mem::zeroed();
+        let r = aarch64_decompose(ins, &mut decoded, address);
+        (r, decoded)
+    };
 
     match r {
         0 => {
-            let decoded = unsafe { decoded.assume_init() };
             let op = Op::from_u32(decoded.operation as u32).unwrap();
-            let mut operands: [MaybeUninit<Operand>; MAX_OPERANDS as usize] =
-                MaybeUninit::uninit_array();
+            let mut operands: [Operand; MAX_OPERANDS as usize] =
+                [Operand::None; MAX_OPERANDS as usize];
             let mut num_operands = 0;
 
             for (n, operand) in decoded.operands.iter().enumerate() {
                 match Operand::try_from(operand) {
                     Ok(o) => {
-                        operands[n] = MaybeUninit::new(o);
+                        operands[n] = o;
                         num_operands += 1;
                     }
                     Err(_) => break,

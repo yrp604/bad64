@@ -1,3 +1,5 @@
+// https://github.com/Vector35/arch-arm64/issues/78
+D5032FFF hint #0x7f
 // added in 2021-03 v9 spec
 // TCANCEL_EX_exception 11010100|opc=011|imm16=xxxxxxxxxxxxxxxx|op2=000|LL=00
 // TCANCEL #<imm>

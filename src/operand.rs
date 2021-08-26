@@ -101,8 +101,6 @@ pub enum Operand {
         str: [u8; MAX_NAME as usize],
         imm: u64,
     },
-    /// This is a special enumerated type for the Rust bindings
-    None,
 }
 
 #[allow(non_upper_case_globals)]
@@ -319,10 +317,6 @@ impl fmt::Display for Operand {
 
                 write!(f, "{} #{:#x}", name, imm)
             }
-            Self::None => write!(
-                f,
-                "None (This is an internal type for the rust-bindings, and most likely an error)"
-            ),
         }
     }
 }

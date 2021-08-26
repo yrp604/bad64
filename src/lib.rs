@@ -71,6 +71,9 @@ extern crate num_derive;
 #[macro_use]
 extern crate static_assertions;
 
+#[cfg(feature = "std")]
+extern crate std;
+
 use core::convert::{TryFrom, TryInto};
 use core::fmt;
 use core::hash::{Hash, Hasher};
@@ -282,6 +285,9 @@ impl fmt::Display for DecodeError {
     }
 }
 
+#[cfg(feature = "std")]
+impl std::error::Error for DecodeError {}
+
 /// Decode a single instruction
 ///
 /// # Arguments
@@ -313,7 +319,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
         0 => {
             let op = Op::from_u32(decoded.operation as u32).unwrap();
             let mut operands: [Operand; MAX_OPERANDS as usize] =
-                [Operand::None; MAX_OPERANDS as usize];
+                [Operand::Label(Imm::Unsigned(0)); MAX_OPERANDS as usize];
             let mut num_operands = 0;
 
             for (n, operand) in decoded.operands.iter().enumerate() {

@@ -13,7 +13,10 @@ fn main() {
             let time = start.elapsed();
             let p = (int as f64) / (u32::MAX as f64) * 100.0;
             let rate = (int as f64) / u64::max(1, time.as_secs()) as f64;
-            println!("checked {} words ({:.1}%) in {:.1?} ({:.0} words/sec)", int, p, time, rate);
+            println!(
+                "checked {} words ({:.1}%) in {:.1?} ({:.0} words/sec)",
+                int, p, time, rate
+            );
         }
     }
 

@@ -661,6 +661,7 @@ pub enum SysReg {
     CNTPS_CTL_EL1 = SystemReg_REG_CNTPS_CTL_EL1 as u32,
     CNTPS_CVAL_EL1 = SystemReg_REG_CNTPS_CVAL_EL1 as u32,
     PSTATE_SPSEL = SystemReg_REG_PSTATE_SPSEL as u32,
+    SYSREG_UNKNOWN = SystemReg_SYSREG_UNKNOWN as u32,
 }
 
 const_assert_eq!(SystemReg_SYSREG_END, 65301);

@@ -2,7 +2,7 @@
 name = "bad64"
 version = "0.4.0"
 authors = ["yrp <yrp604@protonmail.com>"]
-edition = "2018"
+edition = "2021"
 description = "Rust bindings for Binja's arm64 disassembler"
 license = "Apache-2.0"
 repository = "https://github.com/yrp604/bad64"

@@ -276,15 +276,15 @@ impl DecodeError {
 impl fmt::Display for DecodeError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            DecodeError::Reserved(x) => write!(f, "Reserved: 0x{:x}", x),
-            DecodeError::Unmatched(x) => write!(f, "Unmatched: 0x{:x}", x),
-            DecodeError::Unallocated(x) => write!(f, "Unallocated: 0x{:x}", x),
-            DecodeError::Undefined(x) => write!(f, "Undefined: 0x{:x}", x),
-            DecodeError::EndOfInstruction(x) => write!(f, "EndOfInstruction: 0x{:x}", x),
-            DecodeError::Lost(x) => write!(f, "Lost: 0x{:x}", x),
-            DecodeError::Unreachable(x) => write!(f, "Unreachable: 0x{:x}", x),
-            DecodeError::Short(x) => write!(f, "Short: 0x{:x}", x),
-            DecodeError::ErrorOperands(x) => write!(f, "ErrorOperands: 0x{:x}", x),
+            DecodeError::Reserved(x) => write!(f, "Reserved: {:#x}", x),
+            DecodeError::Unmatched(x) => write!(f, "Unmatched: {:#x}", x),
+            DecodeError::Unallocated(x) => write!(f, "Unallocated: {:#x}", x),
+            DecodeError::Undefined(x) => write!(f, "Undefined: {:#x}", x),
+            DecodeError::EndOfInstruction(x) => write!(f, "EndOfInstruction: {:#x}", x),
+            DecodeError::Lost(x) => write!(f, "Lost: {:#x}", x),
+            DecodeError::Unreachable(x) => write!(f, "Unreachable: {:#x}", x),
+            DecodeError::Short(x) => write!(f, "Short: {:#x}", x),
+            DecodeError::ErrorOperands(x) => write!(f, "ErrorOperands: {:#x}", x),
         }
     }
 }

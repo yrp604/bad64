@@ -240,6 +240,7 @@ pub enum DecodeError {
     Lost(u64),
     Unreachable(u64),
     Short(u64),
+    ErrorOperands(u64),
 }
 
 impl DecodeError {
@@ -252,6 +253,7 @@ impl DecodeError {
             DECODE_STATUS_END_OF_INSTRUCTION => Self::EndOfInstruction(address),
             DECODE_STATUS_LOST => Self::Lost(address),
             DECODE_STATUS_UNREACHABLE => Self::Unreachable(address),
+            DECODE_STATUS_ERROR_OPERANDS => Self::ErrorOperands(address),
             _ => panic!("unknown decode error code"),
         }
     }
@@ -266,6 +268,7 @@ impl DecodeError {
             Self::Lost(a) => *a,
             Self::Unreachable(a) => *a,
             Self::Short(a) => *a,
+            Self::ErrorOperands(a) => *a,
         }
     }
 }
@@ -281,6 +284,7 @@ impl fmt::Display for DecodeError {
             DecodeError::Lost(x) => write!(f, "Lost: 0x{:x}", x),
             DecodeError::Unreachable(x) => write!(f, "Unreachable: 0x{:x}", x),
             DecodeError::Short(x) => write!(f, "Short: 0x{:x}", x),
+            DecodeError::ErrorOperands(x) => write!(f, "ErrorOperands: 0x{:x}", x),
         }
     }
 }

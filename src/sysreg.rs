@@ -663,7 +663,7 @@ pub enum SysReg {
     PSTATE_SPSEL = SystemReg_REG_PSTATE_SPSEL as u32,
 }
 
-const_assert_eq!(SystemReg_SYSREG_END, 65301);
+const_assert_eq!(SystemReg_SYSREG_END, 65300);
 
 impl SysReg {
     /// Get system register name

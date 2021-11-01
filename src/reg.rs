@@ -305,7 +305,6 @@ pub enum Reg {
     Z28 = Register_REG_Z28 as u32,
     Z29 = Register_REG_Z29 as u32,
     Z30 = Register_REG_Z30 as u32,
-    ZZR = Register_REG_ZZR as u32,
     Z31 = Register_REG_Z31 as u32,
     P0 = Register_REG_P0 as u32,
     P1 = Register_REG_P1 as u32,

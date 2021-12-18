@@ -106,6 +106,7 @@ pub struct Instruction {
     op: Op,
     num_operands: usize,
     operands: [Operand; MAX_OPERANDS as usize],
+    flags_set: bool,
 }
 
 // Needed because MaybeUninit doesn't allow derives
@@ -115,6 +116,7 @@ impl PartialEq for Instruction {
             && self.op() == other.op()
             && self.opcode() == other.opcode()
             && self.num_operands == other.num_operands
+            && self.flags_set == other.flags_set
             && self
                 .operands()
                 .iter()
@@ -131,6 +133,7 @@ impl Hash for Instruction {
         self.opcode.hash(state);
         self.op.hash(state);
         self.num_operands.hash(state);
+        self.flags_set.hash(state);
 
         for o in self.operands() {
             o.hash(state);
@@ -164,6 +167,7 @@ impl fmt::Debug for Instruction {
             .field("op", &self.op)
             .field("num_operands", &self.num_operands)
             .field("operands", &self.operands())
+            .field("flags_set", &self.flags_set)
             .finish()
     }
 }
@@ -174,7 +178,7 @@ impl Instruction {
     /// # Example
     /// ```
     /// use bad64::decode;
-    /// // nop - "\x1f\x20\x03\xd4"
+    /// // nop - "\x1f\x20\x03\xd5"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
     /// assert_eq!(decoded.address(), 0x1000);
     /// ```
@@ -187,7 +191,7 @@ impl Instruction {
     /// # Example
     /// ```
     /// use bad64::decode;
-    /// // nop - "\x1f\x20\x03\xd4"
+    /// // nop - "\x1f\x20\x03\xd5"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
     /// assert_eq!(decoded.opcode(), 0xd503201f);
     /// ```
@@ -200,7 +204,7 @@ impl Instruction {
     /// # Example
     /// ```
     /// use bad64::{decode, Op};
-    /// // nop - "\x1f\x20\x03\xd4"
+    /// // nop - "\x1f\x20\x03\xd5"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
     /// assert_eq!(decoded.op(), Op::NOP);
     // ```
@@ -226,6 +230,24 @@ impl Instruction {
     /// ```
     pub fn operands(&self) -> &[Operand] {
         &self.operands[..self.num_operands]
+    }
+
+    /// Returns if the instruction updates the flags
+    ///
+    /// # Example
+    /// ```
+    /// use bad64::decode;
+    ///
+    /// // cmp x0, #0x41 - "\x1f\x04\x01\xf1"
+    /// let decoded = decode(0xf101041f, 0x1000).unwrap();
+    /// assert_eq!(decoded.flags_set(), true);
+    ///
+    /// // nop - "\x1f\x20\x03\xd5"
+    /// let decoded = decode(0xd503201f, 0x1000).unwrap();
+    /// assert_eq!(decoded.flags_set(), false);
+    /// ```
+    pub fn flags_set(&self) -> bool {
+        self.flags_set
     }
 }
 /// Decoding errors types
@@ -342,6 +364,7 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
                 op,
                 num_operands,
                 operands,
+                flags_set: decoded.setflags,
             })
         }
         _ => Err(DecodeError::new(r, address)),

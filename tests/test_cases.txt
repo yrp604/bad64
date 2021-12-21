@@ -1,3 +1,21 @@
+// https://github.com/Vector35/arch-arm64/issues/87
+D53FE297 mrs x23, s3_7_c14_c2_4
+D5310B1C mrs x28, trcstallctlr
+D5313011 mrs x17, trccidcvr0
+D53BEB1D mrs x29, pmevcntr24_el0
+D53ECCFF mrs xzr, icc_igrpen1_el3
+D5389E48 mrs x8, pmintenclr_el1
+D53BE8EE mrs x14, pmevcntr7_el0
+D538C134 mrs x20, disr_el1
+D53B9C65 mrs x5, pmovsclr_el0
+D51CC82F msr ich_ap0r1_el2, x15
+D5112A1D msr trcacvr5, x29
+D518213D msr apiakeyhi_el1, x29
+D51BED02 msr pmevtyper8_el0, x2
+D518D089 msr tpidr_el1, x9
+D5111F0D msr trcrsctlr15, x13
+D51BE996 msr pmevcntr12_el0, x22
+D5111020 msr trcrsctlr16, x0
 // https://github.com/Vector35/arch-arm64/issues/78
 D5032FFF hint #0x7f
 // added in 2021-03 v9 spec

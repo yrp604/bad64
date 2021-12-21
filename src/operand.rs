@@ -11,6 +11,29 @@ use crate::Reg;
 use crate::Shift;
 use crate::SysReg;
 
+/// A slice indicator
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+pub enum SliceIndicator {
+    Horizontal,
+    Vertical,
+}
+
+#[allow(non_upper_case_globals)]
+#[doc(hidden)]
+impl TryFrom<&bad64_sys::InstructionOperand> for SliceIndicator {
+    type Error = ();
+
+    fn try_from(oo: &bad64_sys::InstructionOperand) -> Result<Self, Self::Error> {
+        match oo.slice {
+            SliceIndicator_SLICE_NONE => Err(()),
+            SliceIndicator_SLICE_HORIZONTAL => Ok(Self::Horizontal),
+            SliceIndicator_SLICE_VERTICAL=> Ok(Self::Vertical),
+            _ => Err(()),
+        }
+    }
+}
+
+
 /// An instruction immediate
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub enum Imm {
@@ -86,6 +109,22 @@ pub enum Operand {
         regs: [Reg; 2],
         shift: Option<Shift>,
         arrspec: Option<ArrSpec>,
+    },
+    SmeTile {
+        tile: u16,
+        slice: Option<SliceIndicator>,
+        arrspec: Option<ArrSpec>,
+        reg: Option<Reg>,
+        imm: Imm,
+    },
+    AccumArray {
+        reg: Reg,
+        imm: Imm,
+    },
+    IndexedElement {
+        regs: [Reg; 2],
+        arrspec: Option<ArrSpec>,
+        imm: Imm,
     },
     Label(Imm),
     ImplSpec {
@@ -183,6 +222,25 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
                 ],
                 shift: Shift::try_from(oo).ok(),
                 arrspec: ArrSpec::try_from(oo).ok(),
+            }),
+            OperandClass::SME_TILE => Ok(Self::SmeTile {
+                tile: oo.tile,
+                slice: SliceIndicator::try_from(oo).ok(),
+                arrspec: ArrSpec::try_from(oo).ok(),
+                reg: Reg::from_u32(oo.reg[0] as u32),
+                imm: Imm::from(oo),
+            }),
+            OperandClass::INDEXED_ELEMENT => Ok(Self::IndexedElement {
+                regs: [
+                    Reg::from_u32(oo.reg[0] as u32).unwrap(),
+                    Reg::from_u32(oo.reg[1] as u32).unwrap(),
+                ],
+                arrspec: ArrSpec::try_from(oo).ok(),
+                imm: Imm::from(oo),
+            }),
+            OperandClass::ACCUM_ARRAY => Ok(Self::AccumArray {
+                reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
+                imm: Imm::from(oo)
             }),
             OperandClass::LABEL => Ok(Self::Label(Imm::from(oo))),
             OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplSpec {
@@ -297,6 +355,18 @@ impl fmt::Display for Operand {
                     }
                 }
                 write!(f, "]")
+            }
+            // XXX this is probably wrong, if anyone has examples please let me know
+            Self::SmeTile { tile, slice, arrspec, reg, imm } => {
+                if let Some(reg) = reg {
+                    write_full_reg(f, reg, arrspec)?;
+                }
+                write!(f, ", #{}", imm)
+            },
+            Self::AccumArray { reg, imm } => write!(f, "ZA[{}, #{}]", reg, imm),
+            Self::IndexedElement { regs, arrspec, imm } => {
+                write_full_reg(f, regs[0], arrspec)?;
+                write!(f, "[{}, #{}]", regs[1], imm)
             }
             Self::Label(imm) => write!(f, "{}", imm),
             Self::ImplSpec { o0, o1, cm, cn, o2 } => {

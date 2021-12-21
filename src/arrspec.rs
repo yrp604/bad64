@@ -74,16 +74,8 @@ impl ArrSpec {
         }
     }
 
-    pub fn suffix(&self, reg: Reg) -> &'static str {
-        let is_sve = reg.is_sve();
-        let is_pred = reg.is_pred();
-
-        if !reg.is_simd() && !is_sve && !is_pred {
-            return "";
-        }
-
-        if self.lane().is_some() || is_sve || is_pred {
-            return match *self {
+    pub fn suffix_truncated(&self) -> &'static str {
+            match *self {
                 Self::Full(_) => ".q",
                 Self::TwoDoubles(_) | Self::OneDouble(_) => ".d",
                 Self::FourSingles(_) | Self::TwoSingles(_) | Self::OneSingle(_) => ".s",
@@ -95,9 +87,10 @@ impl ArrSpec {
                 | Self::EightBytes(_)
                 | Self::FourBytes(_)
                 | Self::OneByte(_) => ".b",
-            };
-        }
+            }
+    }
 
+    pub fn suffix_full(&self) -> &'static str {
         match *self {
             Self::Full(_) => ".1q",
             Self::TwoDoubles(_) => ".2d",
@@ -114,5 +107,20 @@ impl ArrSpec {
             Self::FourBytes(_) => ".4b",
             Self::OneByte(_) => ".1b",
         }
+    }
+
+    pub fn suffix(&self, reg: Reg) -> &'static str {
+        let is_sve = reg.is_sve();
+        let is_pred = reg.is_pred();
+
+        if !reg.is_simd() && !is_sve && !is_pred {
+            return "";
+        }
+
+        if self.lane().is_some() || is_sve || is_pred {
+            return self.suffix_truncated();
+        }
+
+        return self.suffix_full();
     }
 }

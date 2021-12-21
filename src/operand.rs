@@ -33,6 +33,14 @@ impl TryFrom<&bad64_sys::InstructionOperand> for SliceIndicator {
     }
 }
 
+impl fmt::Display for SliceIndicator {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            Self::Horizontal => write!(f, "H"),
+            Self::Vertical => write!(f, "V"),
+        }
+    }
+}
 
 /// An instruction immediate
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -356,17 +364,32 @@ impl fmt::Display for Operand {
                 }
                 write!(f, "]")
             }
-            // XXX this is probably wrong, if anyone has examples please let me know
             Self::SmeTile { tile, slice, arrspec, reg, imm } => {
-                if let Some(reg) = reg {
-                    write_full_reg(f, reg, arrspec)?;
+                write!(f, "Z{}", tile)?;
+
+                if let Some(slice) = slice {
+                    write!(f, "{}", slice)?;
                 }
-                write!(f, ", #{}", imm)
+
+                if let Some(arrspec) = arrspec {
+                    write!(f, "{}", arrspec.suffix_truncated())?;
+                }
+
+                match (reg, arrspec) {
+                    (Some(reg), Some(ArrSpec::Full(_))) => write!(f, "[{}]", reg),
+                    (Some(reg), _) => write!(f, "[{}, {}]", reg, imm),
+                    _ => write!(f, ""),
+                }
             },
             Self::AccumArray { reg, imm } => write!(f, "ZA[{}, #{}]", reg, imm),
             Self::IndexedElement { regs, arrspec, imm } => {
                 write_full_reg(f, regs[0], arrspec)?;
-                write!(f, "[{}, #{}]", regs[1], imm)
+                write!(f, "[{}", regs[1])?;
+
+                if !matches!(imm, Imm::Signed(0) | Imm::Unsigned(0)) {
+                    write!(f, "{{, #{}}}", imm)?;
+                }
+                write!(f, "]")
             }
             Self::Label(imm) => write!(f, "{}", imm),
             Self::ImplSpec { o0, o1, cm, cn, o2 } => {

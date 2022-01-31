@@ -84,6 +84,7 @@ use bad64_sys::*;
 
 mod arrspec;
 mod condition;
+mod flageffect;
 mod op;
 mod operand;
 mod reg;
@@ -92,6 +93,7 @@ mod sysreg;
 
 pub use arrspec::ArrSpec;
 pub use condition::Condition;
+pub use flageffect::FlagEffect;
 pub use op::Op;
 pub use operand::{Imm, Operand};
 pub use reg::Reg;
@@ -106,7 +108,7 @@ pub struct Instruction {
     op: Op,
     num_operands: usize,
     operands: [Operand; MAX_OPERANDS as usize],
-    flags_set: bool,
+    flags_set: Option<FlagEffect>,
 }
 
 // Needed because MaybeUninit doesn't allow derives
@@ -236,17 +238,17 @@ impl Instruction {
     ///
     /// # Example
     /// ```
-    /// use bad64::decode;
+    /// use bad64::{decode, FlagEffect};
     ///
     /// // cmp x0, #0x41 - "\x1f\x04\x01\xf1"
     /// let decoded = decode(0xf101041f, 0x1000).unwrap();
-    /// assert_eq!(decoded.flags_set(), true);
+    /// assert_eq!(decoded.flags_set(), Some(FlagEffect::Sets));
     ///
     /// // nop - "\x1f\x20\x03\xd5"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();
-    /// assert_eq!(decoded.flags_set(), false);
+    /// assert_eq!(decoded.flags_set(), None);
     /// ```
-    pub fn flags_set(&self) -> bool {
+    pub fn flags_set(&self) -> Option<FlagEffect> {
         self.flags_set
     }
 }
@@ -358,13 +360,15 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
                 }
             }
 
+            let flags_set = FlagEffect::try_from(&decoded).ok();
+
             Ok(Instruction {
                 address,
                 opcode: decoded.insword,
                 op,
                 num_operands,
                 operands,
-                flags_set: decoded.setflags,
+                flags_set,
             })
         }
         _ => Err(DecodeError::new(r, address)),

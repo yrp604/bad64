@@ -1,3 +1,553 @@
+// REVD_Z_P_Z_ 00000101|size=00|101110100|Pg=xxx|Zn=xxxxx|Zd=xxxxx
+// REVD <Zd>.Q,<Pg>/M,<Zn>.Q
+052E93FD revd z29.q, p4/m, z29.q
+052E8F92 revd z18.q, p3/m, z18.q
+052E8EB6 revd z22.q, p3/m, z22.q
+052E8C86 revd z6.q, p3/m, z6.q
+052E940B revd z11.q, p5/m, z11.q
+052E9C0D revd z13.q, p7/m, z13.q
+052E9A85 revd z5.q, p6/m, z5.q
+052E9A09 revd z9.q, p6/m, z9.q
+// UCLAMP_Z_ZZ_ 01000100|size=xx|0|Zm=xxxxx|11000|U=1|Zn=xxxxx|Zd=xxxxx
+// UCLAMP <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+440CC50B uclamp z11.b, z8.b, z12.b
+44C4C559 uclamp z25.d, z10.d, z4.d
+440AC605 uclamp z5.b, z16.b, z10.b
+44C4C42F uclamp z15.d, z1.d, z4.d
+44CAC541 uclamp z1.d, z10.d, z10.d
+4407C512 uclamp z18.b, z8.b, z7.b
+4411C67A uclamp z26.b, z19.b, z17.b
+448FC713 uclamp z19.s, z24.s, z15.s
+// SCLAMP_Z_ZZ_ 01000100|size=xx|0|Zm=xxxxx|11000|U=0|Zn=xxxxx|Zd=xxxxx
+// SCLAMP <Zd>.<T>,<Zn>.<T>,<Zm>.<T>
+44CFC2B9 sclamp z25.d, z21.d, z15.d
+449BC180 sclamp z0.s, z12.s, z27.s
+440CC1FA sclamp z26.b, z15.b, z12.b
+4412C03A sclamp z26.b, z1.b, z18.b
+445EC0A3 sclamp z3.h, z5.h, z30.h
+44D6C19B sclamp z27.d, z12.d, z22.d
+44C1C319 sclamp z25.d, z24.d, z1.d
+44C3C2D9 sclamp z25.d, z22.d, z3.d
+// STR_ZA_RI_ 1110000100|op=1|000000|Rv=xx|000|Rn=xxxxx|0|imm4=xxxx
+// STR ZA[<Wv>, #<imm>], [<Xn|SP>{, #<imm>, MUL VL}]
+E1200106 str za[w12, #0x6], [x8, #0x6, mul vl]
+E1204106 str za[w14, #0x6], [x8, #0x6, mul vl]
+E12061A5 str za[w15, #0x5], [x13, #0x5, mul vl]
+E120204E str za[w13, #0xe], [x2, #0xe, mul vl]
+E1206221 str za[w15, #0x1], [x17, #0x1, mul vl]
+E12001EE str za[w12, #0xe], [x15, #0xe, mul vl]
+E12043CC str za[w14, #0xc], [x30, #0xc, mul vl]
+E1204160 str za[w14, #0x0], [x11]
+// LDR_ZA_RI_ 1110000100|op=0|000000|Rv=xx|000|Rn=xxxxx|0|imm4=xxxx
+// LDR ZA[<Wv>, #<imm>], [<Xn|SP>{, #<imm>, MUL VL}]
+E100004D ldr za[w12, #0xd], [x2, #0xd, mul vl]
+E10041EE ldr za[w14, #0xe], [x15, #0xe, mul vl]
+E10043EB ldr za[w14, #0xb], [sp, #0xb, mul vl]
+E10063EB ldr za[w15, #0xb], [sp, #0xb, mul vl]
+E10062A0 ldr za[w15, #0x0], [x21]
+E100212F ldr za[w13, #0xf], [x9, #0xf, mul vl]
+E1002208 ldr za[w13, #0x8], [x16, #0x8, mul vl]
+E1002128 ldr za[w13, #0x8], [x9, #0x8, mul vl]
+// ST1B_ZA_P_RRR_ 11100000|msz=00|1|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|imm4=xxxx
+// ST1B {ZA0<HV>.B[<Ws>, #<imm>]},<Pg>, [<Xn|SP>{,<Xm>}]
+E024806B st1b z0v.b[w12, #0xb], p0, [x3, x4]
+E0257DCE st1b z0h.b[w15, #0xe], p7, [x14, x5]
+E0306445 st1b z0h.b[w15, #0x5], p1, [x2, x16]
+E025796A st1b z0h.b[w15, #0xa], p6, [x11, x5]
+E02EF207 st1b z0v.b[w15, #0x7], p4, [x16, x14]
+E033654A st1b z0h.b[w15, #0xa], p1, [x10, x19]
+E03F9FE8 st1b z0v.b[w12, #0x8], p7, [sp, xzr]
+E020AD87 st1b z0v.b[w13, #0x7], p3, [x12, x0]
+// ST1H_ZA_P_RRR_ 11100000|msz=01|1|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=x|imm3=xxx
+// ST1H {<ZAt><HV>.H[<Ws>, #<imm>]},<Pg>, [<Xn|SP>{,<Xm>, LSL #1}]
+E07CDD80 st1h z0v.h[w14, #0x0], p7, [x12, x28, lsl #0x1]
+E062EB89 st1h z0v.h[w15, #0x1], p2, [x28, x2, lsl #0x1]
+E06DF064 st1h z0v.h[w15, #0x4], p4, [x3, x13, lsl #0x1]
+E06A170E st1h z0h.h[w12, #0x6], p5, [x24, x10, lsl #0x1]
+E062B440 st1h z0v.h[w13, #0x0], p5, [x2, x2, lsl #0x1]
+E07C9061 st1h z0v.h[w12, #0x1], p4, [x3, x28, lsl #0x1]
+E0798B42 st1h z0v.h[w12, #0x2], p2, [x26, x25, lsl #0x1]
+E07F0AA2 st1h z0h.h[w12, #0x2], p2, [x21, xzr, lsl #0x1]
+// ST1W_ZA_P_RRR_ 11100000|msz=10|1|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=xx|imm2=xx
+// ST1W {<ZAt><HV>.S[<Ws>, #<imm>]},<Pg>, [<Xn|SP>{,<Xm>, LSL #2}]
+E0AEB44B st1w z0v.s[w13, #0x3], p5, [x2, x14, lsl #0x2]
+E0BBFF62 st1w z0v.s[w15, #0x2], p7, [x27, x27, lsl #0x2]
+E0A2D285 st1w z0v.s[w14, #0x1], p4, [x20, x2, lsl #0x2]
+E0AF3FAA st1w z0h.s[w13, #0x2], p7, [x29, x15, lsl #0x2]
+E0B24FE7 st1w z0h.s[w14, #0x3], p3, [sp, x18, lsl #0x2]
+E0AD3D61 st1w z0h.s[w13, #0x1], p7, [x11, x13, lsl #0x2]
+E0B5FEC3 st1w z0v.s[w15, #0x3], p7, [x22, x21, lsl #0x2]
+E0A5A407 st1w z0v.s[w13, #0x3], p1, [x0, x5, lsl #0x2]
+// ST1D_ZA_P_RRR_ 11100000|msz=11|1|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=xxx|i1=x
+// ST1D {<ZAt><HV>.D[<Ws>, #<imm>]},<Pg>, [<Xn|SP>{,<Xm>, LSL #3}]
+E0F475AA st1d z0h.d[w15, #0x0], p5, [x13, x20, lsl #0x3]
+E0F64E45 st1d z0h.d[w14, #0x1], p3, [x18, x22, lsl #0x3]
+E0F19BC7 st1d z0v.d[w12, #0x1], p6, [x30, x17, lsl #0x3]
+E0E36001 st1d z0h.d[w15, #0x1], p0, [x0, x3, lsl #0x3]
+E0E183C0 st1d z0v.d[w12, #0x0], p0, [x30, x1, lsl #0x3]
+E0E09FAB st1d z0v.d[w12, #0x1], p7, [x29, x0, lsl #0x3]
+E0F1160A st1d z0h.d[w12, #0x0], p5, [x16, x17, lsl #0x3]
+E0E1CB2F st1d z0v.d[w14, #0x1], p2, [x25, x1, lsl #0x3]
+// ST1Q_ZA_P_RRR_ 11100001111|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=xxxx
+// ST1Q {<ZAt><HV>.Q[<Ws>]},<Pg>, [<Xn|SP>{,<Xm>, LSL #4}]
+E1F50B6D st1q z0h.q[w12], p2, [x27, x21, lsl #0x4]
+E1F2710C st1q z0h.q[w15], p4, [x8, x18, lsl #0x4]
+E1FAE567 st1q z0v.q[w15], p1, [x11, x26, lsl #0x4]
+E1E79303 st1q z0v.q[w12], p4, [x24, x7, lsl #0x4]
+E1F210CF st1q z0h.q[w12], p4, [x6, x18, lsl #0x4]
+E1F2842F st1q z0v.q[w12], p1, [x1, x18, lsl #0x4]
+E1F7066A st1q z0h.q[w12], p1, [x19, x23, lsl #0x4]
+E1EEED0C st1q z0v.q[w15], p3, [x8, x14, lsl #0x4]
+// LD1B_ZA_P_RRR_ 11100000|msz=00|0|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|imm4=xxxx
+// LD1B {ZA0<HV>.B[<Ws>, #<imm>]},<Pg>/Z, [<Xn|SP>{,<Xm>}]
+E011E5A3 ld1b z0v.b[w15, #0x3], p1/z, [x13, x17]
+E0082108 ld1b z0h.b[w13, #0x8], p0/z, [x8, x8]
+E00AFCCB ld1b z0v.b[w15, #0xb], p7/z, [x6, x10]
+E007B783 ld1b z0v.b[w13, #0x3], p5/z, [x28, x7]
+E00F12E9 ld1b z0h.b[w12, #0x9], p4/z, [x23, x15]
+E006E161 ld1b z0v.b[w15, #0x1], p0/z, [x11, x6]
+E019410A ld1b z0h.b[w14, #0xa], p0/z, [x8, x25]
+E00769A0 ld1b z0h.b[w15, #0x0], p2/z, [x13, x7]
+// LD1H_ZA_P_RRR_ 11100000|msz=01|0|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=x|imm3=xxx
+// LD1H {<ZAt><HV>.H[<Ws>, #<imm>]},<Pg>/Z, [<Xn|SP>{,<Xm>, LSL #1}]
+E059A9C2 ld1h z0v.h[w13, #0x2], p2/z, [x14, x25, lsl #0x1]
+E04118C6 ld1h z0h.h[w12, #0x6], p6/z, [x6, x1, lsl #0x1]
+E0567420 ld1h z0h.h[w15, #0x0], p5/z, [x1, x22, lsl #0x1]
+E05499EF ld1h z0v.h[w12, #0x7], p6/z, [x15, x20, lsl #0x1]
+E05A0E63 ld1h z0h.h[w12, #0x3], p3/z, [x19, x26, lsl #0x1]
+E0478440 ld1h z0v.h[w12, #0x0], p1/z, [x2, x7, lsl #0x1]
+E04D65E8 ld1h z0h.h[w15, #0x0], p1/z, [x15, x13, lsl #0x1]
+E044C562 ld1h z0v.h[w14, #0x2], p1/z, [x11, x4, lsl #0x1]
+// LD1W_ZA_P_RRR_ 11100000|msz=10|0|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=xx|imm2=xx
+// LD1W {<ZAt><HV>.S[<Ws>, #<imm>]},<Pg>/Z, [<Xn|SP>{,<Xm>, LSL #2}]
+E0948E84 ld1w z0v.s[w12, #0x0], p3/z, [x20, x20, lsl #0x2]
+E0929C4E ld1w z0v.s[w12, #0x2], p7/z, [x2, x18, lsl #0x2]
+E0933004 ld1w z0h.s[w13, #0x0], p4/z, [x0, x19, lsl #0x2]
+E096AB63 ld1w z0v.s[w13, #0x3], p2/z, [x27, x22, lsl #0x2]
+E0984488 ld1w z0h.s[w14, #0x0], p1/z, [x4, x24, lsl #0x2]
+E09A748A ld1w z0h.s[w15, #0x2], p5/z, [x4, x26, lsl #0x2]
+E093D2EB ld1w z0v.s[w14, #0x3], p4/z, [x23, x19, lsl #0x2]
+E082EF21 ld1w z0v.s[w15, #0x1], p3/z, [x25, x2, lsl #0x2]
+// LD1D_ZA_P_RRR_ 11100000|msz=11|0|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=xxx|i1=x
+// LD1D {<ZAt><HV>.D[<Ws>, #<imm>]},<Pg>/Z, [<Xn|SP>{,<Xm>, LSL #3}]
+E0D76421 ld1d z0h.d[w15, #0x1], p1/z, [x1, x23, lsl #0x3]
+E0C1F1E9 ld1d z0v.d[w15, #0x1], p4/z, [x15, x1, lsl #0x3]
+E0C2EC0C ld1d z0v.d[w15, #0x0], p3/z, [x0, x2, lsl #0x3]
+E0C8DEC2 ld1d z0v.d[w14, #0x0], p7/z, [x22, x8, lsl #0x3]
+E0DD7AE4 ld1d z0h.d[w15, #0x0], p6/z, [x23, x29, lsl #0x3]
+E0C1F621 ld1d z0v.d[w15, #0x1], p5/z, [x17, x1, lsl #0x3]
+E0D1D407 ld1d z0v.d[w14, #0x1], p5/z, [x0, x17, lsl #0x3]
+E0DD32AC ld1d z0h.d[w13, #0x0], p4/z, [x21, x29, lsl #0x3]
+// LD1Q_ZA_P_RRR_ 11100001110|Rm=xxxxx|V=x|Rs=xx|Pg=xxx|Rn=xxxxx|0|ZAt=xxxx
+// LD1Q {<ZAt><HV>.Q[<Ws>]},<Pg>/Z, [<Xn|SP>{,<Xm>, LSL #4}]
+E1DE4A4D ld1q z0h.q[w14], p2/z, [x18, x30, lsl #0x4]
+E1CAD30E ld1q z0v.q[w14], p4/z, [x24, x10, lsl #0x4]
+E1CB05CF ld1q z0h.q[w12], p1/z, [x14, x11, lsl #0x4]
+E1C81D06 ld1q z0h.q[w12], p7/z, [x8, x8, lsl #0x4]
+E1CB140F ld1q z0h.q[w12], p5/z, [x0, x11, lsl #0x4]
+E1D88700 ld1q z0v.q[w12], p1/z, [x24, x24, lsl #0x4]
+E1CC0A2C ld1q z0h.q[w12], p2/z, [x17, x12, lsl #0x4]
+E1DB7688 ld1q z0h.q[w15], p5/z, [x20, x27, lsl #0x4]
+// DUP_P_P_PI_ 00100101|i1=x|tszh=x|1|tszl=xxx|Rm=xx|01|Pg=xxxx|S=0|Pn=xxxx|0|Pd=xxxx
+// DUP <Pd>.<T>,<Pg>/Z,<Pn>.<T>[<Wm>{, #<imm>}]
+257F7D8D dup p13.d, p15/z, p12.d[w15, #0xf]
+25B0590D dup p13.q, p6/z, p8.q[w12, #0x14]
+25EE7DED dup p13.d, p15/z, p15.d[w14, #0x1b]
+25FE5887 dup p7.d, p6/z, p4.d[w14, #0x1f]
+25F27D09 dup p9.q, p15/z, p8.q[w14, #0x1c]
+25785844 dup p4.b, p6/z, p2.b[w12, #0xe]
+257240AF dup p15.q, p0/z, p5.q[w14, #0xc]
+256B756C dup p12.b, p13/z, p11.b[w15, #0xa]
+// SMOPA_ZA_PP_ZZ_32 10|10000|u0=0|10|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
+// SMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A0822DA1 smopa z1.s, p3/m, p1/m, z13.b, z2.b
+A0895B81 smopa z1.s, p6/m, p2/m, z28.b, z9.b
+A09B2FA2 smopa z2.s, p3/m, p1/m, z29.b, z27.b
+A08134A3 smopa z3.s, p5/m, p1/m, z5.b, z1.b
+A09DE961 smopa z1.s, p2/m, p7/m, z11.b, z29.b
+A097D2C1 smopa z1.s, p4/m, p6/m, z22.b, z23.b
+A08A2483 smopa z3.s, p1/m, p1/m, z4.b, z10.b
+A0972663 smopa z3.s, p1/m, p1/m, z19.b, z23.b
+// SMOPA_ZA_PP_ZZ_64 10|10000|u0=0|11|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|ZAda=xxx
+// SMOPA <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A0CFCB26 smopa z6.d, p2/m, p6/m, z25.h, z15.h
+A0C850A0 smopa z0.d, p4/m, p2/m, z5.h, z8.h
+A0CAA824 smopa z4.d, p2/m, p5/m, z1.h, z10.h
+A0DFC2C2 smopa z2.d, p0/m, p6/m, z22.h, z31.h
+A0C89182 smopa z2.d, p4/m, p4/m, z12.h, z8.h
+A0D85AC7 smopa z7.d, p6/m, p2/m, z22.h, z24.h
+A0CE0D07 smopa z7.d, p3/m, p0/m, z8.h, z14.h
+A0C4C247 smopa z7.d, p0/m, p6/m, z18.h, z4.h
+// SMOPS_ZA_PP_ZZ_32 10|10000|u0=0|10|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|0|ZAda=xx
+// SMOPS <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A094D912 smops z2.s, p6/m, p6/m, z8.b, z20.b
+A0938CF0 smops z0.s, p3/m, p4/m, z7.b, z19.b
+A091EB51 smops z1.s, p2/m, p7/m, z26.b, z17.b
+A082A590 smops z0.s, p1/m, p5/m, z12.b, z2.b
+A0964A72 smops z2.s, p2/m, p2/m, z19.b, z22.b
+A09D3A33 smops z3.s, p6/m, p1/m, z17.b, z29.b
+A087DCD1 smops z1.s, p7/m, p6/m, z6.b, z7.b
+A0855713 smops z3.s, p5/m, p2/m, z24.b, z5.b
+// SMOPS_ZA_PP_ZZ_64 10|10000|u0=0|11|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|ZAda=xxx
+// SMOPS <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A0D5DBF2 smops z2.d, p6/m, p6/m, z31.h, z21.h
+A0CA7F51 smops z1.d, p7/m, p3/m, z26.h, z10.h
+A0D12B91 smops z1.d, p2/m, p1/m, z28.h, z17.h
+A0C7B930 smops z0.d, p6/m, p5/m, z9.h, z7.h
+A0C3D6D0 smops z0.d, p5/m, p6/m, z22.h, z3.h
+A0D27A15 smops z5.d, p6/m, p3/m, z16.h, z18.h
+A0C35AD0 smops z0.d, p6/m, p2/m, z22.h, z3.h
+A0DA1996 smops z6.d, p6/m, p0/m, z12.h, z26.h
+// SUMOPA_ZA_PP_ZZ_32 10|10000|u0=0|10|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
+// SUMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A0A0AC03 sumopa z3.s, p3/m, p5/m, z0.b, z0.b
+A0AFEC42 sumopa z2.s, p3/m, p7/m, z2.b, z15.b
+A0A079C0 sumopa z0.s, p6/m, p3/m, z14.b, z0.b
+A0A64BC2 sumopa z2.s, p2/m, p2/m, z30.b, z6.b
+A0B02581 sumopa z1.s, p1/m, p1/m, z12.b, z16.b
+A0A45A40 sumopa z0.s, p6/m, p2/m, z18.b, z4.b
+A0ADD860 sumopa z0.s, p6/m, p6/m, z3.b, z13.b
+A0A90142 sumopa z2.s, p0/m, p0/m, z10.b, z9.b
+// SUMOPA_ZA_PP_ZZ_64 10|10000|u0=0|11|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|ZAda=xxx
+// SUMOPA <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A0F5A461 sumopa z1.d, p1/m, p5/m, z3.h, z21.h
+A0E208A3 sumopa z3.d, p2/m, p0/m, z5.h, z2.h
+A0E6FF45 sumopa z5.d, p7/m, p7/m, z26.h, z6.h
+A0ED2D64 sumopa z4.d, p3/m, p1/m, z11.h, z13.h
+A0FAA524 sumopa z4.d, p1/m, p5/m, z9.h, z26.h
+A0F64D41 sumopa z1.d, p3/m, p2/m, z10.h, z22.h
+A0F1BEE2 sumopa z2.d, p7/m, p5/m, z23.h, z17.h
+A0E07DA6 sumopa z6.d, p7/m, p3/m, z13.h, z0.h
+// SUMOPS_ZA_PP_ZZ_32 10|10000|u0=0|10|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|0|ZAda=xx
+// SUMOPS <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A0A07950 sumops z0.s, p6/m, p3/m, z10.b, z0.b
+A0B810B1 sumops z1.s, p4/m, p0/m, z5.b, z24.b
+A0A2A753 sumops z3.s, p1/m, p5/m, z26.b, z2.b
+A0BC3C31 sumops z1.s, p7/m, p1/m, z1.b, z28.b
+A0ACEA33 sumops z3.s, p2/m, p7/m, z17.b, z12.b
+A0AE2C72 sumops z2.s, p3/m, p1/m, z3.b, z14.b
+A0A50311 sumops z1.s, p0/m, p0/m, z24.b, z5.b
+A0B64A33 sumops z3.s, p2/m, p2/m, z17.b, z22.b
+// SUMOPS_ZA_PP_ZZ_64 10|10000|u0=0|11|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|ZAda=xxx
+// SUMOPS <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A0FCD672 sumops z2.d, p5/m, p6/m, z19.h, z28.h
+A0E33ED3 sumops z3.d, p7/m, p1/m, z22.h, z3.h
+A0E20233 sumops z3.d, p0/m, p0/m, z17.h, z2.h
+A0F3ACB4 sumops z4.d, p3/m, p5/m, z5.h, z19.h
+A0F683B5 sumops z5.d, p0/m, p4/m, z29.h, z22.h
+A0FD25F0 sumops z0.d, p1/m, p1/m, z15.h, z29.h
+A0EC1054 sumops z4.d, p4/m, p0/m, z2.h, z12.h
+A0E9EA77 sumops z7.d, p2/m, p7/m, z19.h, z9.h
+// UMOPA_ZA_PP_ZZ_32 10|10000|u0=1|10|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
+// UMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A1A98383 umopa z3.s, p0/m, p4/m, z28.b, z9.b
+A1B5D343 umopa z3.s, p4/m, p6/m, z26.b, z21.b
+A1A78500 umopa z0.s, p1/m, p4/m, z8.b, z7.b
+A1A73CC2 umopa z2.s, p7/m, p1/m, z6.b, z7.b
+A1AE0461 umopa z1.s, p1/m, p0/m, z3.b, z14.b
+A1B14141 umopa z1.s, p0/m, p2/m, z10.b, z17.b
+A1A7C2C3 umopa z3.s, p0/m, p6/m, z22.b, z7.b
+A1A234A2 umopa z2.s, p5/m, p1/m, z5.b, z2.b
+// UMOPA_ZA_PP_ZZ_64 10|10000|u0=1|11|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|ZAda=xxx
+// UMOPA <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A1E301C4 umopa z4.d, p0/m, p0/m, z14.h, z3.h
+A1FAA224 umopa z4.d, p0/m, p5/m, z17.h, z26.h
+A1FD16C5 umopa z5.d, p5/m, p0/m, z22.h, z29.h
+A1E45F04 umopa z4.d, p7/m, p2/m, z24.h, z4.h
+A1EBE326 umopa z6.d, p0/m, p7/m, z25.h, z11.h
+A1F66547 umopa z7.d, p1/m, p3/m, z10.h, z22.h
+A1F6A5E3 umopa z3.d, p1/m, p5/m, z15.h, z22.h
+A1FA08A1 umopa z1.d, p2/m, p0/m, z5.h, z26.h
+// UMOPS_ZA_PP_ZZ_32 10|10000|u0=1|10|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|0|ZAda=xx
+// UMOPS <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A1A919D3 umops z3.s, p6/m, p0/m, z14.b, z9.b
+A1ACDEB1 umops z1.s, p7/m, p6/m, z21.b, z12.b
+A1A8FCD0 umops z0.s, p7/m, p7/m, z6.b, z8.b
+A1AE6773 umops z3.s, p1/m, p3/m, z27.b, z14.b
+A1A6B433 umops z3.s, p5/m, p5/m, z1.b, z6.b
+A1A505B3 umops z3.s, p1/m, p0/m, z13.b, z5.b
+A1A72071 umops z1.s, p0/m, p1/m, z3.b, z7.b
+A1B21C53 umops z3.s, p7/m, p0/m, z2.b, z18.b
+// UMOPS_ZA_PP_ZZ_64 10|10000|u0=1|11|u1=1|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|ZAda=xxx
+// UMOPS <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A1EE87D4 umops z4.d, p1/m, p4/m, z30.h, z14.h
+A1F53AB2 umops z2.d, p6/m, p1/m, z21.h, z21.h
+A1F207D4 umops z4.d, p1/m, p0/m, z30.h, z18.h
+A1E8C4D5 umops z5.d, p1/m, p6/m, z6.h, z8.h
+A1F1F3F2 umops z2.d, p4/m, p7/m, z31.h, z17.h
+A1E02ED4 umops z4.d, p3/m, p1/m, z22.h, z0.h
+A1FFAFB5 umops z5.d, p3/m, p5/m, z29.h, z31.h
+A1F5BB12 umops z2.d, p6/m, p5/m, z24.h, z21.h
+// USMOPA_ZA_PP_ZZ_32 10|10000|u0=1|10|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
+// USMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A19670C1 usmopa z1.s, p4/m, p3/m, z6.b, z22.b
+A19742A0 usmopa z0.s, p0/m, p2/m, z21.b, z23.b
+A18F36E1 usmopa z1.s, p5/m, p1/m, z23.b, z15.b
+A19173A0 usmopa z0.s, p4/m, p3/m, z29.b, z17.b
+A19FA100 usmopa z0.s, p0/m, p5/m, z8.b, z31.b
+A19962E0 usmopa z0.s, p0/m, p3/m, z23.b, z25.b
+A191D962 usmopa z2.s, p6/m, p6/m, z11.b, z17.b
+A1900820 usmopa z0.s, p2/m, p0/m, z1.b, z16.b
+// USMOPA_ZA_PP_ZZ_64 10|10000|u0=1|11|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|ZAda=xxx
+// USMOPA <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A1CDDA03 usmopa z3.d, p6/m, p6/m, z16.h, z13.h
+A1C95143 usmopa z3.d, p4/m, p2/m, z10.h, z9.h
+A1C06906 usmopa z6.d, p2/m, p3/m, z8.h, z0.h
+A1C532C4 usmopa z4.d, p4/m, p1/m, z22.h, z5.h
+A1CA9A81 usmopa z1.d, p6/m, p4/m, z20.h, z10.h
+A1C3A646 usmopa z6.d, p1/m, p5/m, z18.h, z3.h
+A1DA2FA4 usmopa z4.d, p3/m, p1/m, z29.h, z26.h
+A1C1BFA0 usmopa z0.d, p7/m, p5/m, z29.h, z1.h
+// USMOPS_ZA_PP_ZZ_32 10|10000|u0=1|10|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|0|ZAda=xx
+// USMOPS <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
+A196CAB0 usmops z0.s, p2/m, p6/m, z21.b, z22.b
+A1924DD3 usmops z3.s, p3/m, p2/m, z14.b, z18.b
+A1984CF3 usmops z3.s, p3/m, p2/m, z7.b, z24.b
+A199E710 usmops z0.s, p1/m, p7/m, z24.b, z25.b
+A18B5113 usmops z3.s, p4/m, p2/m, z8.b, z11.b
+A184A1F1 usmops z1.s, p0/m, p5/m, z15.b, z4.b
+A1858DB0 usmops z0.s, p3/m, p4/m, z13.b, z5.b
+A198D313 usmops z3.s, p4/m, p6/m, z24.b, z24.b
+// USMOPS_ZA_PP_ZZ_64 10|10000|u0=1|11|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|ZAda=xxx
+// USMOPS <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+A1C0BF92 usmops z2.d, p7/m, p5/m, z28.h, z0.h
+A1D1ECB1 usmops z1.d, p3/m, p7/m, z5.h, z17.h
+A1C655F0 usmops z0.d, p5/m, p2/m, z15.h, z6.h
+A1D9D2B1 usmops z1.d, p4/m, p6/m, z21.h, z25.h
+A1D1A4B0 usmops z0.d, p1/m, p5/m, z5.h, z17.h
+A1CE4F30 usmops z0.d, p3/m, p2/m, z25.h, z14.h
+A1D49630 usmops z0.d, p5/m, p4/m, z17.h, z20.h
+A1D02F53 usmops z3.d, p3/m, p1/m, z26.h, z16.h
+// BFMOPA_ZA32_PP_ZZ_ 10|000001100|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
+// BFMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+8184B942 bfmopa z2.s, p6/m, p5/m, z10.h, z4.h
+818733E0 bfmopa z0.s, p4/m, p1/m, z31.h, z7.h
+819F99E0 bfmopa z0.s, p6/m, p4/m, z15.h, z31.h
+81843DA2 bfmopa z2.s, p7/m, p1/m, z13.h, z4.h
+819B9620 bfmopa z0.s, p5/m, p4/m, z17.h, z27.h
+81898A43 bfmopa z3.s, p2/m, p4/m, z18.h, z9.h
+818FC7E0 bfmopa z0.s, p1/m, p6/m, z31.h, z15.h
+819B8D63 bfmopa z3.s, p3/m, p4/m, z11.h, z27.h
+// BFMOPS_ZA32_PP_ZZ_ 10|000001100|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|0|ZAda=xx
+// BFMOPS <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+819EC990 bfmops z0.s, p2/m, p6/m, z12.h, z30.h
+81801933 bfmops z3.s, p6/m, p0/m, z9.h, z0.h
+81923E51 bfmops z1.s, p7/m, p1/m, z18.h, z18.h
+81947D10 bfmops z0.s, p7/m, p3/m, z8.h, z20.h
+81992591 bfmops z1.s, p1/m, p1/m, z12.h, z25.h
+8184A832 bfmops z2.s, p2/m, p5/m, z1.h, z4.h
+81941373 bfmops z3.s, p4/m, p0/m, z27.h, z20.h
+81873193 bfmops z3.s, p4/m, p1/m, z12.h, z7.h
+// FMOPA_ZA32_PP_ZZ_16 10|000001101|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
+// FMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+81BB7F43 fmopa z3.s, p7/m, p3/m, z26.h, z27.h
+81B67740 fmopa z0.s, p5/m, p3/m, z26.h, z22.h
+81BA8DC2 fmopa z2.s, p3/m, p4/m, z14.h, z26.h
+81B8E542 fmopa z2.s, p1/m, p7/m, z10.h, z24.h
+81A5BF02 fmopa z2.s, p7/m, p5/m, z24.h, z5.h
+81B5DE80 fmopa z0.s, p7/m, p6/m, z20.h, z21.h
+81AE7C20 fmopa z0.s, p7/m, p3/m, z1.h, z14.h
+81AF5A41 fmopa z1.s, p6/m, p2/m, z18.h, z15.h
+// FMOPA_ZA_PP_ZZ_32 10|000000100|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
+// FMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.S,<Zm>.S
+809B4941 fmopa z1.s, p2/m, p2/m, z10.s, z27.s
+80850B21 fmopa z1.s, p2/m, p0/m, z25.s, z5.s
+80942682 fmopa z2.s, p1/m, p1/m, z20.s, z20.s
+8090B322 fmopa z2.s, p4/m, p5/m, z25.s, z16.s
+80879442 fmopa z2.s, p5/m, p4/m, z2.s, z7.s
+80964482 fmopa z2.s, p1/m, p2/m, z4.s, z22.s
+80948442 fmopa z2.s, p1/m, p4/m, z2.s, z20.s
+80806101 fmopa z1.s, p0/m, p3/m, z8.s, z0.s
+// FMOPA_ZA_PP_ZZ_64 10|000000110|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|ZAda=xxx
+// FMOPA <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.D,<Zm>.D
+80D69446 fmopa z6.d, p5/m, p4/m, z2.d, z22.d
+80C5F3A2 fmopa z2.d, p4/m, p7/m, z29.d, z5.d
+80CA1626 fmopa z6.d, p5/m, p0/m, z17.d, z10.d
+80DF9006 fmopa z6.d, p4/m, p4/m, z0.d, z31.d
+80C17BA4 fmopa z4.d, p6/m, p3/m, z29.d, z1.d
+80D6E825 fmopa z5.d, p2/m, p7/m, z1.d, z22.d
+80CCBEE3 fmopa z3.d, p7/m, p5/m, z23.d, z12.d
+80C67B20 fmopa z0.d, p6/m, p3/m, z25.d, z6.d
+// FMOPS_ZA32_PP_ZZ_16 10|000001101|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|0|ZAda=xx
+// FMOPS <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.H,<Zm>.H
+81B3A851 fmops z1.s, p2/m, p5/m, z2.h, z19.h
+81B9C373 fmops z3.s, p0/m, p6/m, z27.h, z25.h
+81BC0A11 fmops z1.s, p2/m, p0/m, z16.h, z28.h
+81A95493 fmops z3.s, p5/m, p2/m, z4.h, z9.h
+81A55DF2 fmops z2.s, p7/m, p2/m, z15.h, z5.h
+81A75373 fmops z3.s, p4/m, p2/m, z27.h, z7.h
+81B70513 fmops z3.s, p1/m, p0/m, z8.h, z23.h
+81B54B72 fmops z2.s, p2/m, p2/m, z27.h, z21.h
+// FMOPS_ZA_PP_ZZ_32 10|000000100|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|0|ZAda=xx
+// FMOPS <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.S,<Zm>.S
+80851312 fmops z2.s, p4/m, p0/m, z24.s, z5.s
+80947950 fmops z0.s, p6/m, p3/m, z10.s, z20.s
+808C3D33 fmops z3.s, p7/m, p1/m, z9.s, z12.s
+8090E3D3 fmops z3.s, p0/m, p7/m, z30.s, z16.s
+8085F752 fmops z2.s, p5/m, p7/m, z26.s, z5.s
+808D8BD3 fmops z3.s, p2/m, p4/m, z30.s, z13.s
+8091C610 fmops z0.s, p1/m, p6/m, z16.s, z17.s
+809721B0 fmops z0.s, p0/m, p1/m, z13.s, z23.s
+// FMOPS_ZA_PP_ZZ_64 10|000000110|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=1|0|ZAda=xxx
+// FMOPS <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.D,<Zm>.D
+80C8A077 fmops z7.d, p0/m, p5/m, z3.d, z8.d
+80DAA1D2 fmops z2.d, p0/m, p5/m, z14.d, z26.d
+80DA2251 fmops z1.d, p0/m, p1/m, z18.d, z26.d
+80CC9731 fmops z1.d, p5/m, p4/m, z25.d, z12.d
+80C26671 fmops z1.d, p1/m, p3/m, z19.d, z2.d
+80D3D973 fmops z3.d, p6/m, p6/m, z11.d, z19.d
+80C45952 fmops z2.d, p6/m, p2/m, z10.d, z4.d
+80DE6AB2 fmops z2.d, p2/m, p3/m, z21.d, z30.d
+// ADDVA_ZA_PP_Z_32 11|0000001|op=0|01|000|V=1|Pm=xxx|Pn=xxx|Zn=xxxxx|0|0|0|ZAda=xx
+// ADDVA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.S
+C091BA23 addva z3.s, p6/m, p5/m, z17.s
+C091E800 addva z0.s, p2/m, p7/m, z0.s
+C0917FC0 addva z0.s, p7/m, p3/m, z30.s
+C091ADE1 addva z1.s, p3/m, p5/m, z15.s
+C0911F21 addva z1.s, p7/m, p0/m, z25.s
+C0910460 addva z0.s, p1/m, p0/m, z3.s
+C0919101 addva z1.s, p4/m, p4/m, z8.s
+C0915E21 addva z1.s, p7/m, p2/m, z17.s
+// ADDVA_ZA_PP_Z_64 11|0000001|op=1|01000|V=1|Pm=xxx|Pn=xxx|Zn=xxxxx|0|0|ZAda=xxx
+// ADDVA <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.D
+C0D16EE5 addva z5.d, p3/m, p3/m, z23.d
+C0D1B1C5 addva z5.d, p4/m, p5/m, z14.d
+C0D19BA1 addva z1.d, p6/m, p4/m, z29.d
+C0D18F05 addva z5.d, p3/m, p4/m, z24.d
+C0D12386 addva z6.d, p0/m, p1/m, z28.d
+C0D1FF64 addva z4.d, p7/m, p7/m, z27.d
+C0D13004 addva z4.d, p4/m, p1/m, z0.d
+C0D15524 addva z4.d, p5/m, p2/m, z9.d
+// ADDHA_ZA_PP_Z_32 11|0000001|op=0|01|000|V=0|Pm=xxx|Pn=xxx|Zn=xxxxx|0|0|0|ZAda=xx
+// ADDHA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.S
+C0909662 addha z2.s, p5/m, p4/m, z19.s
+C0903260 addha z0.s, p4/m, p1/m, z19.s
+C0903C60 addha z0.s, p7/m, p1/m, z3.s
+C090BF63 addha z3.s, p7/m, p5/m, z27.s
+C090AD21 addha z1.s, p3/m, p5/m, z9.s
+C0900920 addha z0.s, p2/m, p0/m, z9.s
+C090F5E3 addha z3.s, p5/m, p7/m, z15.s
+C090DBE3 addha z3.s, p6/m, p6/m, z31.s
+// ADDHA_ZA_PP_Z_64 11|0000001|op=1|01000|V=0|Pm=xxx|Pn=xxx|Zn=xxxxx|0|0|ZAda=xxx
+// ADDHA <ZAda>.D,<Pn>/M,<Pm>/M,<Zn>.D
+C0D053E5 addha z5.d, p4/m, p2/m, z31.d
+C0D012C2 addha z2.d, p4/m, p0/m, z22.d
+C0D02983 addha z3.d, p2/m, p1/m, z12.d
+C0D019C2 addha z2.d, p6/m, p0/m, z14.d
+C0D0E1A5 addha z5.d, p0/m, p7/m, z13.d
+C0D02E24 addha z4.d, p3/m, p1/m, z17.d
+C0D0E5C6 addha z6.d, p1/m, p7/m, z14.d
+C0D0C661 addha z1.d, p1/m, p6/m, z19.d
+// SMSTART_MSR_SI_PSTATE 1101010100|L=0|op0=00|op1=011|CRn=0100|CRm=0xx1|op2=011|Rt=11111
+// SMSTART {<option>}
+D503437F smstart sm
+D503477F smstart
+D503457F smstart za
+// SMSTOP_MSR_SI_PSTATE 1101010100|L=0|op0=00|op1=011|CRn=0100|CRm=0xx0|op2=011|Rt=11111
+// SMSTOP {<option>}
+D503467F smstop
+D503427F smstop sm
+D503447F smstop za
+// MOV_MOVA_Z_P_RZA_B 11000000|size=00|00001|Q=0|V=x|Rs=xx|Pg=xxx|0|imm4=xxxx|Zd=xxxxx
+// MOV <Zd>.B,<Pg>/M, ZA0<HV>.B[<Ws>, #<imm>]
+C002D4B0 mova z16.b, p5/m, z0v.b[w14, #0x5]
+C00218EB mova z11.b, p6/m, z0h.b[w12, #0x7]
+C002054C mova z12.b, p1/m, z0h.b[w12, #0xa]
+C0027CB0 mova z16.b, p7/m, z0h.b[w15, #0x5]
+C002B95D mova z29.b, p6/m, z0v.b[w13, #0xa]
+C00259BD mova z29.b, p6/m, z0h.b[w14, #0xd]
+C002C49F mova z31.b, p1/m, z0v.b[w14, #0x4]
+C002EC7F mova z31.b, p3/m, z0v.b[w15, #0x3]
+// MOV_MOVA_Z_P_RZA_H 11000000|size=01|00001|Q=0|V=x|Rs=xx|Pg=xxx|0|ZAn=x|imm3=xxx|Zd=xxxxx
+// MOV <Zd>.H,<Pg>/M,<ZAn><HV>.H[<Ws>, #<imm>]
+C04254D6 mova z22.h, p5/m, z0h.h[w14, #0x6]
+C042BD71 mova z17.h, p7/m, z1v.h[w13, #0x3]
+C042F0F0 mova z16.h, p4/m, z0v.h[w15, #0x7]
+C042ACDB mova z27.h, p3/m, z0v.h[w13, #0x6]
+C0428D80 mova z0.h, p3/m, z1v.h[w12, #0x4]
+C042E1AA mova z10.h, p0/m, z1v.h[w15, #0x5]
+C0426924 mova z4.h, p2/m, z1h.h[w15, #0x1]
+C0423137 mova z23.h, p4/m, z1h.h[w13, #0x1]
+// MOV_MOVA_Z_P_RZA_W 11000000|size=10|00001|Q=0|V=x|Rs=xx|Pg=xxx|0|ZAn=xx|imm2=xx|Zd=xxxxx
+// MOV <Zd>.S,<Pg>/M,<ZAn><HV>.S[<Ws>, #<imm>]
+C0825448 mova z8.s, p5/m, z0h.s[w14, #0x2]
+C0828D9B mova z27.s, p3/m, z3v.s[w12, #0x0]
+C0820CE3 mova z3.s, p3/m, z1h.s[w12, #0x3]
+C08229D8 mova z24.s, p2/m, z3h.s[w13, #0x2]
+C08208BC mova z28.s, p2/m, z1h.s[w12, #0x1]
+C082B40A mova z10.s, p5/m, z0v.s[w13, #0x0]
+C0826547 mova z7.s, p1/m, z2h.s[w15, #0x2]
+C0829CF9 mova z25.s, p7/m, z1v.s[w12, #0x3]
+// MOV_MOVA_Z_P_RZA_D 11000000|size=11|00001|Q=0|V=x|Rs=xx|Pg=xxx|0|ZAn=xxx|i1=x|Zd=xxxxx
+// MOV <Zd>.D,<Pg>/M,<ZAn><HV>.D[<Ws>, #<imm>]
+C0C29D93 mova z19.d, p7/m, z6v.d[w12, #0x0]
+C0C2C0E5 mova z5.d, p0/m, z3v.d[w14, #0x1]
+C0C28CEE mova z14.d, p3/m, z3v.d[w12, #0x1]
+C0C25432 mova z18.d, p5/m, z0h.d[w14, #0x1]
+C0C29418 mova z24.d, p5/m, z0v.d[w12, #0x0]
+C0C2CD62 mova z2.d, p3/m, z5v.d[w14, #0x1]
+C0C2A062 mova z2.d, p0/m, z1v.d[w13, #0x1]
+C0C2EC31 mova z17.d, p3/m, z0v.d[w15, #0x1]
+// MOV_MOVA_Z_P_RZA_Q 11000000|size=11|00001|Q=1|V=x|Rs=xx|Pg=xxx|0|ZAn=xxxx|Zd=xxxxx
+// MOV <Zd>.Q,<Pg>/M,<ZAn><HV>.Q[<Ws>]
+C0C350F0 mova z16.q, p4/m, z7h.q[w14]
+C0C3F502 mova z2.q, p5/m, z8v.q[w15]
+C0C31541 mova z1.q, p5/m, z10h.q[w12]
+C0C31D0F mova z15.q, p7/m, z8h.q[w12]
+C0C3A5A6 mova z6.q, p1/m, z13v.q[w13]
+C0C32DDA mova z26.q, p3/m, z14h.q[w13]
+C0C33107 mova z7.q, p4/m, z8h.q[w13]
+C0C30415 mova z21.q, p1/m, z0h.q[w12]
+// MOV_MOVA_ZA_P_RZ_B 11000000|size=00|00000|Q=0|V=x|Rs=xx|Pg=xxx|Zn=xxxxx|0|imm4=xxxx
+// MOV ZA0<HV>.B[<Ws>, #<imm>],<Pg>/M,<Zn>.B
+C0002F06 mova z0h.b[w13, #0x6], p3/m, z24.b
+C000F88B mova z0v.b[w15, #0xb], p6/m, z4.b
+C00089EF mova z0v.b[w12, #0xf], p2/m, z15.b
+C00033A8 mova z0h.b[w13, #0x8], p4/m, z29.b
+C00006A4 mova z0h.b[w12, #0x4], p1/m, z21.b
+C0001560 mova z0h.b[w12, #0x0], p5/m, z11.b
+C00049CA mova z0h.b[w14, #0xa], p2/m, z14.b
+C0006900 mova z0h.b[w15, #0x0], p2/m, z8.b
+// MOV_MOVA_ZA_P_RZ_H 11000000|size=01|00000|Q=0|V=x|Rs=xx|Pg=xxx|Zn=xxxxx|0|ZAd=x|imm3=xxx
+// MOV <ZAd><HV>.H[<Ws>, #<imm>],<Pg>/M,<Zn>.H
+C040B14E mova z1v.h[w13, #0x6], p4/m, z10.h
+C04025EF mova z1h.h[w13, #0x7], p1/m, z15.h
+C040776C mova z1h.h[w15, #0x4], p5/m, z27.h
+C040EB61 mova z0v.h[w15, #0x1], p2/m, z27.h
+C040AC05 mova z0v.h[w13, #0x5], p3/m, z0.h
+C0401F6B mova z1h.h[w12, #0x3], p7/m, z27.h
+C040F924 mova z0v.h[w15, #0x4], p6/m, z9.h
+C040828E mova z1v.h[w12, #0x6], p0/m, z20.h
+// MOV_MOVA_ZA_P_RZ_W 11000000|size=10|00000|Q=0|V=x|Rs=xx|Pg=xxx|Zn=xxxxx|0|ZAd=xx|imm2=xx
+// MOV <ZAd><HV>.S[<Ws>, #<imm>],<Pg>/M,<Zn>.S
+C0803C6A mova z2h.s[w13, #0x2], p7/m, z3.s
+C0803B0D mova z3h.s[w13, #0x1], p6/m, z24.s
+C080F206 mova z1v.s[w15, #0x2], p4/m, z16.s
+C080B5A0 mova z0v.s[w13, #0x0], p5/m, z13.s
+C080BAEA mova z2v.s[w13, #0x2], p6/m, z23.s
+C08039EE mova z3h.s[w13, #0x2], p6/m, z15.s
+C080B5E7 mova z1v.s[w13, #0x3], p5/m, z15.s
+C0809C6D mova z3v.s[w12, #0x1], p7/m, z3.s
+// MOV_MOVA_ZA_P_RZ_D 11000000|size=11|00000|Q=0|V=x|Rs=xx|Pg=xxx|Zn=xxxxx|0|ZAd=xxx|i1=x
+// MOV <ZAd><HV>.D[<Ws>, #<imm>],<Pg>/M,<Zn>.D
+C0C0F4E9 mova z4v.d[w15, #0x1], p5/m, z7.d
+C0C0C5CC mova z6v.d[w14, #0x0], p1/m, z14.d
+C0C09B6C mova z6v.d[w12, #0x0], p6/m, z27.d
+C0C0096F mova z7h.d[w12, #0x1], p2/m, z11.d
+C0C02F03 mova z1h.d[w13, #0x1], p3/m, z24.d
+C0C071CE mova z7h.d[w15, #0x0], p4/m, z14.d
+C0C0862D mova z6v.d[w12, #0x1], p1/m, z17.d
+C0C042E5 mova z2h.d[w14, #0x1], p0/m, z23.d
+// MOV_MOVA_ZA_P_RZ_Q 11000000|size=11|00000|Q=1|V=x|Rs=xx|Pg=xxx|Zn=xxxxx|0|ZAd=xxxx
+// MOV <ZAd><HV>.Q[<Ws>],<Pg>/M,<Zn>.Q
+C0C1D2E5 mova z5v.q[w14], p4/m, z23.q
+C0C1A9CE mova z14v.q[w13], p2/m, z14.q
+C0C1C620 mova z0v.q[w14], p1/m, z17.q
+C0C110C2 mova z2h.q[w12], p4/m, z6.q
+C0C1F2C9 mova z9v.q[w15], p4/m, z22.q
+C0C1C328 mova z8v.q[w14], p0/m, z25.q
+C0C14E60 mova z0h.q[w14], p3/m, z19.q
+C0C1F2A6 mova z6v.q[w15], p4/m, z21.q
 // https://github.com/Vector35/arch-arm64/issues/87
 D53FE297 mrs x23, s3_7_c14_c2_4
 D5310B1C mrs x28, trcstallctlr

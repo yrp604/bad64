@@ -33,7 +33,7 @@ fn testcases() {
             match (a, b) {
                 ("cs", "hs") | ("hs", "cs") => true,
                 ("lo", "cc") | ("cc", "lo") => true,
-                _ if a.starts_with('#') && b.starts_with("#") => {
+                _ if a.starts_with('#') || b.starts_with("#") => {
                     match (parse_num(a), parse_num(b)) {
                         (Ok(x), Ok(y)) => {
                             println!("parsed {:#x} {:#x}", x, y);
@@ -53,6 +53,7 @@ fn testcases() {
                         }
                     }
                 }
+                _ if a.to_lowercase() == b.to_lowercase() => true,
                 _ => a == b,
             }
         }

@@ -387,7 +387,7 @@ impl fmt::Display for Operand {
                 write!(f, "[{}", regs[1])?;
 
                 if !matches!(imm, Imm::Signed(0) | Imm::Unsigned(0)) {
-                    write!(f, "{{, #{}}}", imm)?;
+                    write!(f, ", #{}", imm)?;
                 }
                 write!(f, "]")
             }

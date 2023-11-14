@@ -2,7 +2,7 @@
 
 [![Build Status]][actions] [![Latest Version]][crates.io] [![Latest Docs]][docs.rs]
 
-[Build Status]: https://img.shields.io/github/workflow/status/yrp604/bad64/Rust
+[Build Status]: https://img.shields.io/github/actions/workflow/status/yrp604/bad64/rust.yml?branch=main
 [actions]: https://github.com/yrp604/bad64/actions?query=branch%3Amain
 [Latest Version]: https://img.shields.io/crates/v/bad64.svg
 [crates.io]: https://crates.io/crates/bad64

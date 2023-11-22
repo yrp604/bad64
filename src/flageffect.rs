@@ -20,4 +20,3 @@ impl TryFrom<&bad64_sys::Instruction> for FlagEffect {
         }
     }
 }
-     

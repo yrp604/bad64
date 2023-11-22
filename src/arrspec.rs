@@ -75,19 +75,17 @@ impl ArrSpec {
     }
 
     pub fn suffix_truncated(&self) -> &'static str {
-            match *self {
-                Self::Full(_) => ".q",
-                Self::TwoDoubles(_) | Self::OneDouble(_) => ".d",
-                Self::FourSingles(_) | Self::TwoSingles(_) | Self::OneSingle(_) => ".s",
-                Self::EightHalves(_)
-                | Self::FourHalves(_)
-                | Self::TwoHalves(_)
-                | Self::OneHalf(_) => ".h",
-                Self::SixteenBytes(_)
-                | Self::EightBytes(_)
-                | Self::FourBytes(_)
-                | Self::OneByte(_) => ".b",
+        match *self {
+            Self::Full(_) => ".q",
+            Self::TwoDoubles(_) | Self::OneDouble(_) => ".d",
+            Self::FourSingles(_) | Self::TwoSingles(_) | Self::OneSingle(_) => ".s",
+            Self::EightHalves(_) | Self::FourHalves(_) | Self::TwoHalves(_) | Self::OneHalf(_) => {
+                ".h"
             }
+            Self::SixteenBytes(_) | Self::EightBytes(_) | Self::FourBytes(_) | Self::OneByte(_) => {
+                ".b"
+            }
+        }
     }
 
     pub fn suffix_full(&self) -> &'static str {

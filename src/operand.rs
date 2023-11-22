@@ -27,7 +27,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for SliceIndicator {
         match oo.slice {
             SliceIndicator_SLICE_NONE => Err(()),
             SliceIndicator_SLICE_HORIZONTAL => Ok(Self::Horizontal),
-            SliceIndicator_SLICE_VERTICAL=> Ok(Self::Vertical),
+            SliceIndicator_SLICE_VERTICAL => Ok(Self::Vertical),
             _ => Err(()),
         }
     }
@@ -248,7 +248,7 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
             }),
             OperandClass::ACCUM_ARRAY => Ok(Self::AccumArray {
                 reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                imm: Imm::from(oo)
+                imm: Imm::from(oo),
             }),
             OperandClass::LABEL => Ok(Self::Label(Imm::from(oo))),
             OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplSpec {
@@ -364,7 +364,13 @@ impl fmt::Display for Operand {
                 }
                 write!(f, "]")
             }
-            Self::SmeTile { tile, slice, arrspec, reg, imm } => {
+            Self::SmeTile {
+                tile,
+                slice,
+                arrspec,
+                reg,
+                imm,
+            } => {
                 write!(f, "Z{}", tile)?;
 
                 if let Some(slice) = slice {
@@ -380,7 +386,7 @@ impl fmt::Display for Operand {
                     (Some(reg), _) => write!(f, "[{}, {}]", reg, imm),
                     _ => write!(f, ""),
                 }
-            },
+            }
             Self::AccumArray { reg, imm } => write!(f, "ZA[{}, #{}]", reg, imm),
             Self::IndexedElement { regs, arrspec, imm } => {
                 write_full_reg(f, regs[0], arrspec)?;

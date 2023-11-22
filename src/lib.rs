@@ -386,14 +386,21 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 /// ```
 /// use bad64::{disasm, Op};
 ///
-/// let mut decoded_iter = disasm(b"\x1f\x20\x03\xd5", 0x1000);
+/// let mut decoded_iter = disasm(b"\x1f\x20\x03\xd5\x1f\x20\x03\xd5", 0x1000);
 ///
-/// let decoded = decoded_iter.next().unwrap().unwrap();
+/// let decoded1 = decoded_iter.next().unwrap().unwrap();
 ///
-/// assert_eq!(decoded.address(), 0x1000);
-/// assert_eq!(decoded.operands().len(), 0);
-/// assert_eq!(decoded.op(), Op::NOP);
-/// assert_eq!(decoded.op().mnem(), "nop");
+/// assert_eq!(decoded1.address(), 0x1000);
+/// assert_eq!(decoded1.operands().len(), 0);
+/// assert_eq!(decoded1.op(), Op::NOP);
+/// assert_eq!(decoded1.op().mnem(), "nop");
+///
+/// let decoded2 = decoded_iter.next().unwrap().unwrap();
+///
+/// assert_eq!(decoded2.address(), 0x1004);
+/// assert_eq!(decoded2.operands().len(), 0);
+/// assert_eq!(decoded2.op(), Op::NOP);
+/// assert_eq!(decoded2.op().mnem(), "nop");
 ///
 /// assert_eq!(decoded_iter.next(), None);
 /// ```

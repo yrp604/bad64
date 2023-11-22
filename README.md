@@ -48,7 +48,7 @@ Instruction {
             shift: None,
         },
     ],
-    flags_set: false,
+    flags_set: None,
 }
 add x0, x1, #0x41
 ```

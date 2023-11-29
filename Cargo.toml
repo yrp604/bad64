@@ -1,6 +1,6 @@
 [package]
 name = "bad64"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["yrp <yrp604@protonmail.com>"]
 edition = "2021"
 description = "Rust bindings for Binja's arm64 disassembler"

@@ -150,14 +150,14 @@ E1CC0A2C ld1q z0h.q[w12], p2/z, [x17, x12, lsl #0x4]
 E1DB7688 ld1q z0h.q[w15], p5/z, [x20, x27, lsl #0x4]
 // DUP_P_P_PI_ 00100101|i1=x|tszh=x|1|tszl=xxx|Rm=xx|01|Pg=xxxx|S=0|Pn=xxxx|0|Pd=xxxx
 // DUP <Pd>.<T>,<Pg>/Z,<Pn>.<T>[<Wm>{, #<imm>}]
-257F7D8D dup p13.d, p15/z, p12.d[w15, #0xf]
-25B0590D dup p13.q, p6/z, p8.q[w12, #0x14]
-25EE7DED dup p13.d, p15/z, p15.d[w14, #0x1b]
-25FE5887 dup p7.d, p6/z, p4.d[w14, #0x1f]
-25F27D09 dup p9.q, p15/z, p8.q[w14, #0x1c]
-25785844 dup p4.b, p6/z, p2.b[w12, #0xe]
-257240AF dup p15.q, p0/z, p5.q[w14, #0xc]
-256B756C dup p12.b, p13/z, p11.b[w15, #0xa]
+257F7D8D dup p13.b, p15/z, p12.b[w15, #0xf]
+25B0590D dup p13.s, p6/z, p8.s[w12, #0x14]
+25EE7DED dup p13.b, p15/z, p15.b[w14, #0x1b]
+25FE5887 dup p7.b, p6/z, p4.b[w14, #0x1f]
+25F27D09 dup p9.s, p15/z, p8.s[w14, #0x1c]
+25785844 dup p4.h, p6/z, p2.h[w12, #0xe]
+257240AF dup p15.s, p0/z, p5.s[w14, #0xc]
+256B756C dup p12.h, p13/z, p11.h[w15, #0xa]
 // SMOPA_ZA_PP_ZZ_32 10|10000|u0=0|10|u1=0|Zm=xxxxx|Pm=xxx|Pn=xxx|Zn=xxxxx|S=0|0|0|ZAda=xx
 // SMOPA <ZAda>.S,<Pn>/M,<Pm>/M,<Zn>.B,<Zm>.B
 A0822DA1 smopa z1.s, p3/m, p1/m, z13.b, z2.b
@@ -1405,23 +1405,23 @@ C50DCF41 ldnt1w {z1.d}, p3/z, [z26.d, x13]
 4535F606 rax1 z6.d, z16.d, z21.d
 // rshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=1|R=1|T=0|Zn=xxxxx|Zd=xxxxx
 // RSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
-45671A73 rshrnb z19.q, z19.d, #0x19
-45751871 rshrnb z17.s, z3.h, #0xb
+45671A73 rshrnb z19.s, z19.d, #0x19
+45751871 rshrnb z17.s, z3.d, #0xb
 45371AB3 rshrnb z19.h, z21.s, #0x9
 452B1B16 rshrnb z22.b, z24.h, #0x5
 45291BB4 rshrnb z20.b, z29.h, #0x7
-45661B63 rshrnb z3.q, z27.d, #0x1a
+45661B63 rshrnb z3.s, z27.d, #0x1a
 453018E0 rshrnb z0.h, z7.s, #0x10
-456F1A14 rshrnb z20.h, z16.b, #0x11
+456F1A14 rshrnb z20.s, z16.d, #0x11
 // rshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=1|R=1|T=1|Zn=xxxxx|Zd=xxxxx
 // RSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
 452B1C70 rshrnt z16.b, z3.h, #0x5
-453F1E2D rshrnt z13.s, z17.d, #0x1
-456B1E09 rshrnt z9.h, z16.b, #0x15
-45391D1F rshrnt z31.s, z8.d, #0x7
-456D1DDB rshrnt z27.h, z14.b, #0x13
-453B1D2E rshrnt z14.s, z9.d, #0x5
-45721EB8 rshrnt z24.s, z21.h, #0xe
+453F1E2D rshrnt z13.h, z17.s, #0x1
+456B1E09 rshrnt z9.s, z16.d, #0x15
+45391D1F rshrnt z31.h, z8.s, #0x7
+456D1DDB rshrnt z27.s, z14.d, #0x13
+453B1D2E rshrnt z14.h, z9.s, #0x5
+45721EB8 rshrnt z24.s, z21.d, #0xe
 452B1F10 rshrnt z16.b, z24.h, #0x5
 // rsubhnb_z_zz_ 01000101|size=xx|1|Zm=xxxxx|011|S=1|R=1|T=0|Zn=xxxxx|Zd=xxxxx
 // RSUBHNB <Zd>.<T>,<Zn>.<Tb>,<Zm>.<Tb>
@@ -1587,22 +1587,22 @@ C50DCF41 ldnt1w {z1.d}, p3/z, [z26.d, x13]
 // SHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
 453210F7 shrnb z23.h, z7.s, #0xe
 452911CC shrnb z12.b, z14.h, #0x7
-45651070 shrnb z16.q, z3.d, #0x1b
-457F124C shrnb z12.d, z18.s, #0x1
+45651070 shrnb z16.s, z3.d, #0x1b
+457F124C shrnb z12.s, z18.d, #0x1
 453313CD shrnb z13.h, z30.s, #0xd
-457A10E2 shrnb z2.d, z7.s, #0x6
-456511A1 shrnb z1.q, z13.d, #0x1b
-45701106 shrnb z6.s, z8.h, #0x10
+457A10E2 shrnb z2.s, z7.d, #0x6
+456511A1 shrnb z1.s, z13.d, #0x1b
+45701106 shrnb z6.s, z8.d, #0x10
 // shrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=1|R=0|T=1|Zn=xxxxx|Zd=xxxxx
 // SHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
-457B161A shrnt z26.d, z16.s, #0x5
-4561151C shrnt z28.q, z8.d, #0x1f
-457614B3 shrnt z19.s, z5.h, #0xa
-4577157F shrnt z31.s, z11.h, #0x9
+457B161A shrnt z26.s, z16.d, #0x5
+4561151C shrnt z28.s, z8.d, #0x1f
+457614B3 shrnt z19.s, z5.d, #0xa
+4577157F shrnt z31.s, z11.d, #0x9
 452D1777 shrnt z23.b, z27.h, #0x3
-456C175A shrnt z26.h, z26.b, #0x14
-4562166F shrnt z15.q, z19.d, #0x1e
-45391614 shrnt z20.s, z16.d, #0x7
+456C175A shrnt z26.s, z26.d, #0x14
+4562166F shrnt z15.s, z19.d, #0x1e
+45391614 shrnt z20.h, z16.s, #0x7
 // shsub_z_p_zz_ 01000100|size=xx|010|R=0|S=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
 // SHSUB <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
 44D28618 shsub z24.d, p1/m, z24.d, z16.d
@@ -2326,43 +2326,43 @@ C50DCF41 ldnt1w {z1.d}, p3/z, [z26.d, x13]
 // sqrshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=1|T=0|Zn=xxxxx|Zd=xxxxx
 // SQRSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
 45332B5A sqrshrnb z26.h, z26.s, #0xd
-453E288D sqrshrnb z13.s, z4.d, #0x2
+453E288D sqrshrnb z13.h, z4.s, #0x2
 45342B39 sqrshrnb z25.h, z25.s, #0xc
 45362934 sqrshrnb z20.h, z9.s, #0xa
 453329A2 sqrshrnb z2.h, z13.s, #0xd
-456D28D2 sqrshrnb z18.h, z6.b, #0x13
+456D28D2 sqrshrnb z18.s, z6.d, #0x13
 45372BE7 sqrshrnb z7.h, z31.s, #0x9
 45342968 sqrshrnb z8.h, z11.s, #0xc
 // sqrshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=1|T=1|Zn=xxxxx|Zd=xxxxx
 // SQRSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
-45612C92 sqrshrnt z18.q, z4.d, #0x1f
+45612C92 sqrshrnt z18.s, z4.d, #0x1f
 452D2D16 sqrshrnt z22.b, z8.h, #0x3
-45612F61 sqrshrnt z1.q, z27.d, #0x1f
-45732D8B sqrshrnt z11.s, z12.h, #0xd
+45612F61 sqrshrnt z1.s, z27.d, #0x1f
+45732D8B sqrshrnt z11.s, z12.d, #0xd
 452E2E0D sqrshrnt z13.b, z16.h, #0x2
-45772FC1 sqrshrnt z1.s, z30.h, #0x9
-453B2C03 sqrshrnt z3.s, z0.d, #0x5
-45692FE3 sqrshrnt z3.h, z31.b, #0x17
+45772FC1 sqrshrnt z1.s, z30.d, #0x9
+453B2C03 sqrshrnt z3.h, z0.s, #0x5
+45692FE3 sqrshrnt z3.s, z31.d, #0x17
 // sqrshrunb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=1|T=0|Zn=xxxxx|Zd=xxxxx
 // SQRSHRUNB <Zd>.<T>,<Zn>.<Tb>, #<const>
-45700A00 sqrshrunb z0.s, z16.h, #0x10
+45700A00 sqrshrunb z0.s, z16.d, #0x10
 452B0BF4 sqrshrunb z20.b, z31.h, #0x5
-456E0937 sqrshrunb z23.h, z9.b, #0x12
-456708DB sqrshrunb z27.q, z6.d, #0x19
-456A09AF sqrshrunb z15.h, z13.b, #0x16
+456E0937 sqrshrunb z23.s, z9.d, #0x12
+456708DB sqrshrunb z27.s, z6.d, #0x19
+456A09AF sqrshrunb z15.s, z13.d, #0x16
 45310840 sqrshrunb z0.h, z2.s, #0xf
-45630A2C sqrshrunb z12.q, z17.d, #0x1d
-45790AB7 sqrshrunb z23.d, z21.s, #0x7
+45630A2C sqrshrunb z12.s, z17.d, #0x1d
+45790AB7 sqrshrunb z23.s, z21.d, #0x7
 // sqrshrunt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=1|T=1|Zn=xxxxx|Zd=xxxxx
 // SQRSHRUNT <Zd>.<T>,<Zn>.<Tb>, #<const>
-45700E43 sqrshrunt z3.s, z18.h, #0x10
-45750F05 sqrshrunt z5.s, z24.h, #0xb
-456A0D9C sqrshrunt z28.h, z12.b, #0x16
-456E0D5C sqrshrunt z28.h, z10.b, #0x12
-453C0E2D sqrshrunt z13.s, z17.d, #0x4
-453E0C8B sqrshrunt z11.s, z4.d, #0x2
-457C0DC8 sqrshrunt z8.d, z14.s, #0x4
-45690C4B sqrshrunt z11.h, z2.b, #0x17
+45700E43 sqrshrunt z3.s, z18.d, #0x10
+45750F05 sqrshrunt z5.s, z24.d, #0xb
+456A0D9C sqrshrunt z28.s, z12.d, #0x16
+456E0D5C sqrshrunt z28.s, z10.d, #0x12
+453C0E2D sqrshrunt z13.h, z17.s, #0x4
+453E0C8B sqrshrunt z11.h, z4.s, #0x2
+457C0DC8 sqrshrunt z8.s, z14.d, #0x4
+45690C4B sqrshrunt z11.s, z2.d, #0x17
 // sqshl_z_p_zi_ 00000100|tszh=xx|00|opc=01|L=1|U=0|100|Pg=xxx|tszl=xx|imm3=xxx|Zdn=xxxxx
 // SQSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>, #<const>
 040696D4 sqshl z20.h, p5/m, z20.h, #0x6
@@ -2405,44 +2405,44 @@ C50DCF41 ldnt1w {z1.d}, p3/z, [z26.d, x13]
 04CF8E97 sqshlu z23.d, p3/m, z23.d, #0x34
 // sqshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=0|T=0|Zn=xxxxx|Zd=xxxxx
 // SQSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
-456720D2 sqshrnb z18.q, z6.d, #0x19
-456623CD sqshrnb z13.q, z30.d, #0x1a
-45722115 sqshrnb z21.s, z8.h, #0xe
-453F2217 sqshrnb z23.s, z16.d, #0x1
+456720D2 sqshrnb z18.s, z6.d, #0x19
+456623CD sqshrnb z13.s, z30.d, #0x1a
+45722115 sqshrnb z21.s, z8.d, #0xe
+453F2217 sqshrnb z23.h, z16.s, #0x1
 45322218 sqshrnb z24.h, z16.s, #0xe
 4533200F sqshrnb z15.h, z0.s, #0xd
-45762204 sqshrnb z4.s, z16.h, #0xa
+45762204 sqshrnb z4.s, z16.d, #0xa
 45372214 sqshrnb z20.h, z16.s, #0x9
 // sqshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=0|R=0|T=1|Zn=xxxxx|Zd=xxxxx
 // SQSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
 452D25BD sqshrnt z29.b, z13.h, #0x3
 452C27EA sqshrnt z10.b, z31.h, #0x4
-457A2658 sqshrnt z24.d, z18.s, #0x6
-4566245C sqshrnt z28.q, z2.d, #0x1a
-45792636 sqshrnt z22.d, z17.s, #0x7
-457D2514 sqshrnt z20.d, z8.s, #0x3
+457A2658 sqshrnt z24.s, z18.d, #0x6
+4566245C sqshrnt z28.s, z2.d, #0x1a
+45792636 sqshrnt z22.s, z17.d, #0x7
+457D2514 sqshrnt z20.s, z8.d, #0x3
 45282709 sqshrnt z9.b, z24.h, #0x8
-456024DE sqshrnt z30.q, z6.d, #0x20
+456024DE sqshrnt z30.s, z6.d, #0x20
 // sqshrunb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=0|T=0|Zn=xxxxx|Zd=xxxxx
 // SQSHRUNB <Zd>.<T>,<Zn>.<Tb>, #<const>
-4562021A sqshrunb z26.q, z16.d, #0x1e
+4562021A sqshrunb z26.s, z16.d, #0x1e
 452D003B sqshrunb z27.b, z1.h, #0x3
-45700381 sqshrunb z1.s, z28.h, #0x10
-45630012 sqshrunb z18.q, z0.d, #0x1d
-457C0168 sqshrunb z8.d, z11.s, #0x4
-457E0320 sqshrunb z0.d, z25.s, #0x2
-457D0118 sqshrunb z24.d, z8.s, #0x3
-4564002C sqshrunb z12.q, z1.d, #0x1c
+45700381 sqshrunb z1.s, z28.d, #0x10
+45630012 sqshrunb z18.s, z0.d, #0x1d
+457C0168 sqshrunb z8.s, z11.d, #0x4
+457E0320 sqshrunb z0.s, z25.d, #0x2
+457D0118 sqshrunb z24.s, z8.d, #0x3
+4564002C sqshrunb z12.s, z1.d, #0x1c
 // sqshrunt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=0|U=0|R=0|T=1|Zn=xxxxx|Zd=xxxxx
 // SQSHRUNT <Zd>.<T>,<Zn>.<Tb>, #<const>
 453405F9 sqshrunt z25.h, z15.s, #0xc
-453D04B8 sqshrunt z24.s, z5.d, #0x3
-45660772 sqshrunt z18.q, z27.d, #0x1a
+453D04B8 sqshrunt z24.h, z5.s, #0x3
+45660772 sqshrunt z18.s, z27.d, #0x1a
 4531065D sqshrunt z29.h, z18.s, #0xf
-457B053C sqshrunt z28.d, z9.s, #0x5
-45750433 sqshrunt z19.s, z1.h, #0xb
+457B053C sqshrunt z28.s, z9.d, #0x5
+45750433 sqshrunt z19.s, z1.d, #0xb
 452B0423 sqshrunt z3.b, z1.h, #0x5
-456605C0 sqshrunt z0.q, z14.d, #0x1a
+456605C0 sqshrunt z0.s, z14.d, #0x1a
 // sqsub_z_p_zz_ 01000100|size=xx|011|op=0|S=1|U=0|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
 // SQSUB <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
 449A902E sqsub z14.s, p4/m, z14.s, z1.s
@@ -2566,23 +2566,23 @@ C50DCF41 ldnt1w {z1.d}, p3/z, [z26.d, x13]
 // sshllb_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=0|T=0|Zn=xxxxx|Zd=xxxxx
 // SSHLLB <Zd>.<T>,<Zn>.<Tb>, #<const>
 450CA08C sshllb z12.h, z4.b, #0x4
-4556A2F0 sshllb z16.h, z23.s, #0x16
-451EA17C sshllb z28.d, z11.s, #0xe
-4518A0D4 sshllb z20.d, z6.s, #0x8
+4556A2F0 sshllb z16.d, z23.s, #0x16
+451EA17C sshllb z28.s, z11.h, #0xe
+4518A0D4 sshllb z20.s, z6.h, #0x8
 4516A175 sshllb z21.s, z11.h, #0x6
-455BA2BA sshllb z26.s, z21.d, #0x1b
-451EA239 sshllb z25.d, z17.s, #0xe
+455BA2BA sshllb z26.d, z21.s, #0x1b
+451EA239 sshllb z25.s, z17.h, #0xe
 450CA281 sshllb z1.h, z20.b, #0x4
 // sshllt_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=0|T=1|Zn=xxxxx|Zd=xxxxx
 // SSHLLT <Zd>.<T>,<Zn>.<Tb>, #<const>
-4542A64D sshllt z13.d, z18.q, #0x2
-455DA587 sshllt z7.s, z12.d, #0x1d
-4549A73B sshllt z27.b, z25.h, #0x9
+4542A64D sshllt z13.d, z18.s, #0x2
+455DA587 sshllt z7.d, z12.s, #0x1d
+4549A73B sshllt z27.d, z25.s, #0x9
 4513A637 sshllt z23.s, z17.h, #0x3
-455DA679 sshllt z25.s, z19.d, #0x1d
-4547A454 sshllt z20.d, z2.q, #0x7
-454BA498 sshllt z24.b, z4.h, #0xb
-454FA6DF sshllt z31.b, z22.h, #0xf
+455DA679 sshllt z25.d, z19.s, #0x1d
+4547A454 sshllt z20.d, z2.s, #0x7
+454BA498 sshllt z24.d, z4.s, #0xb
+454FA6DF sshllt z31.d, z22.s, #0xf
 // ssra_z_zi_ 01000101|tszh=xx|0|tszl=xx|imm3=xxx|1110|R=0|U=0|Zn=xxxxx|Zda=xxxxx
 // SSRA <Zda>.<T>,<Zn>.<T>, #<const>
 458DE16E ssra z14.d, z11.d, #0x33
@@ -3145,24 +3145,24 @@ E5133C7B stnt1w {z27.d}, p7, [z3.d, x19]
 44CF9390 uqrshlr z16.d, p4/m, z16.d, z28.d
 // uqrshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=1|T=0|Zn=xxxxx|Zd=xxxxx
 // UQRSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
-456739AE uqrshrnb z14.q, z13.d, #0x19
-45393A9E uqrshrnb z30.s, z20.d, #0x7
-4574384D uqrshrnb z13.s, z2.h, #0xc
-456439A0 uqrshrnb z0.q, z13.d, #0x1c
-456D3B63 uqrshrnb z3.h, z27.b, #0x13
-45723A9E uqrshrnb z30.s, z20.h, #0xe
+456739AE uqrshrnb z14.s, z13.d, #0x19
+45393A9E uqrshrnb z30.h, z20.s, #0x7
+4574384D uqrshrnb z13.s, z2.d, #0xc
+456439A0 uqrshrnb z0.s, z13.d, #0x1c
+456D3B63 uqrshrnb z3.s, z27.d, #0x13
+45723A9E uqrshrnb z30.s, z20.d, #0xe
 453039E9 uqrshrnb z9.h, z15.s, #0x10
-457A39C0 uqrshrnb z0.d, z14.s, #0x6
+457A39C0 uqrshrnb z0.s, z14.d, #0x6
 // uqrshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=1|T=1|Zn=xxxxx|Zd=xxxxx
 // UQRSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
 45343EC6 uqrshrnt z6.h, z22.s, #0xc
-45643E56 uqrshrnt z22.q, z18.d, #0x1c
+45643E56 uqrshrnt z22.s, z18.d, #0x1c
 452E3FA6 uqrshrnt z6.b, z29.h, #0x2
-45733F2C uqrshrnt z12.s, z25.h, #0xd
-457C3F5E uqrshrnt z30.d, z26.s, #0x4
-453F3DAA uqrshrnt z10.s, z13.d, #0x1
-45713F40 uqrshrnt z0.s, z26.h, #0xf
-45743CD3 uqrshrnt z19.s, z6.h, #0xc
+45733F2C uqrshrnt z12.s, z25.d, #0xd
+457C3F5E uqrshrnt z30.s, z26.d, #0x4
+453F3DAA uqrshrnt z10.h, z13.s, #0x1
+45713F40 uqrshrnt z0.s, z26.d, #0xf
+45743CD3 uqrshrnt z19.s, z6.d, #0xc
 // uqshl_z_p_zi_ 00000100|tszh=xx|00|opc=01|L=1|U=1|100|Pg=xxx|tszl=xx|imm3=xxx|Zdn=xxxxx
 // UQSHL <Zdn>.<T>,<Pg>/M,<Zdn>.<T>, #<const>
 04079183 uqshl z3.b, p4/m, z3.b, #0x4
@@ -3196,23 +3196,23 @@ E5133C7B stnt1w {z27.d}, p7, [z3.d, x19]
 // uqshrnb_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=0|T=0|Zn=xxxxx|Zd=xxxxx
 // UQSHRNB <Zd>.<T>,<Zn>.<Tb>, #<const>
 452C32B2 uqshrnb z18.b, z21.h, #0x4
-456A3120 uqshrnb z0.h, z9.b, #0x16
-457733BA uqshrnb z26.s, z29.h, #0x9
-453A300A uqshrnb z10.s, z0.d, #0x6
-456D32EC uqshrnb z12.h, z23.b, #0x13
-457033D4 uqshrnb z20.s, z30.h, #0x10
+456A3120 uqshrnb z0.s, z9.d, #0x16
+457733BA uqshrnb z26.s, z29.d, #0x9
+453A300A uqshrnb z10.h, z0.s, #0x6
+456D32EC uqshrnb z12.s, z23.d, #0x13
+457033D4 uqshrnb z20.s, z30.d, #0x10
 45333070 uqshrnb z16.h, z3.s, #0xd
 453630C9 uqshrnb z9.h, z6.s, #0xa
 // uqshrnt_z_zi_ 010001010|tszh=x|1|tszl=xx|imm3=xxx|00|op=1|U=1|R=0|T=1|Zn=xxxxx|Zd=xxxxx
 // UQSHRNT <Zd>.<T>,<Zn>.<Tb>, #<const>
-456437D3 uqshrnt z19.q, z30.d, #0x1c
-457D376A uqshrnt z10.d, z27.s, #0x3
+456437D3 uqshrnt z19.s, z30.d, #0x1c
+457D376A uqshrnt z10.s, z27.d, #0x3
 45313464 uqshrnt z4.h, z3.s, #0xf
 452A3476 uqshrnt z22.b, z3.h, #0x6
-457634A6 uqshrnt z6.s, z5.h, #0xa
-453A36F5 uqshrnt z21.s, z23.d, #0x6
-4572375F uqshrnt z31.s, z26.h, #0xe
-457137F8 uqshrnt z24.s, z31.h, #0xf
+457634A6 uqshrnt z6.s, z5.d, #0xa
+453A36F5 uqshrnt z21.h, z23.s, #0x6
+4572375F uqshrnt z31.s, z26.d, #0xe
+457137F8 uqshrnt z24.s, z31.d, #0xf
 // uqsub_z_p_zz_ 01000100|size=xx|011|op=0|S=1|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
 // UQSUB <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>
 449B8221 uqsub z1.s, p0/m, z1.s, z17.s
@@ -3325,23 +3325,23 @@ E5133C7B stnt1w {z27.d}, p7, [z3.d, x19]
 4586ECBB ursra z27.d, z5.d, #0x3a
 // ushllb_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=1|T=0|Zn=xxxxx|Zd=xxxxx
 // USHLLB <Zd>.<T>,<Zn>.<Tb>, #<const>
-4553ABF0 ushllb z16.h, z31.s, #0x13
-4554AAF3 ushllb z19.h, z23.s, #0x14
-454CA8DC ushllb z28.b, z6.h, #0xc
-455BAAF4 ushllb z20.s, z23.d, #0x1b
+4553ABF0 ushllb z16.d, z31.s, #0x13
+4554AAF3 ushllb z19.d, z23.s, #0x14
+454CA8DC ushllb z28.d, z6.s, #0xc
+455BAAF4 ushllb z20.d, z23.s, #0x1b
 450CA8B6 ushllb z22.h, z5.b, #0x4
-4549A8DF ushllb z31.b, z6.h, #0x9
-4552AB74 ushllb z20.h, z27.s, #0x12
+4549A8DF ushllb z31.d, z6.s, #0x9
+4552AB74 ushllb z20.d, z27.s, #0x12
 4514A9A6 ushllb z6.s, z13.h, #0x4
 // ushllt_z_zi_ 010001010|tszh=x|0|tszl=xx|imm3=xxx|1010|U=1|T=1|Zn=xxxxx|Zd=xxxxx
 // USHLLT <Zd>.<T>,<Zn>.<Tb>, #<const>
 450AAFE1 ushllt z1.h, z31.b, #0x2
-4546AF2F ushllt z15.d, z25.q, #0x6
-4554AC9D ushllt z29.h, z4.s, #0x14
-455EAD0D ushllt z13.s, z8.d, #0x1e
-4554AF81 ushllt z1.h, z28.s, #0x14
+4546AF2F ushllt z15.d, z25.s, #0x6
+4554AC9D ushllt z29.d, z4.s, #0x14
+455EAD0D ushllt z13.d, z8.s, #0x1e
+4554AF81 ushllt z1.d, z28.s, #0x14
 4515ACB0 ushllt z16.s, z5.h, #0x5
-4547ACBB ushllt z27.d, z5.q, #0x7
+4547ACBB ushllt z27.d, z5.s, #0x7
 4509AFCC ushllt z12.h, z30.b, #0x1
 // usqadd_z_p_zz_ 01000100|size=xx|011|op=1|S=0|U=1|100|Pg=xxx|Zm=xxxxx|Zdn=xxxxx
 // USQADD <Zdn>.<T>,<Pg>/M,<Zdn>.<T>,<Zm>.<T>

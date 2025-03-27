@@ -19,7 +19,7 @@ static_assertions = "1"
 
 [dev-dependencies]
 rand = "0.9"
-xmas-elf = "0.9"
+xmas-elf = "0.10"
 
 [features]
 std = []

@@ -10,7 +10,7 @@
 [docs.rs]: https://docs.rs/bad64
 
 These are bindings to the [Binary Ninja](https://binary.ninja) arm64
-[architecture/disassembler plugin](https://github.com/Vector35/arch-arm64).
+[architecture/disassembler plugin]([https://github.com/Vector35/arch-arm64](https://github.com/Vector35/binaryninja-api/tree/dev/arch/arm64)).
 
 Note that while Binary Ninja is an (excellent) commercial product, the
 disassembler is entirely Apache 2 licensed and may be used without a license.

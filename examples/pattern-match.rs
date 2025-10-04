@@ -4,7 +4,7 @@ use std::process;
 
 use xmas_elf::ElfFile;
 
-use bad64::{disasm, Op, Operand, Reg};
+use bad64::{Op, Operand, Reg, disasm};
 
 fn main() {
     let argv: Vec<String> = env::args().collect();

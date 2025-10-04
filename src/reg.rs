@@ -332,9 +332,10 @@ pub enum Reg {
     P29 = Register_REG_P29 as u32,
     P30 = Register_REG_P30 as u32,
     P31 = Register_REG_P31 as u32,
+    ZT0 = Register_REG_ZT0 as u32,
 }
 
-const_assert_eq!(Register_REG_END, Register_REG_PF31 + 1);
+const_assert_eq!(Register_REG_END, Register_REG_ZT0 + 1);
 
 impl Reg {
     /// Returns the register name

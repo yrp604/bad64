@@ -318,10 +318,10 @@ impl fmt::Display for Operand {
 
                 write!(f, "}}")?;
 
-                if let Some(arsp) = arrspec {
-                    if let Some(lane) = arsp.lane() {
-                        write!(f, "[{}]", lane)?;
-                    }
+                if let Some(arsp) = arrspec
+                    && let Some(lane) = arsp.lane()
+                {
+                    write!(f, "[{}]", lane)?;
                 }
 
                 Ok(())

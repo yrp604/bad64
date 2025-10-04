@@ -119,6 +119,6 @@ impl ArrSpec {
             return self.suffix_truncated();
         }
 
-        return self.suffix_full();
+        self.suffix_full()
     }
 }

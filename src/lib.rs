@@ -242,7 +242,7 @@ impl Instruction {
     ///
     /// // cmp x0, #0x41 - "\x1f\x04\x01\xf1"
     /// let decoded = decode(0xf101041f, 0x1000).unwrap();
-    /// assert_eq!(decoded.flags_set(), Some(FlagEffect::Sets));
+    /// assert_eq!(decoded.flags_set(), Some(FlagEffect::Integer));
     ///
     /// // nop - "\x1f\x20\x03\xd5"
     /// let decoded = decode(0xd503201f, 0x1000).unwrap();

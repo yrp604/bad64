@@ -568,40 +568,43 @@ D51BE996 msr pmevcntr12_el0, x22
 D5111020 msr trcrsctlr16, x0
 // https://github.com/Vector35/arch-arm64/issues/78
 D5032FFF hint #0x7f
-// added in 2021-03 v9 spec
+// Removed in 2025-09 ISA specification
 // TCANCEL_EX_exception 11010100|opc=011|imm16=xxxxxxxxxxxxxxxx|op2=000|LL=00
 // TCANCEL #<imm>
-D478DA60 tcancel #0xc6d3
-D469F740 tcancel #0x4fba
-D47B3CC0 tcancel #0xd9e6
-D47EC080 tcancel #0xf604
-D475F200 tcancel #0xaf90
-D46AAE20 tcancel #0x5571
-D4666BE0 tcancel #0x335f
-D47DA280 tcancel #0xed14
+D478DA60 error
+D469F740 error
+D47B3CC0 error
+D47EC080 error
+D475F200 error
+D46AAE20 error
+D4666BE0 error
+D47DA280 error
+// Removed in 2025-09 ISA specification
 // TCOMMIT_only_barriers 1101010100|L=0|op0=00|op1=011|CRn=0011|CRm=0000|op2=011|Rt=11111
 // TCOMMIT
-D503307F tcommit
+D503307F error
+// Removed in 2025-09 ISA specification
 // TSTART_BR_systemresult 1101010100|L=1|op0=00|op1=011|CRn=0011|CRm=0000|op2=011|Rt=xxxxx
 // TSTART <Xt>
-D5233070 tstart x16
-D5233068 tstart x8
-D523307C tstart x28
-D5233062 tstart x2
-D523307F tstart xzr
-D523306B tstart x11
-D523307A tstart x26
-D5233076 tstart x22
+D5233070 error
+D5233068 error
+D523307C error
+D5233062 error
+D523307F error
+D523306B error
+D523307A error
+D5233076 error
+// Removed in 2025-09 ISA specification
 // TTEST_BR_systemresult 1101010100|L=1|op0=00|op1=011|CRn=0011|CRm=0001|op2=011|Rt=xxxxx
 // TTEST <Xt>
-D5233178 ttest x24
-D5233177 ttest x23
-D523317C ttest x28
-D5233169 ttest x9
-D523317D ttest fp
-D523317F ttest xzr
-D5233162 ttest x2
-D5233172 ttest x18
+D5233178 error
+D5233177 error
+D523317C error
+D5233169 error
+D523317D error
+D523317F error
+D5233162 error
+D5233172 error
 // adclb_z_zzz_ 01000101|0|sz=x|0|Zm=xxxxx|11010|T=0|Zn=xxxxx|Zda=xxxxx
 // ADCLB <Zda>.<T>,<Zn>.<T>,<Zm>.<T>
 4540D2D6 adclb z22.d, z22.d, z0.d

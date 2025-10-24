@@ -345,6 +345,8 @@ pub fn decode(ins: u32, address: u64) -> Result<Instruction, DecodeError> {
 
     match r {
         0 => {
+            assert_ne!(decoded.operation, Operation_ARM64_ERROR);
+
             let op = Op::from_u32(decoded.operation as u32).unwrap();
             let mut operands: [Operand; MAX_OPERANDS as usize] =
                 [Operand::Label(Imm::Unsigned(0)); MAX_OPERANDS as usize];

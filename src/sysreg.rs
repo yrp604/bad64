@@ -5,6 +5,9 @@ use num_traits::ToPrimitive;
 
 use bad64_sys::*;
 
+// pub const (SystemReg_Reg_(\w+)): SystemReg = \d+;
+//     $2 = $1 as u32,
+
 /// A system register
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, FromPrimitive, ToPrimitive)]
 #[repr(u32)]

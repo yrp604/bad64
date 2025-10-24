@@ -5,7 +5,8 @@ use bad64_sys::*;
 use cstr_core::CStr;
 use num_traits::ToPrimitive;
 
-// %s/^pub const \(Operation_ARM64_\(\w\+\)\): Operation = \d\+;/    \2 = \1 as u32,/g
+// pub const (Operation_ARM64_(\w+)): Operation = \d+;
+//     $2 = $1 as u32,
 
 /// An instruction operation
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, FromPrimitive, ToPrimitive)]
@@ -27,9 +28,11 @@ pub enum Op {
     ADDP = Operation_ARM64_ADDP as u32,
     ADDPL = Operation_ARM64_ADDPL as u32,
     ADDPT = Operation_ARM64_ADDPT as u32,
+    ADDQP = Operation_ARM64_ADDQP as u32,
     ADDQV = Operation_ARM64_ADDQV as u32,
     ADDS = Operation_ARM64_ADDS as u32,
     ADDSPL = Operation_ARM64_ADDSPL as u32,
+    ADDSUBP = Operation_ARM64_ADDSUBP as u32,
     ADDSVL = Operation_ARM64_ADDSVL as u32,
     ADDV = Operation_ARM64_ADDV as u32,
     ADDVA = Operation_ARM64_ADDVA as u32,
@@ -479,7 +482,9 @@ pub enum Op {
     FCVTXN2 = Operation_ARM64_FCVTXN2 as u32,
     FCVTXNT = Operation_ARM64_FCVTXNT as u32,
     FCVTZS = Operation_ARM64_FCVTZS as u32,
+    FCVTZSN = Operation_ARM64_FCVTZSN as u32,
     FCVTZU = Operation_ARM64_FCVTZU as u32,
+    FCVTZUN = Operation_ARM64_FCVTZUN as u32,
     FDIV = Operation_ARM64_FDIV as u32,
     FDIVR = Operation_ARM64_FDIVR as u32,
     FDOT = Operation_ARM64_FDOT as u32,
@@ -576,7 +581,10 @@ pub enum Op {
     GCSSS2 = Operation_ARM64_GCSSS2 as u32,
     GCSSTR = Operation_ARM64_GCSSTR as u32,
     GCSSTTR = Operation_ARM64_GCSSTTR as u32,
+    GIC = Operation_ARM64_GIC as u32,
+    GICR = Operation_ARM64_GICR as u32,
     GMI = Operation_ARM64_GMI as u32,
+    GSB = Operation_ARM64_GSB as u32,
     HINT = Operation_ARM64_HINT as u32,
     HISTCNT = Operation_ARM64_HISTCNT as u32,
     HISTSEG = Operation_ARM64_HISTSEG as u32,
@@ -655,7 +663,9 @@ pub enum Op {
     LDADDL = Operation_ARM64_LDADDL as u32,
     LDADDLB = Operation_ARM64_LDADDLB as u32,
     LDADDLH = Operation_ARM64_LDADDLH as u32,
+    LDAP = Operation_ARM64_LDAP as u32,
     LDAP1 = Operation_ARM64_LDAP1 as u32,
+    LDAPP = Operation_ARM64_LDAPP as u32,
     LDAPR = Operation_ARM64_LDAPR as u32,
     LDAPRB = Operation_ARM64_LDAPRB as u32,
     LDAPRH = Operation_ARM64_LDAPRH as u32,
@@ -882,6 +892,7 @@ pub enum Op {
     LSRV = Operation_ARM64_LSRV as u32,
     LUTI2 = Operation_ARM64_LUTI2 as u32,
     LUTI4 = Operation_ARM64_LUTI4 as u32,
+    LUTI6 = Operation_ARM64_LUTI6 as u32,
     MAD = Operation_ARM64_MAD as u32,
     MADD = Operation_ARM64_MADD as u32,
     MADDPT = Operation_ARM64_MADDPT as u32,
@@ -889,6 +900,7 @@ pub enum Op {
     MATCH = Operation_ARM64_MATCH as u32,
     MLA = Operation_ARM64_MLA as u32,
     MLAPT = Operation_ARM64_MLAPT as u32,
+    MLBI = Operation_ARM64_MLBI as u32,
     MLS = Operation_ARM64_MLS as u32,
     MNEG = Operation_ARM64_MNEG as u32,
     MOV = Operation_ARM64_MOV as u32,
@@ -1111,6 +1123,7 @@ pub enum Op {
     SBFX = Operation_ARM64_SBFX as u32,
     SCLAMP = Operation_ARM64_SCLAMP as u32,
     SCVTF = Operation_ARM64_SCVTF as u32,
+    SCVTFLT = Operation_ARM64_SCVTFLT as u32,
     SDIV = Operation_ARM64_SDIV as u32,
     SDIVR = Operation_ARM64_SDIVR as u32,
     SDOT = Operation_ARM64_SDOT as u32,
@@ -1168,6 +1181,7 @@ pub enum Op {
     SHRNT = Operation_ARM64_SHRNT as u32,
     SHSUB = Operation_ARM64_SHSUB as u32,
     SHSUBR = Operation_ARM64_SHSUBR as u32,
+    SHUH = Operation_ARM64_SHUH as u32,
     SLI = Operation_ARM64_SLI as u32,
     SM3PARTW1 = Operation_ARM64_SM3PARTW1 as u32,
     SM3PARTW2 = Operation_ARM64_SM3PARTW2 as u32,
@@ -1358,6 +1372,7 @@ pub enum Op {
     STCLRL = Operation_ARM64_STCLRL as u32,
     STCLRLB = Operation_ARM64_STCLRLB as u32,
     STCLRLH = Operation_ARM64_STCLRLH as u32,
+    STCPH = Operation_ARM64_STCPH as u32,
     STEOR = Operation_ARM64_STEOR as u32,
     STEORB = Operation_ARM64_STEORB as u32,
     STEORH = Operation_ARM64_STEORH as u32,
@@ -1382,6 +1397,7 @@ pub enum Op {
     STLLR = Operation_ARM64_STLLR as u32,
     STLLRB = Operation_ARM64_STLLRB as u32,
     STLLRH = Operation_ARM64_STLLRH as u32,
+    STLP = Operation_ARM64_STLP as u32,
     STLR = Operation_ARM64_STLR as u32,
     STLRB = Operation_ARM64_STLRB as u32,
     STLRH = Operation_ARM64_STLRH as u32,
@@ -1515,8 +1531,6 @@ pub enum Op {
     TBX = Operation_ARM64_TBX as u32,
     TBXQ = Operation_ARM64_TBXQ as u32,
     TBZ = Operation_ARM64_TBZ as u32,
-    TCANCEL = Operation_ARM64_TCANCEL as u32,
-    TCOMMIT = Operation_ARM64_TCOMMIT as u32,
     TLBI = Operation_ARM64_TLBI as u32,
     TLBIP = Operation_ARM64_TLBIP as u32,
     TRCIT = Operation_ARM64_TRCIT as u32,
@@ -1524,8 +1538,6 @@ pub enum Op {
     TRN2 = Operation_ARM64_TRN2 as u32,
     TSB = Operation_ARM64_TSB as u32,
     TST = Operation_ARM64_TST as u32,
-    TSTART = Operation_ARM64_TSTART as u32,
-    TTEST = Operation_ARM64_TTEST as u32,
     UABA = Operation_ARM64_UABA as u32,
     UABAL = Operation_ARM64_UABAL as u32,
     UABAL2 = Operation_ARM64_UABAL2 as u32,
@@ -1553,6 +1565,7 @@ pub enum Op {
     UBFX = Operation_ARM64_UBFX as u32,
     UCLAMP = Operation_ARM64_UCLAMP as u32,
     UCVTF = Operation_ARM64_UCVTF as u32,
+    UCVTFLT = Operation_ARM64_UCVTFLT as u32,
     UDF = Operation_ARM64_UDF as u32,
     UDIV = Operation_ARM64_UDIV as u32,
     UDIVR = Operation_ARM64_UDIVR as u32,
@@ -1703,7 +1716,7 @@ pub enum Op {
 }
 
 // this is a guard to try to detect if new instructions get added
-const_assert_eq!(Operation_ARM64_ZIPQ2, 1688);
+const_assert_eq!(Operation_ARM64_ZIPQ2, 1700);
 
 impl Op {
     /// Get the operation name

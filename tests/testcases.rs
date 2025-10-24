@@ -95,7 +95,14 @@ fn testcases() {
         let op = u32::from_str_radix(chunks[0], 16).unwrap();
         let expected = chunks[1..].join(" ");
 
-        let decoded = bad64::decode(op, 0x8000_0000_0000_0004).unwrap();
+        let decoded = bad64::decode(op, 0x8000_0000_0000_0004);
+
+        if decoded.is_err() && expected == "error" {
+            continue;
+        }
+
+        let decoded = decoded.unwrap();
+
         let actual = format!("{}", decoded);
 
         if !fuzzy_eq(&expected, &actual) {

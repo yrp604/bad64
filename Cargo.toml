@@ -18,7 +18,7 @@ num-derive = "0.4"
 static_assertions = "1"
 
 [dev-dependencies]
-rand = "0.9"
+rand = "0.10"
 xmas-elf = "0.10"
 
 [features]

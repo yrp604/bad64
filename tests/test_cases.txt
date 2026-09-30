@@ -22418,7 +22418,7 @@ D535B513 mrs x19, s2_5_c11_c5_0
 D53E3602 mrs x2, s3_6_c3_c6_0
 D53BE1EE mrs x14, s3_3_c14_c1_7
 // MSR_SI_pstate 1101010100000xxxxxxxxxxxxxxxxxxx
-D50049BF msr spsel, #0x9
+D50049BF msr pstate_spsel, #0x9
 D500459F msr pan, #0x5
 D5034EDF msr daifset, #0xe
 D503455F msr dit, #0x5
@@ -22433,7 +22433,7 @@ D50348FF msr daifclr, #0x8
 D50349FF msr daifclr, #0x9
 D503479F msr tco, #0x7
 D503403F msr ssbs, #0x0
-D5004EBF msr spsel, #0xe
+D5004EBF msr pstate_spsel, #0xe
 // MSR_SR_systemmove 1101010100xxxxxxxxxxxxxxxxxxxxxx
 D51B192B msr s3_3_c1_c9_1, x11
 D51E47EE msr s3_6_c4_c7_7, x14

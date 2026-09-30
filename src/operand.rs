@@ -24,11 +24,13 @@ impl TryFrom<&bad64_sys::InstructionOperand> for SliceIndicator {
     type Error = ();
 
     fn try_from(oo: &bad64_sys::InstructionOperand) -> Result<Self, Self::Error> {
-        match oo.slice {
-            SliceIndicator_SLICE_NONE => Err(()),
-            SliceIndicator_SLICE_HORIZONTAL => Ok(Self::Horizontal),
-            SliceIndicator_SLICE_VERTICAL => Ok(Self::Vertical),
-            _ => Err(()),
+        unsafe {
+            match oo.__bindgen_anon_2.__bindgen_anon_1.slice {
+                SliceIndicator_SLICE_NONE => Err(()),
+                SliceIndicator_SLICE_HORIZONTAL => Ok(Self::Horizontal),
+                SliceIndicator_SLICE_VERTICAL => Ok(Self::Vertical),
+                _ => Err(()),
+            }
         }
     }
 }
@@ -156,111 +158,121 @@ impl TryFrom<&bad64_sys::InstructionOperand> for Operand {
     type Error = ();
 
     fn try_from(oo: &bad64_sys::InstructionOperand) -> Result<Self, Self::Error> {
-        match oo.operandClass {
-            OperandClass::IMM32 => Ok(Self::Imm32 {
-                imm: Imm::from(oo),
-                shift: Shift::try_from(oo).ok(),
-            }),
-            OperandClass::IMM64 => Ok(Self::Imm64 {
-                imm: Imm::from(oo),
-                shift: Shift::try_from(oo).ok(),
-            }),
-            OperandClass::FIMM32 => Ok(Self::FImm32(oo.immediate as u32)),
-            OperandClass::REG => {
-                let reg = Reg::from_u32(oo.reg[0] as u32).unwrap();
+        unsafe {
+            match oo.operandClass {
+                OperandClass::IMM32 => Ok(Self::Imm32 {
+                    imm: Imm::from(oo),
+                    shift: Shift::try_from(oo).ok(),
+                }),
+                OperandClass::IMM64 => Ok(Self::Imm64 {
+                    imm: Imm::from(oo),
+                    shift: Shift::try_from(oo).ok(),
+                }),
+                OperandClass::FIMM32 => Ok(Self::FImm32(oo.immediate as u32)),
+                OperandClass::REG => {
+                    let reg = Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap();
 
-                if let Ok(shift) = Shift::try_from(oo) {
-                    return Ok(Self::ShiftReg { reg, shift });
+                    if let Ok(shift) = Shift::try_from(oo) {
+                        return Ok(Self::ShiftReg { reg, shift });
+                    }
+
+                    if oo.pred_qual != 0 {
+                        assert!(reg.is_pred());
+                        return Ok(Self::QualReg {
+                            reg,
+                            qual: char::from_u32(oo.pred_qual as u32).unwrap(),
+                        });
+                    }
+
+                    let arrspec = ArrSpec::try_from(oo).ok();
+
+                    Ok(Self::Reg { reg, arrspec })
                 }
+                OperandClass::MULTI_REG => {
+                    let mut regs = [None; MAX_REGISTERS as usize];
 
-                if oo.pred_qual != 0 {
-                    assert!(reg.is_pred());
-                    return Ok(Self::QualReg {
-                        reg,
-                        qual: char::from_u32(oo.pred_qual as u32).unwrap(),
-                    });
+                    for (n, regno) in oo.__bindgen_anon_1.reg.iter().enumerate() {
+                        regs[n] = Reg::from_u32(*regno as u32);
+                    }
+
+                    let arrspec = ArrSpec::try_from(oo).ok();
+
+                    Ok(Self::MultiReg { regs, arrspec })
                 }
+                OperandClass::SYS_REG => Ok(Self::SysReg(
+                    SysReg::from_u32(oo.__bindgen_anon_1.sysreg as u32).unwrap(),
+                )),
+                OperandClass::MEM_REG => Ok(Self::MemReg(
+                    Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap(),
+                )),
+                OperandClass::STR_IMM => Ok(Self::StrImm {
+                    str: core::mem::transmute(oo.__bindgen_anon_1.name),
+                    imm: oo.immediate,
+                }),
+                OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
+                    reg: Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap(),
+                    offset: Imm::from(oo),
+                    mul_vl: oo.mul_vl,
+                    arrspec: ArrSpec::try_from(oo).ok(),
+                }),
+                OperandClass::MEM_PRE_IDX => Ok(Self::MemPreIdx {
+                    reg: Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap(),
+                    imm: Imm::from(oo),
+                }),
+                OperandClass::MEM_POST_IDX => {
+                    let reg0 = Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap();
 
-                let arrspec = ArrSpec::try_from(oo).ok();
-
-                Ok(Self::Reg { reg, arrspec })
+                    match Reg::from_u32(oo.__bindgen_anon_1.reg[1] as u32) {
+                        Some(reg1) => Ok(Self::MemPostIdxReg([reg0, reg1])),
+                        None => Ok(Self::MemPostIdxImm {
+                            reg: reg0,
+                            imm: Imm::from(oo),
+                        }),
+                    }
+                }
+                OperandClass::MEM_EXTENDED => Ok(Self::MemExt {
+                    regs: [
+                        Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap(),
+                        Reg::from_u32(oo.__bindgen_anon_1.reg[1] as u32).unwrap(),
+                    ],
+                    shift: Shift::try_from(oo).ok(),
+                    arrspec: ArrSpec::try_from(oo).ok(),
+                }),
+                OperandClass::SME_TILE => Ok(Self::SmeTile {
+                    tile: oo.__bindgen_anon_2.__bindgen_anon_1.tile,
+                    slice: SliceIndicator::try_from(oo).ok(),
+                    arrspec: ArrSpec::try_from(oo).ok(),
+                    reg: Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32),
+                    imm: Imm::from(oo),
+                }),
+                OperandClass::INDEXED_ELEMENT => Ok(Self::IndexedElement {
+                    regs: [
+                        Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap(),
+                        Reg::from_u32(oo.__bindgen_anon_1.reg[1] as u32).unwrap(),
+                    ],
+                    arrspec: ArrSpec::try_from(oo).ok(),
+                    imm: Imm::from(oo),
+                }),
+                OperandClass::ACCUM_ARRAY => Ok(Self::AccumArray {
+                    reg: Reg::from_u32(oo.__bindgen_anon_1.reg[0] as u32).unwrap(),
+                    imm: Imm::from(oo),
+                }),
+                OperandClass::LABEL => Ok(Self::Label(Imm::from(oo))),
+                OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplSpec {
+                    o0: oo.__bindgen_anon_2.implspec[0],
+                    o1: oo.__bindgen_anon_2.implspec[1],
+                    cm: oo.__bindgen_anon_2.implspec[2],
+                    cn: oo.__bindgen_anon_2.implspec[3],
+                    o2: oo.__bindgen_anon_2.implspec[4],
+                }),
+                OperandClass::CONDITION => Ok(Self::Cond(
+                    Condition::from_u32(oo.__bindgen_anon_1.cond as u32).unwrap(),
+                )),
+                OperandClass::NAME => {
+                    Ok(Self::Name(core::mem::transmute(oo.__bindgen_anon_1.name)))
+                }
+                OperandClass::NONE => Err(()),
             }
-            OperandClass::MULTI_REG => {
-                let mut regs = [None; MAX_REGISTERS as usize];
-
-                for (n, regno) in oo.reg.iter().enumerate() {
-                    regs[n] = Reg::from_u32(*regno as u32);
-                }
-
-                let arrspec = ArrSpec::try_from(oo).ok();
-
-                Ok(Self::MultiReg { regs, arrspec })
-            }
-            OperandClass::SYS_REG => Ok(Self::SysReg(SysReg::from_u32(oo.sysreg as u32).unwrap())),
-            OperandClass::MEM_REG => Ok(Self::MemReg(Reg::from_u32(oo.reg[0] as u32).unwrap())),
-            OperandClass::STR_IMM => Ok(Self::StrImm {
-                str: unsafe { core::mem::transmute(oo.name) },
-                imm: oo.immediate,
-            }),
-            OperandClass::MEM_OFFSET => Ok(Self::MemOffset {
-                reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                offset: Imm::from(oo),
-                mul_vl: oo.mul_vl,
-                arrspec: ArrSpec::try_from(oo).ok(),
-            }),
-            OperandClass::MEM_PRE_IDX => Ok(Self::MemPreIdx {
-                reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                imm: Imm::from(oo),
-            }),
-            OperandClass::MEM_POST_IDX => {
-                let reg0 = Reg::from_u32(oo.reg[0] as u32).unwrap();
-
-                match Reg::from_u32(oo.reg[1] as u32) {
-                    Some(reg1) => Ok(Self::MemPostIdxReg([reg0, reg1])),
-                    None => Ok(Self::MemPostIdxImm {
-                        reg: reg0,
-                        imm: Imm::from(oo),
-                    }),
-                }
-            }
-            OperandClass::MEM_EXTENDED => Ok(Self::MemExt {
-                regs: [
-                    Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                    Reg::from_u32(oo.reg[1] as u32).unwrap(),
-                ],
-                shift: Shift::try_from(oo).ok(),
-                arrspec: ArrSpec::try_from(oo).ok(),
-            }),
-            OperandClass::SME_TILE => Ok(Self::SmeTile {
-                tile: oo.tile,
-                slice: SliceIndicator::try_from(oo).ok(),
-                arrspec: ArrSpec::try_from(oo).ok(),
-                reg: Reg::from_u32(oo.reg[0] as u32),
-                imm: Imm::from(oo),
-            }),
-            OperandClass::INDEXED_ELEMENT => Ok(Self::IndexedElement {
-                regs: [
-                    Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                    Reg::from_u32(oo.reg[1] as u32).unwrap(),
-                ],
-                arrspec: ArrSpec::try_from(oo).ok(),
-                imm: Imm::from(oo),
-            }),
-            OperandClass::ACCUM_ARRAY => Ok(Self::AccumArray {
-                reg: Reg::from_u32(oo.reg[0] as u32).unwrap(),
-                imm: Imm::from(oo),
-            }),
-            OperandClass::LABEL => Ok(Self::Label(Imm::from(oo))),
-            OperandClass::IMPLEMENTATION_SPECIFIC => Ok(Self::ImplSpec {
-                o0: oo.implspec[0],
-                o1: oo.implspec[1],
-                cm: oo.implspec[2],
-                cn: oo.implspec[3],
-                o2: oo.implspec[4],
-            }),
-            OperandClass::CONDITION => Ok(Self::Cond(Condition::from_u32(oo.cond as u32).unwrap())),
-            OperandClass::NAME => Ok(Self::Name(unsafe { core::mem::transmute(oo.name) })),
-            OperandClass::NONE => Err(()),
         }
     }
 }

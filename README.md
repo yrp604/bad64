@@ -1,3 +1,10 @@
+# This crate is dead, use [exarmo](https://github.com/Vector35/exarmo)
+
+With Binary Ninja publishing and using `exarmo`, this crate no longer has any
+purpose: upstream is rust so bindings are not necessary and the C disassembler
+will not get updates in the future. Please move your projects away from
+`bad64`.
+
 # Binja Arm64 Disassembler
 
 [![Build Status]][actions] [![Latest Version]][crates.io] [![Latest Docs]][docs.rs]
